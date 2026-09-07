@@ -30,34 +30,34 @@ METRICS_JSON = RESULTS_DIR / "metrics.json"
 # trusting this value — 16000 Hz is the common AASIST default, but confirm.
 TARGET_SAMPLE_RATE = 16000
 FORCE_MONO = True
+# ---------------------------------------------------------------------------
+# Windowing
+# ---------------------------------------------------------------------------
+# AASIST-L's ONNX export has a FIXED input length — confirmed via
+# inspect-model: input shape is ('batch', 64600). Not a tunable value.
+FIXED_WINDOW_SAMPLES = 64600
 
-# ---------------------------------------------------------------------------
-# Segmentation
-# ---------------------------------------------------------------------------
-# Window length in seconds for each segment fed to the model.
-SEGMENT_LENGTH_SECONDS = 4.0
-# Overlap between consecutive windows, in seconds (0.0 = no overlap).
+# Upstream clovaai/aasist eval convention: audio >= 64600 -> first 64600
+# samples; audio < 64600 -> tile-repeat to fill. Keep False for baseline.
+USE_SLIDING_WINDOWS = False
 SEGMENT_OVERLAP_SECONDS = 0.0
-# If the total audio is shorter than one segment, pad instead of dropping it.
-PAD_SHORT_AUDIO = True
 
 # ---------------------------------------------------------------------------
 # Aggregation
 # ---------------------------------------------------------------------------
+# Only relevant when USE_SLIDING_WINDOWS = True.
 # One of: "mean", "median", "weighted_mean", "top_k", "majority_vote"
 AGGREGATION_STRATEGY = "mean"
-TOP_K = 3  # used only when AGGREGATION_STRATEGY == "top_k"
+TOP_K = 3
 
 # ---------------------------------------------------------------------------
 # Decision
 # ---------------------------------------------------------------------------
-# Placeholder threshold — Step 5/6 of Phase 1 replaces this with a value
-# derived from the validation set (e.g. via EER or precision/recall tradeoff).
+# Model outputs logits[:, 1] = bona fide (higher = more real). aasist_onnx.py
+# converts this to a spoof probability so "higher = more spoof-like" holds
+# throughout the pipeline.
 SPOOF_THRESHOLD = 0.5
-# Scores within this band of the threshold are reported as UNCERTAIN rather
-# than forced into REAL/SPOOF. Set to 0.0 to disable the uncertain band.
 UNCERTAIN_MARGIN = 0.05
-
 # ---------------------------------------------------------------------------
 # Misc
 # ---------------------------------------------------------------------------

@@ -34,20 +34,23 @@ def test_input_output_shapes_reported():
     assert input_info["name"]
     assert output_info["name"]
 
+@pytest.mark.skipif(not MODEL_AVAILABLE, reason="aasist-l.onnx not present in models/")
+def test_input_shape_matches_fixed_window_config():
+    model = AasistOnnxModel()
+    input_shape = model.input_info()["shape"]
+
+    fixed_dims = [d for d in input_shape if isinstance(d, int) and d > 1]
+    assert fixed_dims, f"Expected a fixed sample-count dimension in {input_shape}"
+    assert fixed_dims[0] == config.FIXED_WINDOW_SAMPLES, (
+        f"Model expects {fixed_dims[0]} samples but config.FIXED_WINDOW_SAMPLES "
+        f"is {config.FIXED_WINDOW_SAMPLES} — update config.py"
+    )
+
 
 @pytest.mark.skipif(not MODEL_AVAILABLE, reason="aasist-l.onnx not present in models/")
 def test_predict_segment_returns_float_in_range():
     model = AasistOnnxModel()
-    input_shape = model.input_info()["shape"]
-
-    # Fall back to config's expected segment length if the model reports a
-    # dynamic axis (commonly shown as a string like "batch" or -1).
-    n_samples = int(config.SEGMENT_LENGTH_SECONDS * config.TARGET_SAMPLE_RATE)
-    for dim in input_shape:
-        if isinstance(dim, int) and dim > 1:
-            n_samples = dim
-
-    dummy_segment = np.random.uniform(-1, 1, size=n_samples).astype(np.float32)
+    dummy_segment = np.random.uniform(-1, 1, size=config.FIXED_WINDOW_SAMPLES).astype(np.float32)
     score = model.predict_segment(dummy_segment)
 
     assert isinstance(score, float)

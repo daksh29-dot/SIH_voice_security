@@ -1,16 +1,11 @@
 """
 segment_audio.py
 
-Splits a preprocessed waveform into fixed-length windows for inference.
+AASIST-L's ONNX export has a FIXED input length of 64600 samples.
 
-    10-second recording
-    ├── Segment 1
-    ├── Segment 2
-    ├── Segment 3
-    └── Segment 4
-
-Window size and overlap are controlled from config.py so they're easy to
-sweep during Step 5 (single window vs multiple windows vs sliding windows).
+Baseline windowing (matches upstream clovaai/aasist eval convention):
+    audio >= 64600 samples  ->  take the FIRST 64600 samples (no random crop)
+    audio <  64600 samples  ->  tile-repeat the audio to fill 64600 samples
 """
 
 from typing import List
@@ -21,63 +16,58 @@ import _pathfix  # noqa: F401
 import config
 
 
-def segment_waveform(
-    waveform: np.ndarray,
-    sample_rate: int = config.TARGET_SAMPLE_RATE,
-    segment_length_s: float = config.SEGMENT_LENGTH_SECONDS,
-    overlap_s: float = config.SEGMENT_OVERLAP_SECONDS,
-    pad_short: bool = config.PAD_SHORT_AUDIO,
-) -> List[np.ndarray]:
-    """
-    Split a 1D waveform into fixed-length segments.
-
-    Args:
-        waveform: 1D float32 array (mono, already resampled/normalized).
-        sample_rate: sample rate of `waveform`.
-        segment_length_s: length of each segment in seconds.
-        overlap_s: overlap between consecutive segments in seconds.
-        pad_short: if True, zero-pad audio shorter than one segment instead
-            of returning an empty list.
-
-    Returns:
-        List of 1D float32 arrays, each of length `segment_length_s * sample_rate`
-        (except possibly the last one, unless it was padded).
-    """
+def pad_fixed(waveform: np.ndarray, window_samples: int = config.FIXED_WINDOW_SAMPLES) -> np.ndarray:
+    """Take first `window_samples` samples, or tile-repeat if audio is shorter."""
     if waveform.ndim != 1:
         raise ValueError(f"Expected 1D mono waveform, got shape {waveform.shape}")
 
-    segment_len = int(segment_length_s * sample_rate)
-    hop_len = segment_len - int(overlap_s * sample_rate)
-    if hop_len <= 0:
-        raise ValueError("overlap_s must be smaller than segment_length_s")
+    waveform = waveform.astype(np.float32)
+    n = waveform.shape[0]
 
-    total_samples = len(waveform)
+    if n >= window_samples:
+        return waveform[:window_samples]
 
-    # Audio shorter than one full segment.
-    if total_samples < segment_len:
-        if pad_short:
-            padded = np.zeros(segment_len, dtype=np.float32)
-            padded[:total_samples] = waveform
-            return [padded]
-        return []
+    reps = window_samples // n + 1
+    return np.tile(waveform, reps)[:window_samples].astype(np.float32)
+
+
+def segment_waveform_sliding(
+    waveform: np.ndarray,
+    window_samples: int = config.FIXED_WINDOW_SAMPLES,
+    overlap_s: float = config.SEGMENT_OVERLAP_SECONDS,
+    sample_rate: int = config.TARGET_SAMPLE_RATE,
+) -> List[np.ndarray]:
+    """EXPERIMENTAL (Step 5): multiple overlapping 64600-sample windows."""
+    if waveform.ndim != 1:
+        raise ValueError(f"Expected 1D mono waveform, got shape {waveform.shape}")
+
+    hop = window_samples - int(overlap_s * sample_rate)
+    if hop <= 0:
+        raise ValueError("overlap_s must be smaller than the fixed window length")
+
+    total = len(waveform)
+    if total <= window_samples:
+        return [pad_fixed(waveform, window_samples)]
 
     segments = []
     start = 0
-    while start + segment_len <= total_samples:
-        segments.append(waveform[start:start + segment_len])
-        start += hop_len
-
-    # Capture any leftover tail as a final (padded) segment so we don't
-    # silently discard the end of the recording.
-    remainder_start = start
-    if remainder_start < total_samples:
-        tail = waveform[remainder_start:]
-        if pad_short:
-            padded = np.zeros(segment_len, dtype=np.float32)
-            padded[:len(tail)] = tail
-            segments.append(padded)
+    while start < total:
+        end = start + window_samples
+        if end <= total:
+            segments.append(waveform[start:end])
+        else:
+            segments.append(pad_fixed(waveform[start:], window_samples))
+            break
+        start += hop
 
     return segments
+
+
+def segment_waveform(waveform: np.ndarray) -> List[np.ndarray]:
+    """Entry point used by inference.py."""
+    if config.USE_SLIDING_WINDOWS:
+        return segment_waveform_sliding(waveform)
+    return [pad_fixed(waveform)]
 
 
 if __name__ == "__main__":
@@ -90,5 +80,7 @@ if __name__ == "__main__":
 
     wav = preprocess_audio(sys.argv[1])
     segs = segment_waveform(wav)
-    print(f"Total duration: {len(wav) / config.TARGET_SAMPLE_RATE:.2f}s")
-    print(f"Produced {len(segs)} segment(s) of shape {segs[0].shape if segs else 'N/A'}")
+    print(f"Input duration: {len(wav) / config.TARGET_SAMPLE_RATE:.2f}s ({len(wav)} samples)")
+    print(f"Fixed window:   {config.FIXED_WINDOW_SAMPLES} samples")
+    print(f"Sliding windows enabled: {config.USE_SLIDING_WINDOWS}")
+    print(f"Produced {len(segs)} window(s) of shape {segs[0].shape if segs else 'N/A'}")

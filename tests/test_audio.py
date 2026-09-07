@@ -11,7 +11,7 @@ import pytest
 
 import config
 from audio_preprocessing import to_mono, resample, normalize, preprocess_audio
-from segment_audio import segment_waveform
+from segment_audio import pad_fixed, segment_waveform, segment_waveform_sliding
 
 
 @pytest.fixture
@@ -75,32 +75,57 @@ def test_preprocess_audio_end_to_end(synthetic_wav):
     assert abs(len(wav) - expected_len) < 10
     assert np.max(np.abs(wav)) <= 1.0 + 1e-6
 
-
-def test_segment_waveform_exact_multiple():
-    sr = 16000
-    segment_len_s = 1.0
-    wav = np.random.uniform(-1, 1, sr * 4).astype(np.float32)  # exactly 4 segments
-    segments = segment_waveform(wav, sample_rate=sr, segment_length_s=segment_len_s, overlap_s=0.0)
-    assert len(segments) == 4
-    assert all(len(s) == sr for s in segments)
+def test_pad_fixed_truncates_long_audio():
+    window = config.FIXED_WINDOW_SAMPLES
+    wav = np.arange(window + 5000, dtype=np.float32)
+    result = pad_fixed(wav, window)
+    assert len(result) == window
+    assert np.array_equal(result, wav[:window])
 
 
-def test_segment_waveform_pads_short_audio():
-    sr = 16000
-    wav = np.random.uniform(-1, 1, sr // 2).astype(np.float32)  # 0.5s, shorter than 1 segment
-    segments = segment_waveform(wav, sample_rate=sr, segment_length_s=1.0, pad_short=True)
-    assert len(segments) == 1
-    assert len(segments[0]) == sr
+def test_pad_fixed_tile_repeats_short_audio():
+    window = 1000
+    wav = np.array([1.0, 2.0, 3.0], dtype=np.float32)
+    result = pad_fixed(wav, window)
+    assert len(result) == window
+    assert np.array_equal(result[:3], wav)
+    assert np.array_equal(result[3:6], wav)
 
 
-def test_segment_waveform_no_pad_returns_empty_for_short_audio():
-    sr = 16000
-    wav = np.random.uniform(-1, 1, sr // 2).astype(np.float32)
-    segments = segment_waveform(wav, sample_rate=sr, segment_length_s=1.0, pad_short=False)
-    assert segments == []
+def test_pad_fixed_exact_length_passthrough():
+    window = 500
+    wav = np.random.uniform(-1, 1, window).astype(np.float32)
+    result = pad_fixed(wav, window)
+    assert np.array_equal(result, wav)
 
 
-def test_segment_waveform_rejects_multi_dim_input():
+def test_pad_fixed_rejects_multi_dim_input():
     bad_wav = np.zeros((2, 1000), dtype=np.float32)
     with pytest.raises(ValueError):
-        segment_waveform(bad_wav)
+        pad_fixed(bad_wav, 500)
+
+
+def test_segment_waveform_baseline_returns_single_fixed_window(monkeypatch):
+    monkeypatch.setattr(config, "USE_SLIDING_WINDOWS", False)
+    wav = np.random.uniform(-1, 1, config.FIXED_WINDOW_SAMPLES * 3).astype(np.float32)
+    segments = segment_waveform(wav)
+    assert len(segments) == 1
+    assert len(segments[0]) == config.FIXED_WINDOW_SAMPLES
+    assert np.array_equal(segments[0], wav[:config.FIXED_WINDOW_SAMPLES])
+
+
+def test_segment_waveform_sliding_multiple_windows(monkeypatch):
+    monkeypatch.setattr(config, "USE_SLIDING_WINDOWS", True)
+    window = config.FIXED_WINDOW_SAMPLES
+    wav = np.random.uniform(-1, 1, window * 3).astype(np.float32)
+    segments = segment_waveform_sliding(wav, window_samples=window, overlap_s=0.0)
+    assert len(segments) == 3
+    assert all(len(s) == window for s in segments)
+
+
+def test_segment_waveform_sliding_short_audio_returns_one_padded_window():
+    window = config.FIXED_WINDOW_SAMPLES
+    wav = np.random.uniform(-1, 1, window // 2).astype(np.float32)
+    segments = segment_waveform_sliding(wav, window_samples=window)
+    assert len(segments) == 1
+    assert len(segments[0]) == window

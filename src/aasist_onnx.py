@@ -55,45 +55,32 @@ class AasistOnnxModel:
             "shape": self._output_meta.shape,
             "type": self._output_meta.type,
         }
-
     def predict_segment(self, segment: np.ndarray) -> float:
         """
-        Run inference on a single audio segment.
+        Run inference on a single 64600-sample segment.
 
-        Args:
-            segment: 1D float32 waveform of the expected input length.
-
-        Returns:
-            A single float score. Convention used here: higher score =
-            more likely SPOOF. Confirm this convention against the actual
-            model outputs/labels during Step 2 — some AASIST checkpoints
-            output [bonafide_logit, spoof_logit] and need a softmax + index
-            pick rather than a raw single score. Adjust this method once
-            verified.
+        CONFIRMED from the model card and reference/aasist_l.py wrapper:
+            logits[:, 1] = BONA FIDE logit (higher = more real)
+            logits[:, 0] = SPOOF logit
+        We softmax and return the spoof-class probability (index 0).
         """
-        # Most ONNX AASIST exports expect shape (batch, samples).
         input_array = segment.astype(np.float32)[np.newaxis, :]
 
         input_name = self._input_meta.name
         output_name = self._output_meta.name
 
         result = self.session.run([output_name], {input_name: input_array})[0]
-        raw = np.asarray(result).squeeze()
+        logits = np.asarray(result).squeeze()
 
-        if raw.ndim == 0:
-            # Single scalar output.
-            score = float(raw)
-        elif raw.ndim == 1 and raw.shape[0] == 2:
-            # [bonafide_logit, spoof_logit] style output -> softmax -> spoof prob.
-            exp = np.exp(raw - np.max(raw))
-            probs = exp / exp.sum()
-            score = float(probs[1])
-        else:
-            # Fallback: take the max value. Flag for manual review.
-            score = float(np.max(raw))
+        if logits.ndim != 1 or logits.shape[0] != 2:
+            raise ValueError(
+                f"Expected AASIST-L output of shape (2,), got {logits.shape}."
+            )
 
-        return score
+        exp = np.exp(logits - np.max(logits))
+        probs = exp / exp.sum()
 
+        return float(probs[0])  # index 0 = spoof
 
 if __name__ == "__main__":
     model = AasistOnnxModel()
