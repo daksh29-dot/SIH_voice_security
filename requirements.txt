@@ -1,10 +1,22 @@
+# Core Deep Learning & Audio Processing
+torch>=2.0.0
+transformers>=4.35.0
 onnxruntime>=1.17.0
 librosa>=0.10.1
 soundfile>=0.12.1
 numpy>=1.24.0
-pytest>=7.4.0
-torch
-transformers>=4.35.0
-datasets
+av>=11.0.0                    # High-speed stream decoding for WebM/Opus microphone input
+
+# Speech Recognition & NLP
+SpeechRecognition>=3.10.0      # Live speech-to-text transcription engine
+
+# Web Application & API
 flask>=3.0.0
 flask-cors>=4.0.0
+
+# Testing & Dataset Evaluation
+pytest>=7.4.0
+datasets>=2.14.0
+
+# Scenario Voice Generation (Optional / Tooling)
+edge-tts>=6.1.9

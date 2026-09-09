@@ -1,5 +1,27 @@
 [
   {
+    "id": "THREAT-1524E1",
+    "phone_number": "+91 9845012345",
+    "reported_as": "Voice Cloned Relative SOS Emergency",
+    "risk_level": "CRITICAL",
+    "scam_type": "URGENT_FAMILY_SOS",
+    "voice_signature_hash": "cf6cd2e8a3962595039bbf1eefd0a22f",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-B3CAE2",
+    "phone_number": "+91 11-23459812",
+    "reported_as": "CBI / Police Digital Arrest Extortion",
+    "risk_level": "CRITICAL",
+    "scam_type": "DIGITAL_ARREST_CBI",
+    "voice_signature_hash": "e097422ae20f9676d2b014bd8f1f6231",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
     "id": "THREAT-C20F5A",
     "phone_number": "+91 22-67123984",
     "reported_as": "Customs / FedEx Illegal Parcel Scam",

@@ -1,5 +1,58 @@
 [
   {
+    "index": 82,
+    "timestamp": "2026-09-09 17:56:59 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9845012345",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "URGENT_FAMILY_SOS",
+    "transcript_snippet": "Papa, police ne pakad liya hai mujhe. Accident ho gaya car se. Hospital me hu, bail money chahiye fifty thousand rupees emergency. Please kisi ko mat ",
+    "pillar_details": {
+      "voice_clone_risk": 0.99,
+      "caller_cli_risk": 0.2,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.848,
+      "matched_keywords": [
+        "hospital me hu",
+        "accident ho gaya",
+        "bail money",
+        "police ne pakad liya",
+        "police"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "cf6cd2e8a3962595039bbf1eefd0a22f54c512a96d13eb0b3ef52a2b640da143"
+  },
+  {
+    "index": 81,
+    "timestamp": "2026-09-09 17:56:51 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 11-23459812",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
+    "pillar_details": {
+      "voice_clone_risk": 0.985,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.847,
+      "matched_keywords": [
+        "skype call",
+        "central bureau",
+        "arrest warrant",
+        "cyber crime",
+        "cbi",
+        "narcotics",
+        "money laundering",
+        "digital arrest"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "e097422ae20f9676d2b014bd8f1f62315ffe562bea7a14e4aa36f1632c328e2f"
+  },
+  {
     "index": 80,
     "timestamp": "2026-09-09 17:40:59 UTC",
     "event_type": "LIVE_CALL_VERIFICATION",
