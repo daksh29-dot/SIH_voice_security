@@ -16,8 +16,8 @@ MODEL_PATH = PROJECT_ROOT / "models" / "aasist-l.onnx"  # Legacy, kept for refer
 MODEL_NAME = "garystafford/wav2vec2-deepfake-voice-detector"
 
 TEST_AUDIO_DIR = PROJECT_ROOT / "test_audio"
-REAL_AUDIO_DIR = TEST_AUDIO_DIR / "real_asvspoof"
-SPOOF_AUDIO_DIR = TEST_AUDIO_DIR / "spoof_4sec"
+REAL_AUDIO_DIR = TEST_AUDIO_DIR / "real"
+SPOOF_AUDIO_DIR = TEST_AUDIO_DIR / "spoof"
 
 RESULTS_DIR = PROJECT_ROOT / "results"
 PREDICTIONS_CSV = RESULTS_DIR / "predictions.csv"

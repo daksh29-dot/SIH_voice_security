@@ -82,12 +82,14 @@ def test_pad_fixed_truncates_long_audio():
     assert len(result) == window
     assert np.array_equal(result, wav[:window])
 
-def test_pad_fixed_rejects_short_audio():
-    """DIAGNOSTIC: short audio is now rejected rather than tile-repeated."""
+
+def test_pad_fixed_tile_repeats_short_audio():
     window = 1000
     wav = np.array([1.0, 2.0, 3.0], dtype=np.float32)
-    with pytest.raises(ValueError, match="too short"):
-        pad_fixed(wav, window)
+    result = pad_fixed(wav, window)
+    assert len(result) == window
+    assert np.array_equal(result[:3], wav)
+    assert np.array_equal(result[3:6], wav)
 
 
 def test_pad_fixed_exact_length_passthrough():
@@ -120,9 +122,10 @@ def test_segment_waveform_sliding_multiple_windows(monkeypatch):
     assert len(segments) == 3
     assert all(len(s) == window for s in segments)
 
-def test_segment_waveform_sliding_short_audio_raises():
-    """Sliding-window path falls back to pad_fixed() for short input, which now raises."""
+
+def test_segment_waveform_sliding_short_audio_returns_one_padded_window():
     window = config.FIXED_WINDOW_SAMPLES
     wav = np.random.uniform(-1, 1, window // 2).astype(np.float32)
-    with pytest.raises(ValueError, match="too short"):
-        segment_waveform_sliding(wav, window_samples=window)
+    segments = segment_waveform_sliding(wav, window_samples=window)
+    assert len(segments) == 1
+    assert len(segments[0]) == window
