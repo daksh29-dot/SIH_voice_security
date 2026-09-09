@@ -1,0 +1,1320 @@
+[
+  {
+    "index": 64,
+    "timestamp": "2026-09-09 16:09:13 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.265,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Cyber crime Department you are under digital arrest",
+    "pillar_details": {
+      "voice_clone_risk": 0.031417421996593475,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.8,
+      "biometric_risk": 0.066,
+      "matched_keywords": [
+        "digital arrest",
+        "cyber crime"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "41ca2b14b62b9274d9f2a831abe047e40723e5bce1e1f9537c5665489f2cd1eb"
+  },
+  {
+    "index": 63,
+    "timestamp": "2026-09-09 16:07:49 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.021,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "From Cybertrime br",
+    "pillar_details": {
+      "voice_clone_risk": 0.02179480716586113,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.061,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "894b4e82c571172c8c829cd49ed2e9ac2584b34494c708db0e2f1a9634031810"
+  },
+  {
+    "index": 62,
+    "timestamp": "2026-09-09 16:06:01 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9876500000",
+    "composite_risk": 0.644,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "You are under digital arrest transfer money immediately to escrow",
+    "pillar_details": {
+      "voice_clone_risk": 0.9538723230361938,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.6,
+      "biometric_risk": 0.841,
+      "matched_keywords": [
+        "digital arrest"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "667faf2ff6634fda05f4c32dd58db3a30c82289641f9f4ce7dc3f9eef262f590"
+  },
+  {
+    "index": 61,
+    "timestamp": "2026-09-09 15:59:31 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "169d98a70eeebe57827d38fab9df3a1f0b75051d5377880f72df76bec800774f"
+  },
+  {
+    "index": 60,
+    "timestamp": "2026-09-09 15:59:28 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "e56fb3dc0dfc5b6c7c6aa36c7489b521dd36d4e2b5475ea1f60261b85c7cec81"
+  },
+  {
+    "index": 59,
+    "timestamp": "2026-09-09 15:58:30 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "6bc573327d0ec7e2b603b8548ae22afec3fdf90345b0a09a1c5577dcf077e694"
+  },
+  {
+    "index": 58,
+    "timestamp": "2026-09-09 15:58:27 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "ded9ca3132206eadc7be0cfb7b0c844d84400adf6cb9896281723243db2d5c3c"
+  },
+  {
+    "index": 57,
+    "timestamp": "2026-09-09 15:58:25 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "ad761c3ad2defa5f49b317e528749bb8c96702726f797c1fc8ad880a712e3fe9"
+  },
+  {
+    "index": 56,
+    "timestamp": "2026-09-09 15:58:22 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "91c20e492e05dca97d4bbff68c8f837dc5daede6d1a0788926a21a5ed50fabf4"
+  },
+  {
+    "index": 55,
+    "timestamp": "2026-09-09 15:58:19 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "a9f0977a9ab5efab2f831a7a4db344a909143d6698a63393269b68db73b96449"
+  },
+  {
+    "index": 54,
+    "timestamp": "2026-09-09 15:58:17 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "76dccba09ec81e3e41d7f6831a923e26564ce667cea9f2794f2cc54867e7de06"
+  },
+  {
+    "index": 53,
+    "timestamp": "2026-09-09 15:58:14 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "02d90f2e59322e9cc5261bace97744ad6e4a3d473e1174e0f15b04df91437b4b"
+  },
+  {
+    "index": 52,
+    "timestamp": "2026-09-09 15:58:11 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "ac46051ac7fa2a4a1eb4cf16cef13011b11e877437f917825c4f7a0fb06d52dd"
+  },
+  {
+    "index": 51,
+    "timestamp": "2026-09-09 15:58:08 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "11cceaae5e4aeec429c5498ceb88702d030d52f15b088f58c041976581e31038"
+  },
+  {
+    "index": 50,
+    "timestamp": "2026-09-09 15:56:58 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.315,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Inspector from CBI you are under digital arrest",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.8,
+      "biometric_risk": 0.125,
+      "matched_keywords": [
+        "cbi",
+        "digital arrest"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "8b15345d3ef07ea681786e38934134b0b1b655bd42764ccdf8461d2b923324c9"
+  },
+  {
+    "index": 49,
+    "timestamp": "2026-09-09 15:56:56 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.315,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Inspector from CBI you are under digital arrest",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.8,
+      "biometric_risk": 0.125,
+      "matched_keywords": [
+        "cbi",
+        "digital arrest"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "ec8b4d2252cb68367fe90554701b6c131b6a872efe00ec2d32b969fe1bc5dc91"
+  },
+  {
+    "index": 48,
+    "timestamp": "2026-09-09 15:56:53 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.315,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Inspector from CBI you are under digital arrest",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.8,
+      "biometric_risk": 0.125,
+      "matched_keywords": [
+        "cbi",
+        "digital arrest"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "446eb52c337c10b75362aaa98cf7b2c298481d4ff1690e4dd66454fde448db36"
+  },
+  {
+    "index": 47,
+    "timestamp": "2026-09-09 15:56:51 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.315,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Inspector from CBI you are under digital arrest",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.8,
+      "biometric_risk": 0.125,
+      "matched_keywords": [
+        "cbi",
+        "digital arrest"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "514356b01e9057dbd472d52cf0f3a5fe2857a998c32a0f57fe0d4cccbc27e499"
+  },
+  {
+    "index": 46,
+    "timestamp": "2026-09-09 15:56:46 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "b80a6e4a343bdfb7617a7f4ab15ae643549eaed0e1f7a5b9aff0d0f584506209"
+  },
+  {
+    "index": 45,
+    "timestamp": "2026-09-09 15:56:43 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "cd7b7d40bbdeaf8997b356376d3fe9e19d0c6337ac519b38a3703098d105c9c9"
+  },
+  {
+    "index": 44,
+    "timestamp": "2026-09-09 15:56:15 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "a99f090f7a4477bafaa1214950ae40c69f1d367307f2508399616ac63f883339"
+  },
+  {
+    "index": 43,
+    "timestamp": "2026-09-09 15:56:13 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "1277d610a3e5bd744da3ee5b66d902ba5857b8db62d1a73bed90a92d9d1a7279"
+  },
+  {
+    "index": 42,
+    "timestamp": "2026-09-09 15:56:11 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "5f4610e9d36ada1f2fc2faf0802789efe1ae7b15176d054547a136758e548962"
+  },
+  {
+    "index": 41,
+    "timestamp": "2026-09-09 15:56:08 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "8128d8d2a5b0b4ca5d432251c5fa344b7b9338a85d0b2c05ea7c91f0b6241f19"
+  },
+  {
+    "index": 40,
+    "timestamp": "2026-09-09 15:56:06 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "44e9e22fab23791ea75a4a3ce62a395961de29d71fc94f4312514afcfc363571"
+  },
+  {
+    "index": 39,
+    "timestamp": "2026-09-09 15:55:00 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "9a3810be5de5f94e1723f85d42d8d0b22fe6cc0a9d6514357484df2d26862ddc"
+  },
+  {
+    "index": 38,
+    "timestamp": "2026-09-09 15:54:57 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.09,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.125,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "8252c01328226a21fdafc77aea64e3561fd84e852e522b836803183125d70b0f"
+  },
+  {
+    "index": 37,
+    "timestamp": "2026-09-09 15:49:48 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9876500000",
+    "composite_risk": 0.644,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "You are under digital arrest transfer money immediately to escrow",
+    "pillar_details": {
+      "voice_clone_risk": 0.9538723230361938,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.6,
+      "biometric_risk": 0.841,
+      "matched_keywords": [
+        "digital arrest"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "e37786c62e9b2d036f5f0b37bd14afb76421798ca72b470a5ca99298760414ca"
+  },
+  {
+    "index": 36,
+    "timestamp": "2026-09-09 15:49:33 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9876500000",
+    "composite_risk": 0.644,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "You are under digital arrest transfer money immediately to escrow",
+    "pillar_details": {
+      "voice_clone_risk": 0.9538723230361938,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.6,
+      "biometric_risk": 0.841,
+      "matched_keywords": [
+        "digital arrest"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "65f33e68c6f585924a27d0c0498eafd4c1248ddadd78fb5386fb7fde09395d44"
+  },
+  {
+    "index": 35,
+    "timestamp": "2026-09-09 15:48:47 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 11-23459812",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello this is inspector rathore from CBI Central Bureau of Investigation you are under digital arrest",
+    "pillar_details": {
+      "voice_clone_risk": 0.94,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.838,
+      "matched_keywords": [
+        "cbi",
+        "central bureau",
+        "digital arrest"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "8d0ce19e16cc2b0e00283bd859d04a387f9707dc32648b05c6fd591f42e4b4b4"
+  },
+  {
+    "index": 34,
+    "timestamp": "2026-09-09 15:23:06 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9820123456",
+    "composite_risk": 0.028,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "Hey Rahul, let us meet tomorrow for lunch and discuss the project slides.",
+    "pillar_details": {
+      "voice_clone_risk": 0.04,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.07,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "0744db62b6aed6c6a65d73b25e6bfda1772fd2c5884e27f9a1e308ffb17d1796"
+  },
+  {
+    "index": 33,
+    "timestamp": "2026-09-09 15:22:56 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 11-23459812",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "This is CBI police cyber cell digital arrest money laundering",
+    "pillar_details": {
+      "voice_clone_risk": 0.94,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.838,
+      "matched_keywords": [
+        "money laundering",
+        "digital arrest",
+        "cbi",
+        "police"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "7af244da176ed32e1418b6fa0d4a0c666b34aa5b3613d1e5d7aad7b3d9fc8a14"
+  },
+  {
+    "index": 32,
+    "timestamp": "2026-09-09 15:11:33 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "64bfd7b69c5e7a1c2cdbf5a8a7fea698a98e33b88fb31dea4cf8d9d6b69c316f"
+  },
+  {
+    "index": 31,
+    "timestamp": "2026-09-09 15:11:30 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "10ca7edcaa6a4b48ba2a1dd78767a992f25a2e8c72edc2896db9b7d8ce576ada"
+  },
+  {
+    "index": 30,
+    "timestamp": "2026-09-09 15:11:28 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "285b688daf6601d7b7d6b03ce8cd3ca5732ed6d72f15e72318a8677b1cb9e6d4"
+  },
+  {
+    "index": 29,
+    "timestamp": "2026-09-09 15:11:25 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "d5c8b493e57299f1ce047fac4192fb3808057ddd8e5bf14418da55ab39f8d0c8"
+  },
+  {
+    "index": 28,
+    "timestamp": "2026-09-09 15:11:23 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "ea082638e8b04efcc55be5221058de440f2b723515420de93715c5fabe5cc299"
+  },
+  {
+    "index": 27,
+    "timestamp": "2026-09-09 15:11:20 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "6956154cdcce5af0dc84c9b387d66cd78870af251626a2e62060d1d969e60862"
+  },
+  {
+    "index": 26,
+    "timestamp": "2026-09-09 15:11:18 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "a4475a5e64e8a4e818878375df3ffc826d08c896ea9e0eed857fd9ed2bc851c2"
+  },
+  {
+    "index": 25,
+    "timestamp": "2026-09-09 15:11:15 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "4afc27783cce629ce5aae88c43f19b0312257e16c2c5575f7eef6800ced4d912"
+  },
+  {
+    "index": 24,
+    "timestamp": "2026-09-09 15:11:13 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "d2f767c9eb944fa2f5be2b4904542dc3d39544ab15f951d4ae8741ccf3fe47ae"
+  },
+  {
+    "index": 23,
+    "timestamp": "2026-09-09 15:11:10 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "e9eecd50f31d4292f39011793458af143a9457c968d7c0c63ccc9df16710ce5a"
+  },
+  {
+    "index": 22,
+    "timestamp": "2026-09-09 15:11:07 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "baea69af54563fde4febcecc89f4c7e0453c0b6aafa47b18f9b7f6debf67b8eb"
+  },
+  {
+    "index": 21,
+    "timestamp": "2026-09-09 15:11:04 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "be05d1743e517e6d1585f815b904613a3f8b352306d457482dd49a0575146781"
+  },
+  {
+    "index": 20,
+    "timestamp": "2026-09-09 15:11:00 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "a289dd5dc5e0e5f49fc4214c71ac2f1b08673bf85f69918f00952e6d256e3918"
+  },
+  {
+    "index": 19,
+    "timestamp": "2026-09-09 15:10:57 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "23fe1ca29f7fbab81f3c8e856b1c7ea99e1b5b5c8aee85dd7fc847f084e97776"
+  },
+  {
+    "index": 18,
+    "timestamp": "2026-09-09 15:10:55 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "243d0270c52511957fdde7c5bb89e3becfa8b3b545a6063597e7f7cf30c6defb"
+  },
+  {
+    "index": 17,
+    "timestamp": "2026-09-09 15:07:58 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 11-23459812",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
+    "pillar_details": {
+      "voice_clone_risk": 0.985,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.847,
+      "matched_keywords": [
+        "central bureau",
+        "digital arrest",
+        "arrest warrant",
+        "cyber crime",
+        "cbi",
+        "narcotics",
+        "skype call",
+        "money laundering"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "850b03de6ed7b2119707b68a384575e1d63f84ce53b3663a59784ef716216c25"
+  },
+  {
+    "index": 16,
+    "timestamp": "2026-09-09 15:04:28 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "bdc7ccbb61add301f7ba7385e0c9aa6b573e637a7977fce8949771a6b34e23c7"
+  },
+  {
+    "index": 15,
+    "timestamp": "2026-09-09 15:04:26 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "bad480e18e757809a960160fa035e19826d4d42686c685befbcc7cbbebc763ed"
+  },
+  {
+    "index": 14,
+    "timestamp": "2026-09-09 15:02:36 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "832aa1909d183e31665dcf701a828a157f839d34c36f5f891d2728abc49c1467"
+  },
+  {
+    "index": 13,
+    "timestamp": "2026-09-09 15:01:15 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "f5482d31ddadcacb7c69645dc724229dc3807848d26956942bfce18b7837617c"
+  },
+  {
+    "index": 12,
+    "timestamp": "2026-09-09 15:01:13 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "f5936943fa1d467ff40d939c12e03ca70a2e9e7f7dbb2edd6833f21279426f56"
+  },
+  {
+    "index": 11,
+    "timestamp": "2026-09-09 14:51:38 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 11-23459812",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
+    "pillar_details": {
+      "voice_clone_risk": 0.985,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.847,
+      "matched_keywords": [
+        "central bureau",
+        "digital arrest",
+        "arrest warrant",
+        "cyber crime",
+        "cbi",
+        "narcotics",
+        "skype call",
+        "money laundering"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "80689677704a8155d277d8bd858ece28a61ecc6369a24a759982efce0114bf98"
+  },
+  {
+    "index": 10,
+    "timestamp": "2026-09-09 14:10:40 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 11-23459812",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
+    "pillar_details": {
+      "voice_clone_risk": 0.985,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.847,
+      "matched_keywords": [
+        "central bureau",
+        "digital arrest",
+        "arrest warrant",
+        "cyber crime",
+        "cbi",
+        "narcotics",
+        "skype call",
+        "money laundering"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "a8ce7ae8c238c24cf6af2de11c5aa575137003df618e92c54983b6df4a48b445"
+  },
+  {
+    "index": 9,
+    "timestamp": "2026-09-09 14:08:58 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9823411092",
+    "composite_risk": 0.722,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "BANK_KYC_OTP_THEFT",
+    "transcript_snippet": "Dear customer, your State Bank of India Net Banking KYC has expired today. Your bank account will be frozen within two hours. Please share the six dig",
+    "pillar_details": {
+      "voice_clone_risk": 0.92,
+      "caller_cli_risk": 0.55,
+      "scam_words_risk": 0.55,
+      "biometric_risk": 0.834,
+      "matched_keywords": [
+        "otp"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "76543e0b303d23ce156b2e695d38baf35247bd7b1736598cc99503f39fe94426"
+  },
+  {
+    "index": 8,
+    "timestamp": "2026-09-09 14:08:50 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 11-23459812",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
+    "pillar_details": {
+      "voice_clone_risk": 0.985,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.847,
+      "matched_keywords": [
+        "central bureau",
+        "digital arrest",
+        "arrest warrant",
+        "cyber crime",
+        "cbi",
+        "narcotics",
+        "skype call",
+        "money laundering"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "012d7f861ef01a992086859f09573f70712ad576a5e408cb468dea31ec88a566"
+  },
+  {
+    "index": 7,
+    "timestamp": "2026-09-09 14:08:10 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "931a54f5268208c5a30fd5cd5b7b23159ef6a01b52d340ec54db1b1b8bd51825"
+  },
+  {
+    "index": 6,
+    "timestamp": "2026-09-09 14:08:09 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.269,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.5,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "69ac47b1d4fddc65ff19fd422877268aeccd91ae458c3a7141088c599f7a5965"
+  },
+  {
+    "index": 5,
+    "timestamp": "2026-09-09 14:05:47 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 11-23459812",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
+    "pillar_details": {
+      "voice_clone_risk": 0.985,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.847,
+      "matched_keywords": [
+        "central bureau",
+        "digital arrest",
+        "arrest warrant",
+        "cyber crime",
+        "cbi",
+        "narcotics",
+        "skype call",
+        "money laundering"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "879ac5e2a9211a0a3819402c4d841effe8b30d59855c985da0031f6e8b811c56"
+  },
+  {
+    "index": 4,
+    "timestamp": "2026-09-09 14:05:37 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 11-23459812",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
+    "pillar_details": {
+      "voice_clone_risk": 0.985,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.847,
+      "matched_keywords": [
+        "central bureau",
+        "digital arrest",
+        "arrest warrant",
+        "cyber crime",
+        "cbi",
+        "narcotics",
+        "skype call",
+        "money laundering"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "5f92ad00367ec5ed89a371cee44e265ef7c5d05eaf81f3f5ccda9f084f52229c"
+  },
+  {
+    "index": 3,
+    "timestamp": "2026-09-09 13:51:56 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9823411092",
+    "composite_risk": 0.722,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "BANK_KYC_OTP_THEFT",
+    "transcript_snippet": "Dear customer, your State Bank Net Banking KYC has expired today. Your bank account will be blocked within 2 hours. Please tell the 6-digit OTP sent t",
+    "pillar_details": {
+      "voice_clone_risk": 0.92,
+      "caller_cli_risk": 0.55,
+      "scam_words_risk": 0.55,
+      "biometric_risk": 0.834,
+      "matched_keywords": [
+        "otp"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "0e2d66824ab67490ea9f6deec3c2490011ccbee587a972ec7cac32070652d2f6"
+  },
+  {
+    "index": 2,
+    "timestamp": "2026-09-09 13:47:30 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 11-23459812",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
+    "pillar_details": {
+      "voice_clone_risk": 0.985,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.847,
+      "matched_keywords": [
+        "money laundering",
+        "cbi",
+        "central bureau",
+        "digital arrest",
+        "arrest warrant",
+        "cyber crime",
+        "narcotics",
+        "skype call"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "26b80acefbe3e3570ebc048d2b4393fbd83f89ba973eef3fcacea7180f99954e"
+  },
+  {
+    "index": 1,
+    "timestamp": "2026-09-09 13:45:49 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 11-23459812",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello this is CBI cyber crime officer. You are under digital arrest for money laundering. Transfer funds now.",
+    "pillar_details": {
+      "voice_clone_risk": 0.98,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.846,
+      "matched_keywords": [
+        "money laundering",
+        "cbi",
+        "digital arrest",
+        "cyber crime"
+      ]
+    },
+    "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "block_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d"
+  }
+]

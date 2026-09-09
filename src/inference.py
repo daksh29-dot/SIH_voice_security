@@ -18,7 +18,7 @@ import _pathfix  # noqa: F401
 import config
 from audio_preprocessing import preprocess_audio
 from segment_audio import segment_waveform
-from aasist_onnx import AasistOnnxModel
+from model import Wav2Vec2SpoofDetector
 from aggregation import aggregate
 from decision import decide, Decision
 
@@ -37,8 +37,8 @@ class VoiceSpoofDetector:
     any number of audio files via `analyze()`.
     """
 
-    def __init__(self, model_path: str | Path = config.MODEL_PATH):
-        self.model = AasistOnnxModel(model_path)
+    def __init__(self, model_name: str = config.MODEL_NAME):
+        self.model = Wav2Vec2SpoofDetector(model_name)
 
     def analyze(self, audio_path: str | Path) -> InferenceResult:
         audio_path = str(audio_path)

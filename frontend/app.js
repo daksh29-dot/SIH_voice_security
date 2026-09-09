@@ -1,733 +1,982 @@
-/* ═══════════════════════════════════════════════════════════════════
-   VoiceGuard AI — Frontend Application Logic
-   ═══════════════════════════════════════════════════════════════════ */
+/**
+ * VoiceGuard AI — app.js
+ * Real-Time Scam & Deepfake Call Defense Simulator
+ * - Headphone / Headset optimized audio capture
+ * - Word-by-word real-time live transcription in the box
+ * - Real Web Audio API Analyser waveform reacting to actual voice
+ * - Single-click "Stop & Analyze Call" running 4-Pillar Multi-Modal Defense
+ * - Cryptographic SHA-256 audit ledger & federated threat DB
+ */
 
-// ── Constants ─────────────────────────────────────────────────────
-const API_BASE = '';  // Same origin
+// State
+let presetsData = {};
+let currentPresetId = 'cbi_digital_arrest';
+let callActive = false;
+let liveMicActive = false;
+let callTimerInterval = null;
+let callSeconds = 0;
 
-// ── State ─────────────────────────────────────────────────────────
-let mediaRecorder = null;
-let audioChunks = [];
-let recordingInterval = null;
-let recordingStartTime = 0;
-let analysisHistory = [];
+// Live Mic & Headset Audio State
+let liveStream = null;
+let liveMediaRecorder = null;
+let liveAudioChunks = [];
+let speechRecognition = null;
+let liveTranscriptAccum = '';
+let currentInterimText = '';
+let audioCtx = null;
+let audioAnalyser = null;
+let audioSourceNode = null;
+let analyserDataArray = null;
 
-// ══════════════════════════════════════════════════════════════════
-// NAVIGATION
-// ══════════════════════════════════════════════════════════════════
-function navigateTo(sectionId) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+// Demo Audio
+let demoAudioPlayer = new Audio();
+let waveActive = false;
 
-    const section = document.getElementById(sectionId);
-    if (section) {
-        section.classList.remove('active');
-        // Force reflow for animation
-        void section.offsetWidth;
-        section.classList.add('active');
-    }
+// Standalone Deepfake Check State
+let recordBtnActive = false;
+let recordMediaRecorder = null;
+let recordTimer = null;
+let recordSeconds = 0;
 
-    const link = document.querySelector(`.nav-link[data-section="${sectionId}"]`);
-    if (link) link.classList.add('active');
+// Initialize
+document.addEventListener('DOMContentLoaded', async () => {
+    initNavigation();
+    initParticleCanvas();
+    startWaveformLoop();
+    await fetchPresets();
+    await loadScenarioData('cbi_digital_arrest');
+    setupFileUpload();
+    drawGauge(null);
+});
 
-    // Load data for specific sections
-    if (sectionId === 'metrics') loadMetrics();
-    if (sectionId === 'dashboard') {
-        loadHistory();
-        animateStats();
-    }
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+// Navigation
+function initNavigation() {
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            navigateTo(link.getAttribute('data-section'));
+        });
+    });
+    window.addEventListener('hashchange', () => {
+        navigateTo(window.location.hash.replace('#', '') || 'simulator');
+    });
 }
 
-// Nav link handlers
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        navigateTo(link.dataset.section);
-    });
-});
+function navigateTo(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    const sec = document.getElementById(id) || document.getElementById('simulator');
+    sec.classList.add('active');
+    const lnk = document.querySelector('.nav-link[data-section="' + id + '"]');
+    if (lnk) lnk.classList.add('active');
+    window.location.hash = id;
+    if (id === 'ledger') fetchAuditLedger();
+    if (id === 'threats') fetchThreatDB();
+}
 
-// Navbar scroll effect
-window.addEventListener('scroll', () => {
-    const nav = document.getElementById('navbar');
-    nav.classList.toggle('scrolled', window.scrollY > 20);
-});
+// Fetch Presets
+async function fetchPresets() {
+    try {
+        const res = await fetch('/api/presets');
+        const data = await res.json();
+        data.forEach(p => { presetsData[p.id] = p; });
+    } catch (e) {
+        console.error('Failed to fetch presets:', e);
+    }
+}
 
-// ══════════════════════════════════════════════════════════════════
-// PARTICLE BACKGROUND
-// ══════════════════════════════════════════════════════════════════
-(function initParticles() {
-    const canvas = document.getElementById('particleCanvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    const PARTICLE_COUNT = 60;
+// Scenario Selection
+function selectScenario(btn, presetId) {
+    if (callActive || liveMicActive) endLiveCall(false);
+    currentPresetId = presetId;
+    document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    loadScenarioData(presetId);
+}
 
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+async function loadScenarioData(presetId) {
+    if (Object.keys(presetsData).length === 0) await fetchPresets();
+    const preset = presetsData[presetId];
+    if (!preset) return;
+
+    const emojiMap = {
+        'cbi_digital_arrest': '&#128680;',
+        'sbi_kyc_otp_theft': '&#9888;',
+        'fedex_customs_drugs': '&#128230;',
+        'cloned_relative_emergency': '&#127917;',
+        'legitimate_colleague_call': '&#128737;'
+    };
+
+    document.getElementById('callerAvatar').innerHTML = emojiMap[presetId] || '&#128222;';
+    document.getElementById('callerName').textContent = preset.caller_name;
+    document.getElementById('callerPhone').textContent = preset.phone_number;
+    document.getElementById('tagCarrier').textContent = preset.carrier;
+    document.getElementById('tagStir').textContent = 'STIR-' + preset.stir_shaken;
+
+    if (preset.audio_url) {
+        demoAudioPlayer.src = preset.audio_url;
+        demoAudioPlayer.load();
     }
 
-    function createParticle() {
-        return {
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 0.3,
-            vy: (Math.random() - 0.5) * 0.3,
-            size: Math.random() * 2 + 0.5,
-            opacity: Math.random() * 0.3 + 0.1,
-            hue: Math.random() > 0.5 ? 185 : 270,  // cyan or purple
+    // Show clean scenario preview in transcript
+    const transBox = document.getElementById('liveTranscript');
+    transBox.innerHTML = '<span style="color:var(--text-secondary)">' +
+        '<strong style="color:var(--cyan)">Scenario Selected: ' + escapeHtml(preset.title) + '</strong><br>' +
+        '<span style="font-size:0.85em;color:var(--text-muted);display:block;margin-top:6px">Audio Script: "' + escapeHtml(preset.transcript) + '"</span>' +
+        '<span style="display:block;margin-top:8px;font-size:0.8em;color:var(--cyan)">Click <strong>Start Demo Call</strong> to simulate incoming audio, or click <strong>Start Live Mic</strong> to speak yourself.</span>' +
+        '</span>';
+
+    resetPillarsState();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Start Demo Call (Preset Audio)
+// ─────────────────────────────────────────────────────────────────────────────
+async function startDemoCall() {
+    const preset = presetsData[currentPresetId];
+    if (!preset) return;
+
+    if (liveMicActive) endLiveCall(false);
+    callActive = true;
+    liveMicActive = false;
+    setCallUI(true, false);
+    setWfStatus('CALL SIMULATING...', true);
+
+    try {
+        demoAudioPlayer.currentTime = 0;
+        await demoAudioPlayer.play();
+    } catch (e) {
+        console.warn('Audio play notice:', e);
+    }
+
+    document.getElementById('liveTranscript').innerHTML = '<span class="tp-placeholder">&#128225; Analyzing voice stream against 4-pillar neural engine...</span>';
+
+    try {
+        const t0 = performance.now();
+        const res = await fetch('/api/analyze-call', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                phone_number: preset.phone_number,
+                carrier: preset.carrier,
+                stir_shaken: preset.stir_shaken,
+                voip_flag: preset.voip_flag,
+                transcript: preset.transcript,
+                preset_voice_score: preset.preset_voice_score
+            })
+        });
+        const data = await res.json();
+        const latency = Math.round(performance.now() - t0);
+        renderAnalysis(data, latency, preset.transcript);
+        setWfStatus('CALL ACTIVE', true);
+    } catch (e) {
+        console.error('Demo call analysis failed:', e);
+        setWfStatus('ANALYSIS ERROR', false);
+    }
+
+    demoAudioPlayer.onended = () => {
+        if (callActive && !liveMicActive) {
+            setWfStatus('CALL COMPLETED (VERDICT LOGGED)', false);
+            clearInterval(callTimerInterval);
+            resetCallButtons();
+        }
+    };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Live Microphone Mode: Stream Real-Time Words & Analyze on Stop
+// ─────────────────────────────────────────────────────────────────────────────
+async function toggleLiveMic() {
+    if (liveMicActive) {
+        // User finished speaking! Stop recording and run the full 4-pillar analysis
+        stopAndAnalyzeLiveCall();
+        return;
+    }
+
+    if (callActive) {
+        demoAudioPlayer.pause();
+        callActive = false;
+    }
+
+    // Request high-quality headset/headphone audio with noise suppression & echo cancellation
+    try {
+        liveStream = await navigator.mediaDevices.getUserMedia({
+            audio: {
+                channelCount: 1,
+                sampleRate: 16000,
+                echoCancellation: true,
+                noiseSuppression: true,
+                autoGainControl: true
+            }
+        });
+    } catch (e) {
+        alert('Microphone access denied or unavailable. Please check your browser microphone permissions.');
+        return;
+    }
+
+    liveMicActive = true;
+    callActive = true;
+    liveTranscriptAccum = '';
+    currentInterimText = '';
+    liveAudioChunks = [];
+
+    // Connect Web Audio API Analyser to headset audio stream for real waveform reaction
+    setupLiveAudioAnalyser(liveStream);
+
+    setCallUI(true, true);
+    setWfStatus('LISTENING TO HEADSET (SPEAK NOW...)', true);
+
+    document.getElementById('callerAvatar').innerHTML = '&#127909;';
+    document.getElementById('callerName').textContent = 'Headphone / Headset Input';
+    document.getElementById('callerPhone').textContent = 'Live Audio Stream';
+    document.getElementById('tagCarrier').textContent = 'WebRTC-Direct';
+    document.getElementById('tagStir').textContent = 'STIR-A (Verified)';
+
+    // Set clear listening prompt
+    document.getElementById('liveTranscript').innerHTML = '<span class="tp-placeholder" style="color:var(--cyan);font-size:0.95rem;">' +
+        '&#127908; <strong>Listening to your headset mic...</strong><br>' +
+        '<span style="font-size:0.85rem;color:var(--text-secondary);display:block;margin-top:6px;">Start speaking now! Your words will stream directly into this box.<br>' +
+        'When you are done speaking, click <strong>"⏹ Stop & Analyze Call"</strong> below to run the complete defense engine.</span>' +
+        '</span>';
+
+    // Start recording entire audio continuously into memory
+    startLiveMediaRecorder(liveStream);
+
+    // Start Web Speech API with immediate word-by-word streaming
+    startLiveSpeechToText();
+}
+
+// Set up Web Audio API AnalyserNode for real microphone waveform visualizer
+function setupLiveAudioAnalyser(stream) {
+    try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioCtx();
+        audioSourceNode = audioCtx.createMediaStreamSource(stream);
+        audioAnalyser = audioCtx.createAnalyser();
+        audioAnalyser.fftSize = 256;
+        analyserDataArray = new Uint8Array(audioAnalyser.frequencyBinCount);
+        audioSourceNode.connect(audioAnalyser);
+    } catch (e) {
+        console.warn('Web Audio API Analyser initialization notice:', e);
+    }
+}
+
+// Continuous MediaRecorder capturing the complete call audio
+function startLiveMediaRecorder(stream) {
+    let mimeType = 'audio/webm;codecs=opus';
+    if (!MediaRecorder.isTypeSupported(mimeType)) {
+        mimeType = 'audio/webm';
+        if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = '';
+    }
+
+    try {
+        liveMediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : {});
+        liveMediaRecorder.ondataavailable = (e) => {
+            if (e.data && e.data.size > 0) liveAudioChunks.push(e.data);
         };
+        // Slice every 200ms into chunks buffer
+        liveMediaRecorder.start(200);
+    } catch (e) {
+        console.error('Failed to initialize MediaRecorder:', e);
+    }
+}
+
+// Continuous Web Speech API with immediate word-by-word live streaming
+function startLiveSpeechToText() {
+    if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+        console.warn('Web Speech API not supported. Backend Google STT will transcribe on stop.');
+        return;
     }
 
-    function init() {
-        resize();
-        particles = Array.from({ length: PARTICLE_COUNT }, createParticle);
-    }
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    try {
+        speechRecognition = new SR();
+        speechRecognition.continuous = true;
+        speechRecognition.interimResults = true;
+        speechRecognition.lang = 'en-IN'; // Optimized for Indian English & Hinglish
 
-    function drawParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Draw connections
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 150) {
-                    const opacity = (1 - dist / 150) * 0.08;
-                    ctx.beginPath();
-                    ctx.strokeStyle = `rgba(0, 240, 255, ${opacity})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.stroke();
+        speechRecognition.onresult = (event) => {
+            let interim = '';
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                const textPart = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    liveTranscriptAccum += textPart + ' ';
+                } else {
+                    interim += textPart;
                 }
             }
-        }
+            currentInterimText = interim;
+            const fullSpoken = (liveTranscriptAccum + currentInterimText).trim();
+            if (fullSpoken) {
+                // Instantly display words directly in the box as they are spoken!
+                document.getElementById('liveTranscript').innerHTML = '"' + escapeHtml(fullSpoken) + '"';
+                document.getElementById('nlpBadge').textContent = 'Speaking... (' + fullSpoken.split(/\s+/).length + ' words)';
+            }
+        };
 
-        // Draw particles
-        particles.forEach(p => {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fillStyle = `hsla(${p.hue}, 100%, 70%, ${p.opacity})`;
-            ctx.fill();
+        speechRecognition.onerror = (e) => {
+            console.warn('SpeechRecognition event:', e.error);
+            if (liveMicActive && e.error !== 'not-allowed') {
+                setTimeout(() => {
+                    if (liveMicActive) {
+                        try { speechRecognition.start(); } catch (err) {}
+                    }
+                }, 300);
+            }
+        };
 
-            p.x += p.vx;
-            p.y += p.vy;
+        speechRecognition.onend = () => {
+            // Auto-reconnect so pauses in speech do not kill the recognizer
+            if (liveMicActive) {
+                try { speechRecognition.start(); } catch (e) {}
+            }
+        };
 
-            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-        });
+        speechRecognition.start();
+    } catch (e) {
+        console.warn('SpeechRecognition startup notice:', e);
+    }
+}
 
-        requestAnimationFrame(drawParticles);
+// ─────────────────────────────────────────────────────────────────────────────
+// User Clicks "Stop & Analyze Call" — Run Full 4-Pillar Multi-Modal Defense
+// ─────────────────────────────────────────────────────────────────────────────
+async function stopAndAnalyzeLiveCall() {
+    if (!liveMicActive) return;
+
+    // Change status to analyzing
+    setWfStatus('ANALYZING RECORDED VOICE & SCAM PATTERN...', true);
+    const btnLive = document.getElementById('btnLiveMic');
+    btnLive.disabled = true;
+    btnLive.style.opacity = '0.6';
+    btnLive.textContent = 'Analyzing Call...';
+
+    // Stop Speech Recognition
+    if (speechRecognition) {
+        try { speechRecognition.stop(); } catch (e) {}
+        speechRecognition = null;
     }
 
-    window.addEventListener('resize', resize);
-    init();
-    drawParticles();
-})();
+    const fullTranscriptText = (liveTranscriptAccum + currentInterimText).trim();
 
-// ══════════════════════════════════════════════════════════════════
-// HERO WAVEFORM ANIMATION
-// ══════════════════════════════════════════════════════════════════
-(function initHeroWaveform() {
+    // Stop MediaRecorder and extract complete audio
+    if (liveMediaRecorder && liveMediaRecorder.state !== 'inactive') {
+        liveMediaRecorder.onstop = async () => {
+            const blob = new Blob(liveAudioChunks, { type: liveMediaRecorder.mimeType || 'audio/webm' });
+            cleanupLiveMedia();
+            await executeFullAnalysis(blob, fullTranscriptText);
+        };
+        try {
+            liveMediaRecorder.stop();
+        } catch (e) {
+            cleanupLiveMedia();
+            await executeFullAnalysis(null, fullTranscriptText);
+        }
+    } else {
+        cleanupLiveMedia();
+        await executeFullAnalysis(null, fullTranscriptText);
+    }
+}
+
+// Send full audio and transcript to backend
+async function executeFullAnalysis(audioBlob, userTranscript) {
+    const t0 = performance.now();
+    const fd = new FormData();
+    if (audioBlob && audioBlob.size > 200) {
+        fd.append('audio', audioBlob, 'headset_call.webm');
+    }
+    fd.append('phone_number', '+91 9988776655');
+    fd.append('carrier', 'WebRTC-Direct');
+    fd.append('stir_shaken', 'A');
+    fd.append('voip_flag', 'false');
+    if (userTranscript) {
+        fd.append('transcript', userTranscript);
+    }
+
+    try {
+        const res = await fetch('/api/analyze-call', { method: 'POST', body: fd });
+        const data = await res.json();
+        const latency = Math.round(performance.now() - t0);
+
+        const finalDisplayTranscript = userTranscript || data.transcript || '(voice recorded)';
+        renderAnalysis(data, latency, finalDisplayTranscript);
+        setWfStatus('ANALYSIS COMPLETE (REPORT LOGGED)', false);
+    } catch (e) {
+        console.error('Call analysis failed:', e);
+        setWfStatus('ANALYSIS ERROR', false);
+    } finally {
+        endLiveCall(true);
+    }
+}
+
+// Clean up microphone streams and Web Audio resources
+function cleanupLiveMedia() {
+    if (liveStream) {
+        liveStream.getTracks().forEach(t => t.stop());
+        liveStream = null;
+    }
+    if (audioSourceNode) {
+        try { audioSourceNode.disconnect(); } catch (e) {}
+        audioSourceNode = null;
+    }
+    if (audioCtx && audioCtx.state !== 'closed') {
+        try { audioCtx.close(); } catch (e) {}
+        audioCtx = null;
+    }
+    audioAnalyser = null;
+    analyserDataArray = null;
+}
+
+// End call cleanly and restore UI buttons
+function endLiveCall(keepResultsVisible) {
+    callActive = false;
+    liveMicActive = false;
+
+    if (demoAudioPlayer) {
+        demoAudioPlayer.pause();
+    }
+    cleanupLiveMedia();
+    if (speechRecognition) {
+        try { speechRecognition.stop(); } catch (e) {}
+        speechRecognition = null;
+    }
+
+    clearInterval(callTimerInterval);
+    callTimerInterval = null;
+    callSeconds = 0;
+
+    resetCallButtons();
+
+    if (!keepResultsVisible) {
+        setWfStatus('Ready', false);
+        resetPillarsState();
+    }
+}
+
+function endCall() {
+    endLiveCall(false);
+}
+
+// Reset call buttons to default interactive state
+function resetCallButtons() {
+    const btnStart = document.getElementById('btnStartDemo');
+    const btnLive = document.getElementById('btnLiveMic');
+    const btnDrop = document.getElementById('btnDropCall');
+    const timerDisplay = document.getElementById('callTimerDisplay');
+
+    if (btnStart) {
+        btnStart.disabled = false;
+        btnStart.style.opacity = '1';
+    }
+    if (btnLive) {
+        btnLive.textContent = 'Start Live Mic';
+        btnLive.classList.remove('recording');
+        btnLive.disabled = false;
+        btnLive.style.opacity = '1';
+    }
+    if (btnDrop) {
+        btnDrop.style.display = 'none';
+    }
+    if (timerDisplay) {
+        timerDisplay.style.display = 'none';
+    }
+    const durationEl = document.getElementById('callDuration');
+    if (durationEl) durationEl.textContent = '00:00';
+}
+
+// Update Call UI controls during call
+function setCallUI(active, isLiveMic) {
+    const btnStart = document.getElementById('btnStartDemo');
+    const btnLive = document.getElementById('btnLiveMic');
+    const btnDrop = document.getElementById('btnDropCall');
+    const timerDisplay = document.getElementById('callTimerDisplay');
+
+    if (active) {
+        btnStart.disabled = true;
+        btnStart.style.opacity = '0.5';
+
+        if (isLiveMic) {
+            btnLive.innerHTML = '<span class="rec-dot active"></span> Stop & Analyze Call';
+            btnLive.classList.add('recording');
+            btnLive.disabled = false;
+            btnLive.style.opacity = '1';
+        } else {
+            btnLive.disabled = true;
+            btnLive.style.opacity = '0.5';
+        }
+
+        btnDrop.style.display = 'flex';
+        timerDisplay.style.display = 'flex';
+        callSeconds = 0;
+        clearInterval(callTimerInterval);
+        callTimerInterval = setInterval(() => {
+            callSeconds++;
+            const m = String(Math.floor(callSeconds / 60)).padStart(2, '0');
+            const s = String(callSeconds % 60).padStart(2, '0');
+            document.getElementById('callDuration').textContent = m + ':' + s;
+        }, 1000);
+    } else {
+        resetCallButtons();
+    }
+}
+
+function setWfStatus(text, active) {
+    document.getElementById('wfStatus').textContent = text;
+    const dot = document.getElementById('wfDot');
+    dot.classList.toggle('active', active);
+    waveActive = active;
+}
+
+function resetPillarsState() {
+    ['p1Fill','p2Fill','p3Fill','p4Fill'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.style.width = '0%'; el.className = 'pi-bar-fill'; }
+    });
+    ['p1Verdict','p2Verdict','p3Verdict','p4Verdict'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.textContent = '--'; el.className = 'pi-verdict'; }
+    });
+    ['p1Score','p2Score','p3Score','p4Score'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = '--';
+    });
+    document.getElementById('vpScore').textContent = '--';
+    document.getElementById('vpScore').className = 'vp-score';
+    document.getElementById('vpAction').textContent = 'Awaiting analysis...';
+    document.getElementById('vpAction').className = 'vp-action';
+    document.getElementById('gaugePercent').textContent = '--';
+    document.getElementById('pbBadge').textContent = 'READY FOR CALL';
+    document.getElementById('pbTitle').textContent = 'Start a call to see policy decision';
+    document.getElementById('pbDesc').textContent = 'The Dynamic Risk Orchestrator will fuse all 4 pillar scores and recommend an action.';
+    document.getElementById('policyBox').className = 'policy-box';
+    document.getElementById('pbHash').style.display = 'none';
+    document.getElementById('quickActions').style.display = 'none';
+    document.getElementById('keywordStrip').innerHTML = '';
+    document.getElementById('nlpBadge').textContent = 'Waiting...';
+    document.getElementById('pillarsLatency').textContent = '--';
+    document.getElementById('wfLatency').textContent = 'Engine: --';
+    drawGauge(null);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Render Analysis & 4-Pillar Breakdown
+// ─────────────────────────────────────────────────────────────────────────────
+function renderAnalysis(data, clientLatencyMs, rawTranscript) {
+    if (!data || !data.pillars) return;
+    const orch = data.orchestration || {};
+    const pillars = data.pillars || {};
+    const totalMs = data.total_processing_time_ms || clientLatencyMs;
+
+    document.getElementById('wfLatency').textContent = 'Engine: ' + totalMs + 'ms';
+    document.getElementById('pillarsLatency').textContent = totalMs + 'ms';
+
+    if (pillars.voice_clone) {
+        renderPillar('p1', pillars.voice_clone.score, pillars.voice_clone.score >= 0.5,
+            pillars.voice_clone.is_clone ? 'AI CLONE' : 'HUMAN NATURAL');
+    }
+    if (pillars.caller_telecom) {
+        renderPillar('p2', pillars.caller_telecom.risk_score, pillars.caller_telecom.risk_score >= 0.5,
+            pillars.caller_telecom.risk_score >= 0.5 ? 'SPOOFED' : 'VERIFIED');
+    }
+    if (pillars.scam_nlp) {
+        renderPillar('p3', pillars.scam_nlp.risk_score, pillars.scam_nlp.risk_score >= 0.5,
+            pillars.scam_nlp.severity || (pillars.scam_nlp.risk_score >= 0.5 ? 'SCAM' : 'CLEAN'));
+    }
+    if (pillars.voice_biometrics) {
+        renderPillar('p4', pillars.voice_biometrics.risk_score, pillars.voice_biometrics.risk_score >= 0.5,
+            pillars.voice_biometrics.risk_score >= 0.5 ? 'MISMATCH' : 'MATCH');
+    }
+
+    const risk = orch.composite_risk_score !== undefined ? orch.composite_risk_score : 0.0;
+    const riskPct = orch.risk_percentage !== undefined ? orch.risk_percentage : Math.round(risk * 100);
+    drawGauge(risk);
+    document.getElementById('gaugePercent').textContent = riskPct + '%';
+
+    const vpScore = document.getElementById('vpScore');
+    const vpAction = document.getElementById('vpAction');
+    vpScore.textContent = riskPct + '%';
+
+    if (risk >= 0.60) {
+        vpScore.className = 'vp-score danger';
+        vpAction.textContent = orch.action_label || 'BLOCK & HOLD';
+        vpAction.className = 'vp-action danger';
+    } else if (risk >= 0.25) {
+        vpScore.className = 'vp-score warn';
+        vpAction.textContent = orch.action_label || 'STEP-UP MFA';
+        vpAction.className = 'vp-action warn';
+    } else {
+        vpScore.className = 'vp-score safe';
+        vpAction.textContent = orch.action_label || 'PROCEED NORMALLY';
+        vpAction.className = 'vp-action safe';
+    }
+
+    const colorClass = risk >= 0.60 ? 'danger' : (risk >= 0.25 ? 'warn' : 'safe');
+    document.getElementById('policyBox').className = 'policy-box ' + colorClass;
+    document.getElementById('pbBadge').textContent = 'POLICY: ' + (orch.policy_action || 'EVALUATED');
+    document.getElementById('pbTitle').textContent = orch.action_label || orch.policy_action || 'Call Evaluated';
+    document.getElementById('pbDesc').textContent = orch.recommendation || 'Analysis complete.';
+
+    if (data.ledger_block_hash) {
+        document.getElementById('pbHash').style.display = 'block';
+        document.getElementById('pbHashCode').textContent = data.ledger_block_hash.slice(0, 20) + '...';
+    }
+    document.getElementById('quickActions').style.display = 'flex';
+
+    renderTranscript(rawTranscript, (pillars.scam_nlp && pillars.scam_nlp.matched_keywords) || []);
+    if (pillars.scam_nlp) {
+        document.getElementById('nlpBadge').textContent = 'NLP: ' + (pillars.scam_nlp.detected_intent || 'Analyzed');
+    }
+}
+
+function renderPillar(prefix, score, isDanger, label) {
+    const pct = Math.round(Math.min(100, Math.max(2, (score || 0) * 100)));
+    const fillEl = document.getElementById(prefix + 'Fill');
+    const verdictEl = document.getElementById(prefix + 'Verdict');
+    const scoreEl = document.getElementById(prefix + 'Score');
+    if (fillEl) {
+        fillEl.style.width = pct + '%';
+        fillEl.className = 'pi-bar-fill ' + (isDanger ? 'danger' : 'safe');
+    }
+    if (verdictEl) {
+        verdictEl.textContent = label;
+        verdictEl.className = 'pi-verdict ' + (isDanger ? 'danger' : 'safe');
+    }
+    if (scoreEl) {
+        scoreEl.textContent = pct + '%';
+    }
+}
+
+function renderTranscript(text, keywords) {
+    const container = document.getElementById('liveTranscript');
+    const strip = document.getElementById('keywordStrip');
+    if (!text) {
+        container.innerHTML = '<span class="tp-placeholder">(No speech detected)</span>';
+        strip.innerHTML = '';
+        return;
+    }
+
+    let highlighted = escapeHtml(text);
+    if (keywords && keywords.length > 0) {
+        keywords.forEach(kw => {
+            const rx = new RegExp('(' + escapeRegex(kw) + ')', 'gi');
+            highlighted = highlighted.replace(rx, '<mark class="danger-word">$1</mark>');
+        });
+    }
+    container.innerHTML = '"' + highlighted + '"';
+
+    if (keywords && keywords.length > 0) {
+        strip.innerHTML = keywords.map(kw => '<span class="keyword-pill">&#128680; ' + escapeHtml(kw) + '</span>').join('');
+    } else {
+        strip.innerHTML = '<span class="keyword-pill safe">&#10003; No scam triggers detected</span>';
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Real Microphone Waveform & Idle Visualizer
+// ─────────────────────────────────────────────────────────────────────────────
+function startWaveformLoop() {
     const canvas = document.getElementById('waveformCanvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
+    let phase = 0;
 
-    function resizeCanvas() {
-        const rect = canvas.parentElement.getBoundingClientRect();
-        canvas.width = rect.width - 48;
-        canvas.height = 200;
-    }
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    let time = 0;
     function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const centerY = canvas.height / 2;
-
-        // Draw grid lines
-        ctx.strokeStyle = 'rgba(255,255,255,0.04)';
-        ctx.lineWidth = 1;
-        for (let y = 0; y < canvas.height; y += 20) {
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(canvas.width, y);
-            ctx.stroke();
-        }
-
-        // Draw multiple waveforms
-        const waves = [
-            { amp: 40, freq: 0.015, speed: 0.03, color: 'rgba(0, 240, 255, 0.5)', width: 2 },
-            { amp: 25, freq: 0.02, speed: 0.02, color: 'rgba(123, 47, 247, 0.4)', width: 1.5 },
-            { amp: 15, freq: 0.035, speed: 0.04, color: 'rgba(247, 47, 160, 0.3)', width: 1 },
-        ];
-
-        waves.forEach(wave => {
-            ctx.beginPath();
-            ctx.strokeStyle = wave.color;
-            ctx.lineWidth = wave.width;
-
-            for (let x = 0; x < canvas.width; x++) {
-                const y = centerY +
-                    Math.sin(x * wave.freq + time * wave.speed) * wave.amp *
-                    Math.sin(x * 0.003 + time * 0.01) +
-                    Math.sin(x * wave.freq * 2.7 + time * wave.speed * 1.3) * wave.amp * 0.3;
-                if (x === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
-            }
-            ctx.stroke();
-        });
-
-        // Center line
-        ctx.strokeStyle = 'rgba(0, 240, 255, 0.1)';
-        ctx.lineWidth = 1;
-        ctx.setLineDash([4, 4]);
-        ctx.beginPath();
-        ctx.moveTo(0, centerY);
-        ctx.lineTo(canvas.width, centerY);
-        ctx.stroke();
-        ctx.setLineDash([]);
-
-        time++;
         requestAnimationFrame(draw);
-    }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const w = canvas.width, h = canvas.height, cy = h / 2;
 
-    draw();
-})();
+        ctx.beginPath();
+        ctx.lineWidth = 1.8;
+        const grad = ctx.createLinearGradient(0, 0, w, 0);
+        grad.addColorStop(0, 'rgba(0,240,255,0.4)');
+        grad.addColorStop(0.5, 'rgba(123,47,247,0.9)');
+        grad.addColorStop(1, 'rgba(0,240,255,0.4)');
+        ctx.strokeStyle = grad;
 
-// ══════════════════════════════════════════════════════════════════
-// STAT COUNTER ANIMATION
-// ══════════════════════════════════════════════════════════════════
-function animateStats() {
-    document.querySelectorAll('.stat-value[data-target]').forEach(el => {
-        const target = parseInt(el.dataset.target);
-        const duration = 1500;
-        const startTime = performance.now();
-        const startVal = 0;
-
-        function update(now) {
-            const elapsed = now - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            // Ease out cubic
-            const eased = 1 - Math.pow(1 - progress, 3);
-            el.textContent = Math.round(startVal + (target - startVal) * eased);
-            if (progress < 1) requestAnimationFrame(update);
-        }
-
-        requestAnimationFrame(update);
-    });
-}
-
-// ══════════════════════════════════════════════════════════════════
-// FILE UPLOAD
-// ══════════════════════════════════════════════════════════════════
-const uploadZone = document.getElementById('uploadZone');
-const audioInput = document.getElementById('audioInput');
-
-uploadZone.addEventListener('click', () => audioInput.click());
-
-uploadZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    uploadZone.classList.add('drag-over');
-});
-
-uploadZone.addEventListener('dragleave', () => {
-    uploadZone.classList.remove('drag-over');
-});
-
-uploadZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    uploadZone.classList.remove('drag-over');
-    if (e.dataTransfer.files.length > 0) {
-        analyzeFile(e.dataTransfer.files[0]);
-    }
-});
-
-audioInput.addEventListener('change', () => {
-    if (audioInput.files.length > 0) {
-        analyzeFile(audioInput.files[0]);
-    }
-});
-
-// ══════════════════════════════════════════════════════════════════
-// ANALYZE FILE
-// ══════════════════════════════════════════════════════════════════
-async function analyzeFile(file) {
-    // Show loading overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'analyzing-overlay';
-    overlay.innerHTML = `
-        <div class="analyzing-spinner"></div>
-        <div class="analyzing-text">Analyzing Voice Sample</div>
-        <div class="analyzing-subtext">Running AASIST-L neural network inference…</div>
-    `;
-    document.body.appendChild(overlay);
-
-    // Hide previous results
-    document.getElementById('resultContainer').style.display = 'none';
-
-    const formData = new FormData();
-    formData.append('audio', file);
-
-    try {
-        const response = await fetch(`${API_BASE}/api/analyze`, {
-            method: 'POST',
-            body: formData,
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.error || 'Analysis failed');
-        }
-
-        displayResult(data);
-        showToast('Analysis complete!', 'success');
-
-    } catch (err) {
-        showToast(`Error: ${err.message}`, 'error');
-        console.error('Analysis error:', err);
-    } finally {
-        overlay.remove();
-    }
-}
-
-// ══════════════════════════════════════════════════════════════════
-// DISPLAY RESULT
-// ══════════════════════════════════════════════════════════════════
-function displayResult(data) {
-    const container = document.getElementById('resultContainer');
-    const card = document.getElementById('resultCard');
-
-    // Set card class based on decision
-    card.className = 'result-card ' + data.decision.toLowerCase();
-
-    // Verdict icon
-    const iconMap = {
-        REAL: '✅',
-        SPOOF: '⚠️',
-        UNCERTAIN: '❓'
-    };
-    document.getElementById('verdictIcon').textContent = iconMap[data.decision] || '❓';
-    document.getElementById('verdictLabel').textContent = data.decision;
-    document.getElementById('verdictFile').textContent = data.filename;
-
-    // Score
-    document.getElementById('scoreValue').textContent = data.spoof_probability + '%';
-
-    // Draw score gauge
-    drawScoreGauge(data.spoof_probability / 100);
-
-    // Details
-    document.getElementById('detailTime').textContent = data.inference_time_s + 's';
-    document.getElementById('detailSegments').textContent = data.num_segments;
-    document.getElementById('detailAggregation').textContent = data.aggregation_strategy;
-    document.getElementById('detailThreshold').textContent = data.threshold_used;
-
-    // Segment bars
-    const barsContainer = document.getElementById('segmentBars');
-    barsContainer.innerHTML = '';
-    data.segment_scores.forEach((score, i) => {
-        const bar = document.createElement('div');
-        bar.className = 'segment-bar';
-        bar.classList.add(score < 0.4 ? 'low' : score > 0.6 ? 'high' : 'mid');
-        bar.style.height = '0%';
-        bar.dataset.score = score.toFixed(4);
-        bar.title = `Segment ${i + 1}: ${score.toFixed(4)}`;
-        barsContainer.appendChild(bar);
-
-        // Animate in
-        requestAnimationFrame(() => {
-            setTimeout(() => {
-                bar.style.height = Math.max(score * 100, 5) + '%';
-            }, i * 80);
-        });
-    });
-
-    container.style.display = 'block';
-    container.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-// ══════════════════════════════════════════════════════════════════
-// SCORE GAUGE (Canvas arc)
-// ══════════════════════════════════════════════════════════════════
-function drawScoreGauge(value) {
-    const canvas = document.getElementById('scoreGauge');
-    const ctx = canvas.getContext('2d');
-    const cx = canvas.width / 2;
-    const cy = canvas.height / 2;
-    const radius = 55;
-    const lineWidth = 8;
-    const startAngle = Math.PI * 0.75;
-    const endAngle = Math.PI * 2.25;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Background arc
-    ctx.beginPath();
-    ctx.arc(cx, cy, radius, startAngle, endAngle);
-    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-    ctx.lineWidth = lineWidth;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-
-    // Value arc
-    const valueAngle = startAngle + (endAngle - startAngle) * value;
-    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-
-    if (value < 0.4) {
-        gradient.addColorStop(0, '#00e676');
-        gradient.addColorStop(1, '#00b0ff');
-    } else if (value > 0.6) {
-        gradient.addColorStop(0, '#ff3d71');
-        gradient.addColorStop(1, '#f72fa0');
-    } else {
-        gradient.addColorStop(0, '#ffab00');
-        gradient.addColorStop(1, '#ff6d00');
-    }
-
-    ctx.beginPath();
-    ctx.arc(cx, cy, radius, startAngle, valueAngle);
-    ctx.strokeStyle = gradient;
-    ctx.lineWidth = lineWidth;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-}
-
-// ══════════════════════════════════════════════════════════════════
-// RESET ANALYSIS
-// ══════════════════════════════════════════════════════════════════
-function resetAnalysis() {
-    document.getElementById('resultContainer').style.display = 'none';
-    audioInput.value = '';
-}
-
-// ══════════════════════════════════════════════════════════════════
-// RECORDING
-// ══════════════════════════════════════════════════════════════════
-const recordBtn = document.getElementById('recordBtn');
-const recordBtnText = document.getElementById('recordBtnText');
-const recordingTimer = document.getElementById('recordingTimer');
-const timerDisplay = document.getElementById('timerDisplay');
-const liveWaveformContainer = document.getElementById('liveWaveformContainer');
-let audioContext, analyser, dataArray, liveWaveformCtx, animFrameId;
-
-recordBtn.addEventListener('click', toggleRecording);
-
-async function toggleRecording() {
-    if (mediaRecorder && mediaRecorder.state === 'recording') {
-        stopRecording();
-    } else {
-        await startRecording();
-    }
-}
-
-async function startRecording() {
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaRecorder = new MediaRecorder(stream);
-        audioChunks = [];
-
-        mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
-        mediaRecorder.onstop = async () => {
-            // Browser records in WebM/Opus, NOT WAV.
-            // Convert to real PCM WAV so librosa can decode it.
-            const webmBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType });
-            try {
-                const wavBlob = await convertToWav(webmBlob);
-                const file = new File([wavBlob], 'recording.wav', { type: 'audio/wav' });
-                analyzeFile(file);
-            } catch (err) {
-                showToast('Failed to process recording: ' + err.message, 'error');
+        // If real headset mic audio analyser is available, draw real-time mic frequencies!
+        if (liveMicActive && audioAnalyser && analyserDataArray) {
+            audioAnalyser.getByteTimeDomainData(analyserDataArray);
+            const sliceWidth = w / analyserDataArray.length;
+            let x = 0;
+            for (let i = 0; i < analyserDataArray.length; i++) {
+                const v = analyserDataArray[i] / 128.0; // 0.0 to 2.0
+                const y = v * (h / 2);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+                x += sliceWidth;
             }
-            stream.getTracks().forEach(t => t.stop());
-            cancelAnimationFrame(animFrameId);
-        };
-
-        mediaRecorder.start();
-        recordBtn.classList.add('recording');
-        recordBtnText.textContent = 'Stop Recording';
-        recordingTimer.classList.add('active');
-        recordingStartTime = Date.now();
-
-        recordingInterval = setInterval(() => {
-            const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
-            const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
-            const secs = String(elapsed % 60).padStart(2, '0');
-            timerDisplay.textContent = `${mins}:${secs}`;
-        }, 1000);
-
-        // Live waveform
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        analyser = audioContext.createAnalyser();
-        analyser.fftSize = 2048;
-        const source = audioContext.createMediaStreamSource(stream);
-        source.connect(analyser);
-        dataArray = new Uint8Array(analyser.frequencyBinCount);
-
-        liveWaveformContainer.style.display = 'block';
-        const liveCanvas = document.getElementById('liveWaveformCanvas');
-        liveWaveformCtx = liveCanvas.getContext('2d');
-        liveCanvas.width = liveCanvas.parentElement.clientWidth - 32;
-
-        drawLiveWaveform();
-
-    } catch (err) {
-        showToast('Microphone access denied', 'error');
-    }
-}
-
-function stopRecording() {
-    if (mediaRecorder && mediaRecorder.state === 'recording') {
-        mediaRecorder.stop();
-    }
-    recordBtn.classList.remove('recording');
-    recordBtnText.textContent = 'Start Recording';
-    recordingTimer.classList.remove('active');
-    clearInterval(recordingInterval);
-    liveWaveformContainer.style.display = 'none';
-}
-
-function drawLiveWaveform() {
-    if (!analyser) return;
-    analyser.getByteTimeDomainData(dataArray);
-
-    const canvas = document.getElementById('liveWaveformCanvas');
-    const ctx = liveWaveformCtx;
-    const w = canvas.width;
-    const h = canvas.height;
-
-    ctx.clearRect(0, 0, w, h);
-
-    // Draw waveform
-    ctx.beginPath();
-    const gradient = ctx.createLinearGradient(0, 0, w, 0);
-    gradient.addColorStop(0, '#ff3d71');
-    gradient.addColorStop(0.5, '#f72fa0');
-    gradient.addColorStop(1, '#7b2ff7');
-    ctx.strokeStyle = gradient;
-    ctx.lineWidth = 2;
-
-    const sliceWidth = w / dataArray.length;
-    let x = 0;
-
-    for (let i = 0; i < dataArray.length; i++) {
-        const v = dataArray[i] / 128.0;
-        const y = (v * h) / 2;
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-        x += sliceWidth;
-    }
-    ctx.stroke();
-
-    animFrameId = requestAnimationFrame(drawLiveWaveform);
-}
-
-// ══════════════════════════════════════════════════════════════════
-// LOAD METRICS
-// ══════════════════════════════════════════════════════════════════
-async function loadMetrics() {
-    try {
-        const res = await fetch(`${API_BASE}/api/metrics`);
-        if (!res.ok) return;
-        const data = await res.json();
-
-        // Update values
-        document.getElementById('accuracyValue').textContent = (data.accuracy * 100) + '%';
-        document.getElementById('f1Value').textContent = data.f1.toFixed(2);
-        document.getElementById('eerValue').textContent = (data.eer * 100) + '%';
-        document.getElementById('precisionVal').textContent = data.precision.toFixed(2);
-        document.getElementById('recallVal').textContent = data.recall.toFixed(2);
-        document.getElementById('fprVal').textContent = data.false_positive_rate.toFixed(2);
-        document.getElementById('fnrVal').textContent = data.false_negative_rate.toFixed(2);
-
-        // Confusion matrix
-        if (data.confusion_matrix) {
-            document.querySelector('#matrixTP .cell-value').textContent = data.confusion_matrix.tp;
-            document.querySelector('#matrixTN .cell-value').textContent = data.confusion_matrix.tn;
-            document.querySelector('#matrixFP .cell-value').textContent = data.confusion_matrix.fp;
-            document.querySelector('#matrixFN .cell-value').textContent = data.confusion_matrix.fn;
-        }
-
-        // Draw metric rings
-        drawMetricRing('accuracyRing', data.accuracy, '#00e676', '#00b0ff');
-        drawMetricRing('f1Ring', data.f1, '#00f0ff', '#7b2ff7');
-        drawMetricRing('eerRing', 1 - data.eer, '#f72fa0', '#7b2ff7');  // Invert EER for visual
-
-    } catch (err) {
-        console.error('Failed to load metrics:', err);
-    }
-}
-
-function drawMetricRing(canvasId, value, color1, color2) {
-    const canvas = document.getElementById(canvasId);
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const cx = canvas.width / 2;
-    const cy = canvas.height / 2;
-    const radius = 65;
-    const lineWidth = 10;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Background ring
-    ctx.beginPath();
-    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-    ctx.lineWidth = lineWidth;
-    ctx.stroke();
-
-    // Value ring with animation
-    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    gradient.addColorStop(0, color1);
-    gradient.addColorStop(1, color2);
-
-    const startAngle = -Math.PI / 2;
-    const endAngle = startAngle + (Math.PI * 2 * value);
-
-    ctx.beginPath();
-    ctx.arc(cx, cy, radius, startAngle, endAngle);
-    ctx.strokeStyle = gradient;
-    ctx.lineWidth = lineWidth;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-}
-
-// ══════════════════════════════════════════════════════════════════
-// LOAD HISTORY
-// ══════════════════════════════════════════════════════════════════
-async function loadHistory() {
-    try {
-        const res = await fetch(`${API_BASE}/api/history`);
-        if (!res.ok) return;
-        const data = await res.json();
-
-        const list = document.getElementById('historyList');
-        if (data.length === 0) {
-            list.innerHTML = `
-                <div class="empty-state">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
-                    <p>No analyses yet. Upload an audio file to get started.</p>
-                </div>
-            `;
+            ctx.lineTo(w, cy);
+            ctx.stroke();
             return;
         }
 
-        list.innerHTML = data.map(item => `
-            <div class="history-item">
-                <span class="history-badge ${item.decision.toLowerCase()}">${item.decision}</span>
-                <span class="history-filename">${item.filename}</span>
-                <span class="history-score">Score: ${item.aggregated_score.toFixed(4)}</span>
-                <span class="history-time">${item.inference_time_s}s</span>
-            </div>
-        `).join('');
+        // Idle or Demo Audio sine animation
+        const amp = waveActive ? 22 : 6;
+        for (let x = 0; x < w; x++) {
+            const y = cy + Math.sin(x * 0.022 + phase) * amp + Math.sin(x * 0.048 + phase * 1.7) * (amp * 0.4);
+            if (x === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        phase += waveActive ? 0.12 : 0.025;
+    }
+    draw();
+}
 
-    } catch (err) {
-        console.error('Failed to load history:', err);
+// Risk Gauge Canvas
+function drawGauge(risk) {
+    const canvas = document.getElementById('riskGauge');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    const cx = w / 2, cy = h / 2;
+    const r = Math.min(w, h) / 2 - 14;
+
+    ctx.clearRect(0, 0, w, h);
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0.75 * Math.PI, 2.25 * Math.PI);
+    ctx.lineWidth = 12;
+    ctx.strokeStyle = 'rgba(255,255,255,0.07)';
+    ctx.lineCap = 'round';
+    ctx.stroke();
+
+    if (risk === null || risk === undefined) return;
+
+    const end = 0.75 * Math.PI + 1.5 * Math.PI * Math.min(1, Math.max(0.01, risk));
+    const grad = ctx.createLinearGradient(0, h, w, 0);
+    if (risk >= 0.6) {
+        grad.addColorStop(0, '#f59e0b');
+        grad.addColorStop(1, '#ef4444');
+    } else if (risk >= 0.25) {
+        grad.addColorStop(0, '#10b981');
+        grad.addColorStop(1, '#f59e0b');
+    } else {
+        grad.addColorStop(0, '#00f0ff');
+        grad.addColorStop(1, '#10b981');
+    }
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0.75 * Math.PI, end);
+    ctx.lineWidth = 12;
+    ctx.strokeStyle = grad;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+}
+
+// Actions
+async function triggerAction(action) {
+    const phone = document.getElementById('callerPhone').textContent;
+    try {
+        const res = await fetch('/api/execute-action', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action, phone_number: phone })
+        });
+        const data = await res.json();
+        alert('Action Executed: ' + data.message);
+        fetchAuditLedger();
+    } catch (e) {
+        alert('Action execution failed.');
     }
 }
 
-// ══════════════════════════════════════════════════════════════════
-// TOAST NOTIFICATIONS
-// ══════════════════════════════════════════════════════════════════
-function showToast(message, type = 'success') {
-    const existing = document.querySelector('.toast');
-    if (existing) existing.remove();
-
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
-    document.body.appendChild(toast);
-
-    setTimeout(() => {
-        toast.style.animation = 'toastOut 0.3s ease forwards';
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
+function openMfaModal() {
+    document.getElementById('mfaModal').style.display = 'flex';
 }
-
-// ══════════════════════════════════════════════════════════════════
-// WAV CONVERSION (Browser records WebM/Opus, backend needs WAV)
-// ══════════════════════════════════════════════════════════════════
-async function convertToWav(blob) {
-    const arrayBuffer = await blob.arrayBuffer();
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
-    ctx.close();
-
-    // Downsample to 16kHz mono (matches AASIST-L input)
-    const targetSampleRate = 16000;
-    const offlineCtx = new OfflineAudioContext(1, audioBuffer.duration * targetSampleRate, targetSampleRate);
-    const source = offlineCtx.createBufferSource();
-    source.buffer = audioBuffer;
-    source.connect(offlineCtx.destination);
-    source.start(0);
-    const renderedBuffer = await offlineCtx.startRendering();
-
-    const pcmData = renderedBuffer.getChannelData(0);
-    return encodeWav(pcmData, targetSampleRate);
-}
-
-function encodeWav(samples, sampleRate) {
-    const numChannels = 1;
-    const bitsPerSample = 16;
-    const bytesPerSample = bitsPerSample / 8;
-    const blockAlign = numChannels * bytesPerSample;
-    const dataSize = samples.length * bytesPerSample;
-    const buffer = new ArrayBuffer(44 + dataSize);
-    const view = new DataView(buffer);
-
-    // RIFF header
-    writeString(view, 0, 'RIFF');
-    view.setUint32(4, 36 + dataSize, true);
-    writeString(view, 8, 'WAVE');
-
-    // fmt chunk
-    writeString(view, 12, 'fmt ');
-    view.setUint32(16, 16, true);                     // chunk size
-    view.setUint16(20, 1, true);                      // PCM format
-    view.setUint16(22, numChannels, true);
-    view.setUint32(24, sampleRate, true);
-    view.setUint32(28, sampleRate * blockAlign, true); // byte rate
-    view.setUint16(32, blockAlign, true);
-    view.setUint16(34, bitsPerSample, true);
-
-    // data chunk
-    writeString(view, 36, 'data');
-    view.setUint32(40, dataSize, true);
-
-    // PCM samples (float32 -> int16)
-    let offset = 44;
-    for (let i = 0; i < samples.length; i++) {
-        const s = Math.max(-1, Math.min(1, samples[i]));
-        view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
-        offset += 2;
-    }
-
-    return new Blob([buffer], { type: 'audio/wav' });
-}
-
-function writeString(view, offset, str) {
-    for (let i = 0; i < str.length; i++) {
-        view.setUint8(offset + i, str.charCodeAt(i));
+function closeMfa(success) {
+    document.getElementById('mfaModal').style.display = 'none';
+    if (success) {
+        alert('MFA SUCCESSFUL. In-Call banking operations approved.');
+    } else {
+        alert('MFA FAILED. Terminating suspicious call.');
+        triggerAction('BLOCK_AND_HOLD');
     }
 }
 
-// ══════════════════════════════════════════════════════════════════
-// INITIALIZATION
-// ══════════════════════════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded', () => {
-    animateStats();
-    loadMetrics();
+// Audit Ledger
+async function fetchAuditLedger() {
+    try {
+        const res = await fetch('/api/audit-ledger');
+        const data = await res.json();
+        const tbody = document.getElementById('ledgerBody');
+        if (!data.entries || data.entries.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="empty-row">No audit entries yet.</td></tr>';
+            return;
+        }
+        tbody.innerHTML = data.entries.map(e =>
+            '<tr>' +
+            '<td><strong>#' + e.index + '</strong></td>' +
+            '<td class="mono-cell">' + e.timestamp + '</td>' +
+            '<td>' + e.phone_number + '</td>' +
+            '<td><span class="risk-badge ' + (e.composite_risk > 0.5 ? 'danger' : 'safe') + '">' + (e.composite_risk * 100).toFixed(1) + '%</span></td>' +
+            '<td><strong>' + e.policy_action + '</strong></td>' +
+            '<td><span class="threat-tag ' + (e.threat_category !== 'CLEAN' ? 'danger' : 'info') + '">' + e.threat_category + '</span></td>' +
+            '<td class="mono-cell hash-cell">' + (e.block_hash ? e.block_hash.slice(0, 16) + '...' : '-') + '</td>' +
+            '</tr>'
+        ).join('');
+    } catch (e) {
+        console.error('Ledger fetch failed:', e);
+    }
+}
 
-    // Draw initial metric rings with defaults
-    setTimeout(() => {
-        drawMetricRing('accuracyRing', 1.0, '#00e676', '#00b0ff');
-        drawMetricRing('f1Ring', 1.0, '#00f0ff', '#7b2ff7');
-        drawMetricRing('eerRing', 1.0, '#f72fa0', '#7b2ff7');
-    }, 200);
-});
+function exportLedger() {
+    window.open('/api/audit-ledger', '_blank');
+}
+
+// Threat DB
+async function fetchThreatDB() {
+    try {
+        const res = await fetch('/api/threat-db');
+        const threats = await res.json();
+        const grid = document.getElementById('threatGrid');
+        if (!threats || threats.length === 0) {
+            grid.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text-muted)">No threats registered yet. Run a high-risk scenario.</div>';
+            return;
+        }
+        grid.innerHTML = threats.map(t =>
+            '<div class="threat-card">' +
+            '<div class="tc-top"><span class="tc-number">' + t.phone_number + '</span><span class="tc-status danger">' + t.status + '</span></div>' +
+            '<div class="tc-title">' + t.reported_as + '</div>' +
+            '<div class="tc-meta">Type: <code>' + t.scam_type + '</code> &bull; ' + t.last_seen + '</div>' +
+            '<div class="tc-sig">Sig: ' + t.voice_signature_hash + '</div>' +
+            '</div>'
+        ).join('');
+    } catch (e) {
+        console.error('Threat DB fetch failed:', e);
+    }
+}
+
+// Standalone Deepfake Check
+function setupFileUpload() {
+    const zone = document.getElementById('uploadZone');
+    const input = document.getElementById('audioInput');
+    if (!zone || !input) return;
+
+    zone.addEventListener('click', () => input.click());
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+        e.preventDefault();
+        zone.classList.remove('drag-over');
+        if (e.dataTransfer.files.length) analyzeFile(e.dataTransfer.files[0]);
+    });
+    input.addEventListener('change', () => {
+        if (input.files.length) analyzeFile(input.files[0]);
+    });
+}
+
+async function analyzeFile(file) {
+    const resultEl = document.getElementById('analyzeResult');
+    resultEl.style.display = 'block';
+    document.getElementById('arVerdict').textContent = 'Analyzing...';
+    document.getElementById('arVerdict').className = 'ar-verdict';
+    document.getElementById('arScoreVal').textContent = '--';
+    document.getElementById('ardTime').textContent = '--';
+
+    const fd = new FormData();
+    fd.append('audio', file);
+
+    try {
+        const t0 = performance.now();
+        const res = await fetch('/api/analyze', { method: 'POST', body: fd });
+        const data = await res.json();
+        const ms = Math.round(performance.now() - t0);
+
+        const verdictEl = document.getElementById('arVerdict');
+        verdictEl.textContent = data.decision;
+        verdictEl.className = 'ar-verdict ' + (data.decision === 'SPOOF' ? 'danger' : 'safe');
+
+        const scoreEl = document.getElementById('arScoreVal');
+        scoreEl.textContent = data.spoof_probability + '%';
+        scoreEl.className = 'ar-score-val ' + (data.decision === 'SPOOF' ? 'danger' : 'safe');
+
+        document.getElementById('ardTime').textContent = (data.inference_time_ms || ms) + 'ms';
+    } catch (e) {
+        document.getElementById('arVerdict').textContent = 'Error';
+    }
+}
+
+function toggleRecord() {
+    if (!recordBtnActive) startRecord();
+    else stopRecord();
+}
+
+async function startRecord() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const chunks = [];
+        recordMediaRecorder = new MediaRecorder(stream);
+        recordMediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+        recordMediaRecorder.onstop = () => {
+            analyzeFile(new Blob(chunks, { type: 'audio/wav' }));
+            stream.getTracks().forEach(t => t.stop());
+        };
+        recordMediaRecorder.start();
+        recordBtnActive = true;
+        document.getElementById('recordBtnText').textContent = 'Stop Recording';
+        document.getElementById('recDot').classList.add('active');
+        document.getElementById('recTimer').style.display = 'flex';
+        recordSeconds = 0;
+        recordTimer = setInterval(() => {
+            recordSeconds++;
+            const m = String(Math.floor(recordSeconds / 60)).padStart(2, '0');
+            const s = String(recordSeconds % 60).padStart(2, '0');
+            document.getElementById('timerDisplay').textContent = m + ':' + s;
+        }, 1000);
+    } catch (e) {
+        alert('Microphone access denied.');
+    }
+}
+
+function stopRecord() {
+    if (recordMediaRecorder && recordMediaRecorder.state !== 'inactive') recordMediaRecorder.stop();
+    recordBtnActive = false;
+    document.getElementById('recordBtnText').textContent = 'Start Recording';
+    document.getElementById('recDot').classList.remove('active');
+    document.getElementById('recTimer').style.display = 'none';
+    clearInterval(recordTimer);
+}
+
+// Background Particles
+function initParticleCanvas() {
+    const canvas = document.getElementById('particleCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+    const pts = Array.from({ length: 35 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        r: Math.random() * 1.8 + 0.6
+    }));
+    function loop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'rgba(0,240,255,0.35)';
+        pts.forEach(p => {
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < 0) p.x = canvas.width;
+            if (p.x > canvas.width) p.x = 0;
+            if (p.y < 0) p.y = canvas.height;
+            if (p.y > canvas.height) p.y = 0;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        requestAnimationFrame(loop);
+    }
+    loop();
+}
+
+function escapeHtml(str) {
+    return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+function escapeRegex(str) {
+    return String(str || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}

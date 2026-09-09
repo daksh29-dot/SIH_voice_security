@@ -12,7 +12,8 @@ from pathlib import Path
 # ---------------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parent
 
-MODEL_PATH = PROJECT_ROOT / "models" / "aasist-l.onnx"
+MODEL_PATH = PROJECT_ROOT / "models" / "aasist-l.onnx"  # Legacy, kept for reference
+MODEL_NAME = "garystafford/wav2vec2-deepfake-voice-detector"
 
 TEST_AUDIO_DIR = PROJECT_ROOT / "test_audio"
 REAL_AUDIO_DIR = TEST_AUDIO_DIR / "real"
@@ -56,8 +57,8 @@ TOP_K = 3
 # Model outputs logits[:, 1] = bona fide (higher = more real). aasist_onnx.py
 # converts this to a spoof probability so "higher = more spoof-like" holds
 # throughout the pipeline.
-SPOOF_THRESHOLD = 0.5
-UNCERTAIN_MARGIN = 0.05
+SPOOF_THRESHOLD = 0.95
+UNCERTAIN_MARGIN = 0.0
 # ---------------------------------------------------------------------------
 # Misc
 # ---------------------------------------------------------------------------

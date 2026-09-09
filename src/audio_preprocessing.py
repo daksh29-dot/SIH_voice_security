@@ -25,7 +25,7 @@ class AudioLoadError(Exception):
 
 def load_audio(path: str | Path) -> Tuple[np.ndarray, int]:
     """
-    Load an audio file from disk.
+    Load an audio file from disk. Supports WAV, FLAC, MP3, OGG, WebM/Opus, etc.
 
     Returns:
         waveform: 1D or 2D float32 numpy array, shape (samples,) or (channels, samples)
@@ -35,14 +35,43 @@ def load_audio(path: str | Path) -> Tuple[np.ndarray, int]:
     if not path.exists():
         raise AudioLoadError(f"Audio file not found: {path}")
 
-    try:
-        # sr=None preserves the native sample rate; mono=False preserves channels
-        # so we can control mono-mixing explicitly in to_mono().
-        waveform, sample_rate = librosa.load(str(path), sr=None, mono=False)
-    except Exception as e:
-        raise AudioLoadError(f"Failed to decode audio file {path}: {e}") from e
+    # Try librosa first for standard formats
+    if path.suffix.lower() not in ('.webm', '.ogg'):
+        try:
+            waveform, sample_rate = librosa.load(str(path), sr=None, mono=False)
+            return waveform.astype(np.float32), sample_rate
+        except Exception:
+            pass
 
-    return waveform.astype(np.float32), sample_rate
+    # PyAV fallback: handles WebM/Opus, OGG, and all media streams
+    try:
+        import av
+        container = av.open(str(path))
+        audio_stream = next((s for s in container.streams if s.type == 'audio'), None)
+        if not audio_stream:
+            raise AudioLoadError(f"No audio stream found in {path}")
+
+        target_sr = getattr(config, 'TARGET_SAMPLE_RATE', 16000)
+        resampler = av.AudioResampler(format='fltp', layout='mono', rate=target_sr)
+        frames = []
+        for frame in container.decode(audio_stream):
+            for resampled in resampler.resample(frame):
+                frames.append(resampled.to_ndarray())
+        container.close()
+
+        if not frames:
+            raise AudioLoadError(f"Empty audio decoded from {path}")
+
+        waveform = np.concatenate(frames, axis=1).squeeze(0).astype(np.float32)
+        return waveform, target_sr
+    except Exception as e:
+        # Final attempt: try librosa.load as last resort
+        try:
+            waveform, sample_rate = librosa.load(str(path), sr=None, mono=False)
+            return waveform.astype(np.float32), sample_rate
+        except Exception:
+            raise AudioLoadError(f"Failed to decode audio file {path}: {e}") from e
+
 
 
 def to_mono(waveform: np.ndarray) -> np.ndarray:
@@ -77,6 +106,11 @@ def normalize(waveform: np.ndarray, eps: float = 1e-9) -> np.ndarray:
 def preprocess_audio(path: str | Path) -> np.ndarray:
     """
     Full preprocessing pipeline: load -> mono -> resample -> normalize.
+
+    NOTE: Do NOT add trim/filter steps. AASIST-L is extremely sensitive to
+    waveform modifications — even a Butterworth high-pass filter causes
+    real-speech files to be misclassified as spoof. The model was trained
+    on raw normalized waveforms and must receive them unmodified.
 
     This is the single entry point the rest of the pipeline should call.
     """

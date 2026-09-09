@@ -1,0 +1,167 @@
+[
+  {
+    "id": "THREAT-4A6BDA",
+    "phone_number": "+91 11-23459812",
+    "reported_as": "CBI / Police Digital Arrest Extortion",
+    "risk_level": "CRITICAL",
+    "scam_type": "DIGITAL_ARREST_CBI",
+    "voice_signature_hash": "8d0ce19e16cc2b0e00283bd859d04a38",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-26600D",
+    "phone_number": "+91 11-23459812",
+    "reported_as": "CBI / Police Digital Arrest Extortion",
+    "risk_level": "CRITICAL",
+    "scam_type": "DIGITAL_ARREST_CBI",
+    "voice_signature_hash": "7af244da176ed32e1418b6fa0d4a0c66",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-36125D",
+    "phone_number": "+91 11-23459812",
+    "reported_as": "CBI / Police Digital Arrest Extortion",
+    "risk_level": "CRITICAL",
+    "scam_type": "DIGITAL_ARREST_CBI",
+    "voice_signature_hash": "850b03de6ed7b2119707b68a384575e1",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-1AA8B1",
+    "phone_number": "+91 11-23459812",
+    "reported_as": "CBI / Police Digital Arrest Extortion",
+    "risk_level": "CRITICAL",
+    "scam_type": "DIGITAL_ARREST_CBI",
+    "voice_signature_hash": "80689677704a8155d277d8bd858ece28",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-7BA012",
+    "phone_number": "+91 11-23459812",
+    "reported_as": "CBI / Police Digital Arrest Extortion",
+    "risk_level": "CRITICAL",
+    "scam_type": "DIGITAL_ARREST_CBI",
+    "voice_signature_hash": "a8ce7ae8c238c24cf6af2de11c5aa575",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-A95B37",
+    "phone_number": "+91 9823411092",
+    "reported_as": "Bank Account KYC & OTP Theft",
+    "risk_level": "CRITICAL",
+    "scam_type": "BANK_KYC_OTP_THEFT",
+    "voice_signature_hash": "76543e0b303d23ce156b2e695d38baf3",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-935333",
+    "phone_number": "+91 11-23459812",
+    "reported_as": "CBI / Police Digital Arrest Extortion",
+    "risk_level": "CRITICAL",
+    "scam_type": "DIGITAL_ARREST_CBI",
+    "voice_signature_hash": "012d7f861ef01a992086859f09573f70",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-D07DEB",
+    "phone_number": "+91 11-23459812",
+    "reported_as": "CBI / Police Digital Arrest Extortion",
+    "risk_level": "CRITICAL",
+    "scam_type": "DIGITAL_ARREST_CBI",
+    "voice_signature_hash": "879ac5e2a9211a0a3819402c4d841eff",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-219655",
+    "phone_number": "+91 11-23459812",
+    "reported_as": "CBI / Police Digital Arrest Extortion",
+    "risk_level": "CRITICAL",
+    "scam_type": "DIGITAL_ARREST_CBI",
+    "voice_signature_hash": "5f92ad00367ec5ed89a371cee44e265e",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-4430A4",
+    "phone_number": "+91 9823411092",
+    "reported_as": "Bank Account KYC & OTP Theft",
+    "risk_level": "CRITICAL",
+    "scam_type": "BANK_KYC_OTP_THEFT",
+    "voice_signature_hash": "0e2d66824ab67490ea9f6deec3c24900",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-14FCB9",
+    "phone_number": "+91 11-23459812",
+    "reported_as": "CBI / Police Digital Arrest Extortion",
+    "risk_level": "CRITICAL",
+    "scam_type": "DIGITAL_ARREST_CBI",
+    "voice_signature_hash": "26b80acefbe3e3570ebc048d2b4393fb",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-D2E30B",
+    "phone_number": "+91 11-23459812",
+    "reported_as": "CBI / Police Digital Arrest Extortion",
+    "risk_level": "CRITICAL",
+    "scam_type": "DIGITAL_ARREST_CBI",
+    "voice_signature_hash": "a933119845a41bd628be88133ce187c1",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-2026-0901",
+    "phone_number": "+91 11-23459812",
+    "reported_as": "CBI HQ Digital Arrest Scam",
+    "risk_level": "CRITICAL",
+    "scam_type": "DIGITAL_ARREST_CBI",
+    "voice_signature_hash": "a8f9c2d76e4b1190bc234dfa6610ee98741",
+    "flagged_count": 142,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "12 mins ago"
+  },
+  {
+    "id": "THREAT-2026-0884",
+    "phone_number": "+91 9876543210",
+    "reported_as": "FedEx Customs Narcotics Extortion",
+    "risk_level": "CRITICAL",
+    "scam_type": "CUSTOMS_PARCEL_FEDEX",
+    "voice_signature_hash": "c4d78810e9f1a239b00712de55ac9120783",
+    "flagged_count": 89,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "45 mins ago"
+  },
+  {
+    "id": "THREAT-2026-0870",
+    "phone_number": "+91 8001239988",
+    "reported_as": "SBI YONO Account Block / OTP Harvester",
+    "risk_level": "HIGH",
+    "scam_type": "BANK_KYC_OTP_THEFT",
+    "voice_signature_hash": "e1199ac876023ff0189bca74550119e8894",
+    "flagged_count": 312,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "2 hours ago"
+  }
+]

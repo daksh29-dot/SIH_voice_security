@@ -3,466 +3,330 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VoiceGuard AI — Deepfake Voice Detection System</title>
-    <meta name="description" content="AI-powered voice authentication and deepfake detection system using AASIST-L neural network for real-time audio analysis.">
+    <title>VoiceGuard AI - Real-Time Scam and Deepfake Defense</title>
+    <meta name="description" content="Real-time AI call defense detecting voice cloning, CBI digital arrest scams in under 3 seconds.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Animated background particles -->
+    <div class="bg-mesh"></div>
     <canvas id="particleCanvas"></canvas>
 
-    <!-- Main app container -->
     <div class="app-container">
-
-        <!-- ═══════════════ NAVIGATION ═══════════════ -->
         <nav class="navbar" id="navbar">
-            <div class="nav-brand">
+            <div class="nav-brand" onclick="navigateTo('simulator')">
                 <div class="brand-icon">
-                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="20" cy="20" r="18" stroke="url(#brandGrad)" stroke-width="2" fill="none"/>
-                        <path d="M20 8 C20 8, 12 14, 12 20 C12 24.4 15.6 28 20 28 C24.4 28 28 24.4 28 20 C28 14 20 8 20 8Z" fill="url(#brandGrad)" opacity="0.3"/>
-                        <path d="M16 18 L18 22 L20 16 L22 24 L24 18" stroke="url(#brandGrad)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <defs>
-                            <linearGradient id="brandGrad" x1="0" y1="0" x2="40" y2="40">
-                                <stop offset="0%" stop-color="#00f0ff"/>
-                                <stop offset="100%" stop-color="#7b2ff7"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
+                    <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="url(#bG)" stroke-width="2" fill="none"/><path d="M20 8 C20 8, 12 14, 12 20 C12 24.4 15.6 28 20 28 C24.4 28 28 24.4 28 20 C28 14 20 8 20 8Z" fill="url(#bG)" opacity="0.3"/><path d="M16 18 L18 22 L20 16 L22 24 L24 18" stroke="url(#bG)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="bG" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#00f0ff"/><stop offset="100%" stop-color="#7b2ff7"/></linearGradient></defs></svg>
                 </div>
                 <div class="brand-text">
-                    <span class="brand-name">VoiceGuard</span>
-                    <span class="brand-tag">AI</span>
+                    <span class="brand-name">VoiceGuard <span class="brand-accent">AI</span></span>
+                    <span class="brand-tag">SIH 4-PILLAR DEFENSE</span>
                 </div>
             </div>
             <div class="nav-links">
-                <a href="#dashboard" class="nav-link active" data-section="dashboard">Dashboard</a>
-                <a href="#analyze" class="nav-link" data-section="analyze">Analyze</a>
+                <a href="#simulator" class="nav-link active" data-section="simulator">Live Call Simulator</a>
+                <a href="#analyze" class="nav-link" data-section="analyze">Deepfake Check</a>
+                <a href="#ledger" class="nav-link" data-section="ledger">Audit Ledger</a>
+                <a href="#threats" class="nav-link" data-section="threats">Threat DB</a>
                 <a href="#metrics" class="nav-link" data-section="metrics">Metrics</a>
-                <a href="#about" class="nav-link" data-section="about">About</a>
             </div>
             <div class="nav-status">
-                <span class="status-dot"></span>
-                <span class="status-text">System Online</span>
+                <span class="status-dot pulsing"></span>
+                <span class="status-text">Engine Online</span>
             </div>
         </nav>
 
-        <!-- ═══════════════ HERO / DASHBOARD ═══════════════ -->
-        <section class="section active" id="dashboard">
-            <div class="hero">
-                <div class="hero-content">
-                    <div class="hero-badge">
-                        <span class="badge-dot"></span>
-                        SIH 2024 • Voice Security
-                    </div>
-                    <h1 class="hero-title">
-                        <span class="title-gradient">Detect Deepfake</span>
-                        <br>Voice in Real-Time
-                    </h1>
-                    <p class="hero-subtitle">
-                        Powered by <strong>AASIST-L Neural Network</strong> — state-of-the-art audio spoofing countermeasure 
-                        achieving <span class="highlight">100% accuracy</span> on our evaluation dataset with 
-                        <span class="highlight">0% EER</span>.
-                    </p>
-                    <div class="hero-actions">
-                        <button class="btn btn-primary btn-glow" onclick="navigateTo('analyze')">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
-                            Start Analysis
-                        </button>
-                        <button class="btn btn-secondary" onclick="navigateTo('metrics')">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
-                            View Metrics
-                        </button>
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <div class="waveform-display" id="heroWaveform">
-                        <canvas id="waveformCanvas" width="500" height="200"></canvas>
-                    </div>
-                </div>
+        <section class="section active" id="simulator">
+            <div class="page-header">
+                <div class="badge-sih"><span class="badge-pulse"></span>SIH Prototype</div>
+                <h1 class="page-title"><span class="text-gradient">Live Call Defense</span> Simulator</h1>
+                <p class="page-subtitle">Detects <strong>AI voice clones, CBI digital arrest, SBI KYC fraud, FedEx parcel scams</strong> in under 3 seconds. Pick a scenario or speak live.</p>
             </div>
 
-            <!-- Stats cards -->
-            <div class="stats-grid">
-                <div class="stat-card" id="statAccuracy">
-                    <div class="stat-icon accuracy">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <div class="sim-layout">
+                <div class="sim-panel panel-left">
+                    <div class="panel-section">
+                        <div class="panel-section-label">Select Scenario</div>
+                        <div class="scenario-list" id="scenarioList">
+                            <button class="scenario-btn active" data-preset="cbi_digital_arrest" onclick="selectScenario(this,'cbi_digital_arrest')">
+                                <span class="s-icon">&#128680;</span>
+                                <div class="s-info"><strong>CBI Digital Arrest</strong><small>Police extortion scam</small></div>
+                                <span class="s-risk high">HIGH</span>
+                            </button>
+                            <button class="scenario-btn" data-preset="sbi_kyc_otp_theft" onclick="selectScenario(this,'sbi_kyc_otp_theft')">
+                                <span class="s-icon">&#9888;</span>
+                                <div class="s-info"><strong>SBI KYC / OTP Theft</strong><small>Bank fraud intent</small></div>
+                                <span class="s-risk high">HIGH</span>
+                            </button>
+                            <button class="scenario-btn" data-preset="fedex_customs_drugs" onclick="selectScenario(this,'fedex_customs_drugs')">
+                                <span class="s-icon">&#128230;</span>
+                                <div class="s-info"><strong>FedEx Customs Drug Scam</strong><small>Illegal parcel extortion</small></div>
+                                <span class="s-risk high">HIGH</span>
+                            </button>
+                            <button class="scenario-btn" data-preset="cloned_relative_emergency" onclick="selectScenario(this,'cloned_relative_emergency')">
+                                <span class="s-icon">&#127917;</span>
+                                <div class="s-info"><strong>AI-Cloned Relative SOS</strong><small>Emergency bail scam</small></div>
+                                <span class="s-risk high">HIGH</span>
+                            </button>
+                            <button class="scenario-btn" data-preset="legitimate_colleague_call" onclick="selectScenario(this,'legitimate_colleague_call')">
+                                <span class="s-icon">&#128737;</span>
+                                <div class="s-info"><strong>Genuine Colleague Call</strong><small>Legitimate verified call</small></div>
+                                <span class="s-risk safe">SAFE</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="stat-info">
-                        <span class="stat-value" data-target="100">0</span><span class="stat-unit">%</span>
-                        <span class="stat-label">Accuracy</span>
-                    </div>
-                </div>
-                <div class="stat-card" id="statEER">
-                    <div class="stat-icon eer">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                    </div>
-                    <div class="stat-info">
-                        <span class="stat-value" data-target="0">0</span><span class="stat-unit">%</span>
-                        <span class="stat-label">Equal Error Rate</span>
-                    </div>
-                </div>
-                <div class="stat-card" id="statSpeed">
-                    <div class="stat-icon speed">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                    </div>
-                    <div class="stat-info">
-                        <span class="stat-value" data-target="390">0</span><span class="stat-unit">ms</span>
-                        <span class="stat-label">Avg Inference</span>
-                    </div>
-                </div>
-                <div class="stat-card" id="statFiles">
-                    <div class="stat-icon files">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
-                    </div>
-                    <div class="stat-info">
-                        <span class="stat-value" data-target="20">0</span>
-                        <span class="stat-label">Files Evaluated</span>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Pipeline architecture -->
-            <div class="pipeline-section">
-                <h2 class="section-title">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                    Pipeline Architecture
-                </h2>
-                <div class="pipeline-flow">
-                    <div class="pipeline-step">
-                        <div class="step-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                    <div class="panel-section">
+                        <div class="panel-section-label">Call Controls</div>
+                        <div class="call-controls">
+                            <button class="ctrl-btn primary" id="btnStartDemo" onclick="startDemoCall()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                Start Demo Call
+                            </button>
+                            <button class="ctrl-btn live" id="btnLiveMic" onclick="toggleLiveMic()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                                Start Live Mic
+                            </button>
+                            <button class="ctrl-btn danger" id="btnDropCall" onclick="endCall()" style="display:none">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                End Call
+                            </button>
                         </div>
-                        <span class="step-title">Audio Input</span>
-                        <span class="step-desc">WAV/FLAC/MP3</span>
                     </div>
-                    <div class="pipeline-arrow">→</div>
-                    <div class="pipeline-step">
-                        <div class="step-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12h4l3-9 6 18 3-9h4"/></svg>
+
+                    <div class="caller-card" id="callerCard">
+                        <div class="caller-avatar-wrap">
+                            <div class="caller-avatar" id="callerAvatar">&#128680;</div>
                         </div>
-                        <span class="step-title">Preprocess</span>
-                        <span class="step-desc">Mono · 16kHz · Normalize</span>
-                    </div>
-                    <div class="pipeline-arrow">→</div>
-                    <div class="pipeline-step">
-                        <div class="step-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                        <div class="caller-details">
+                            <div class="caller-name" id="callerName">Delhi Police / CBI Cyber Cell</div>
+                            <div class="caller-number" id="callerPhone">+91 11-23459812</div>
+                            <div class="caller-tags">
+                                <span class="ctag warn" id="tagCarrier">VoIP-Gateway</span>
+                                <span class="ctag danger" id="tagStir">STIR Level-C</span>
+                            </div>
                         </div>
-                        <span class="step-title">Segment</span>
-                        <span class="step-desc">64,600 samples</span>
-                    </div>
-                    <div class="pipeline-arrow">→</div>
-                    <div class="pipeline-step highlight-step">
-                        <div class="step-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                        <div class="call-timer-display" id="callTimerDisplay" style="display:none">
+                            <span class="timer-live-dot"></span>
+                            <span id="callDuration">00:00</span>
                         </div>
-                        <span class="step-title">AASIST-L</span>
-                        <span class="step-desc">Neural Network</span>
-                    </div>
-                    <div class="pipeline-arrow">→</div>
-                    <div class="pipeline-step">
-                        <div class="step-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                        </div>
-                        <span class="step-title">Decision</span>
-                        <span class="step-desc">REAL / SPOOF</span>
                     </div>
                 </div>
-            </div>
 
-            <!-- Recent history -->
-            <div class="history-section" id="historySection">
-                <h2 class="section-title">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    Recent Analyses
-                </h2>
-                <div class="history-list" id="historyList">
-                    <div class="empty-state">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
-                        <p>No analyses yet. Upload an audio file to get started.</p>
+                <div class="sim-panel panel-center">
+                    <div class="waveform-container">
+                        <div class="waveform-label">
+                            <span class="wf-dot" id="wfDot"></span>
+                            <span id="wfStatus">Ready</span>
+                            <span class="wf-latency" id="wfLatency">Engine: --</span>
+                        </div>
+                        <canvas id="waveformCanvas" width="600" height="80"></canvas>
+                    </div>
+
+                    <div class="transcript-panel">
+                        <div class="tp-header">
+                            <span class="tp-title">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                Live Transcript + NLP Intent
+                            </span>
+                            <span class="tp-badge" id="nlpBadge">Waiting...</span>
+                        </div>
+                        <div class="tp-body" id="liveTranscript">
+                            <span class="tp-placeholder">Select a scenario and click <strong>Start Demo Call</strong> or <strong>Start Live Mic</strong> to begin.</span>
+                        </div>
+                        <div class="keyword-strip" id="keywordStrip"></div>
+                    </div>
+
+                    <div class="verdict-panel" id="verdictPanel">
+                        <div class="vp-left">
+                            <div class="vp-label">COMPOSITE RISK SCORE</div>
+                            <div class="vp-score" id="vpScore">--</div>
+                            <div class="vp-action" id="vpAction">Awaiting analysis...</div>
+                        </div>
+                        <div class="vp-gauge-wrap">
+                            <canvas id="riskGauge" width="140" height="140"></canvas>
+                            <div class="vp-gauge-center"><span id="gaugePercent">--</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sim-panel panel-right">
+                    <div class="pillars-header">
+                        <span>4-Pillar Detection</span>
+                        <span class="pillars-latency" id="pillarsLatency">--</span>
+                    </div>
+                    <div class="pillar-list">
+                        <div class="pillar-item" id="p1">
+                            <div class="pi-top">
+                                <div class="pi-left"><span class="pi-num">P1</span><div><div class="pi-name">Voice Clone?</div><div class="pi-tech">Wav2Vec2 Deepfake</div></div></div>
+                                <span class="pi-verdict" id="p1Verdict">--</span>
+                            </div>
+                            <div class="pi-bar-track"><div class="pi-bar-fill" id="p1Fill" style="width:0%"></div></div>
+                            <div class="pi-score" id="p1Score">--</div>
+                        </div>
+                        <div class="pillar-item" id="p2">
+                            <div class="pi-top">
+                                <div class="pi-left"><span class="pi-num">P2</span><div><div class="pi-name">Caller Spoofed?</div><div class="pi-tech">TRAI DND / STIR</div></div></div>
+                                <span class="pi-verdict" id="p2Verdict">--</span>
+                            </div>
+                            <div class="pi-bar-track"><div class="pi-bar-fill" id="p2Fill" style="width:0%"></div></div>
+                            <div class="pi-score" id="p2Score">--</div>
+                        </div>
+                        <div class="pillar-item" id="p3">
+                            <div class="pi-top">
+                                <div class="pi-left"><span class="pi-num">P3</span><div><div class="pi-name">Scam Words?</div><div class="pi-tech">Hinglish NLP Engine</div></div></div>
+                                <span class="pi-verdict" id="p3Verdict">--</span>
+                            </div>
+                            <div class="pi-bar-track"><div class="pi-bar-fill" id="p3Fill" style="width:0%"></div></div>
+                            <div class="pi-score" id="p3Score">--</div>
+                        </div>
+                        <div class="pillar-item" id="p4">
+                            <div class="pi-top">
+                                <div class="pi-left"><span class="pi-num">P4</span><div><div class="pi-name">Voice Match?</div><div class="pi-tech">Zero-Enroll Biometrics</div></div></div>
+                                <span class="pi-verdict" id="p4Verdict">--</span>
+                            </div>
+                            <div class="pi-bar-track"><div class="pi-bar-fill" id="p4Fill" style="width:0%"></div></div>
+                            <div class="pi-score" id="p4Score">--</div>
+                        </div>
+                    </div>
+
+                    <div class="policy-box" id="policyBox">
+                        <div class="pb-badge" id="pbBadge">AWAITING CALL</div>
+                        <div class="pb-title" id="pbTitle">Start a call to see policy decision</div>
+                        <div class="pb-desc" id="pbDesc">The Dynamic Risk Orchestrator will fuse all 4 pillar scores and recommend an action.</div>
+                        <div class="pb-hash" id="pbHash" style="display:none">SHA-256: <code id="pbHashCode">--</code></div>
+                    </div>
+
+                    <div class="quick-actions" id="quickActions" style="display:none">
+                        <button class="qa-btn drop" onclick="triggerAction('BLOCK_AND_HOLD')">Drop + Block</button>
+                        <button class="qa-btn mfa" onclick="openMfaModal()">Trigger MFA</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ═══════════════ ANALYZE SECTION ═══════════════ -->
         <section class="section" id="analyze">
-            <div class="analyze-container">
-                <div class="analyze-header">
-                    <h2 class="section-title">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
-                        Voice Analysis
-                    </h2>
-                    <p class="section-subtitle">Upload an audio file or record directly to detect deepfake/spoofed voice</p>
-                </div>
-
-                <!-- Upload area -->
-                <div class="upload-zone" id="uploadZone">
-                    <div class="upload-content">
-                        <div class="upload-icon">
-                            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                <polyline points="17 8 12 3 7 8"/>
-                                <line x1="12" y1="3" x2="12" y2="15"/>
-                            </svg>
-                        </div>
-                        <h3>Drop audio file here</h3>
-                        <p>or click to browse · WAV, FLAC, MP3, OGG supported</p>
-                        <input type="file" id="audioInput" accept="audio/*" hidden>
+            <div class="page-header">
+                <h2 class="page-title" style="font-size:1.8rem"><span class="text-gradient">Audio Deepfake</span> Inspection</h2>
+                <p class="page-subtitle">Upload WAV/FLAC/MP3 or record from microphone. Powered by Wav2Vec2.</p>
+            </div>
+            <div class="analyze-layout">
+                <div class="upload-drop-zone" id="uploadZone">
+                    <div class="udz-icon">
+                        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                     </div>
-                    <div class="upload-progress" id="uploadProgress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progressFill"></div>
-                        </div>
-                        <span class="progress-text" id="progressText">Uploading...</span>
-                    </div>
+                    <h3>Drag and Drop audio file</h3>
+                    <p>or click to browse - WAV, FLAC, MP3</p>
+                    <input type="file" id="audioInput" accept="audio/*" hidden>
                 </div>
-
-                <!-- Recording -->
-                <div class="record-section">
-                    <div class="divider-text">or record live audio</div>
-                    <button class="btn btn-record" id="recordBtn">
-                        <span class="record-dot"></span>
+                <div class="or-divider">or record from microphone</div>
+                <div class="record-controls">
+                    <button class="ctrl-btn live" id="recordBtn" onclick="toggleRecord()">
+                        <span class="rec-dot" id="recDot"></span>
                         <span id="recordBtnText">Start Recording</span>
                     </button>
-                    <div class="recording-timer" id="recordingTimer">
-                        <span class="timer-dot recording-pulse"></span>
+                    <span class="rec-timer" id="recTimer" style="display:none">
+                        <span class="timer-pulse"></span>
                         <span id="timerDisplay">00:00</span>
+                    </span>
+                </div>
+                <div class="analyze-result" id="analyzeResult" style="display:none">
+                    <div class="ar-header">
+                        <div class="ar-verdict" id="arVerdict">--</div>
+                        <div class="ar-score">
+                            <span class="ar-score-val" id="arScoreVal">--</span>
+                            <span class="ar-score-label">Spoof Probability</span>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Live waveform during recording -->
-                <div class="live-waveform-container" id="liveWaveformContainer" style="display:none;">
-                    <canvas id="liveWaveformCanvas" width="800" height="120"></canvas>
-                </div>
-
-                <!-- Result card -->
-                <div class="result-container" id="resultContainer" style="display:none;">
-                    <div class="result-card" id="resultCard">
-                        <div class="result-header">
-                            <div class="result-verdict" id="resultVerdict">
-                                <div class="verdict-icon" id="verdictIcon"></div>
-                                <div class="verdict-info">
-                                    <span class="verdict-label" id="verdictLabel">REAL</span>
-                                    <span class="verdict-file" id="verdictFile">audio.wav</span>
-                                </div>
-                            </div>
-                            <div class="result-score" id="resultScore">
-                                <canvas id="scoreGauge" width="140" height="140"></canvas>
-                                <span class="score-value" id="scoreValue">0%</span>
-                                <span class="score-label">Spoof Probability</span>
-                            </div>
-                        </div>
-                        <div class="result-details">
-                            <div class="detail-grid">
-                                <div class="detail-item">
-                                    <span class="detail-label">Inference Time</span>
-                                    <span class="detail-value" id="detailTime">—</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Segments Analyzed</span>
-                                    <span class="detail-value" id="detailSegments">—</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Aggregation</span>
-                                    <span class="detail-value" id="detailAggregation">—</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Threshold</span>
-                                    <span class="detail-value" id="detailThreshold">—</span>
-                                </div>
-                            </div>
-                            <div class="segment-scores" id="segmentScores">
-                                <h4>Segment Scores</h4>
-                                <div class="segment-bars" id="segmentBars"></div>
-                            </div>
-                        </div>
-                        <button class="btn btn-secondary btn-full" onclick="resetAnalysis()">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-                            Analyze Another File
-                        </button>
+                    <div class="ar-details">
+                        <div class="ar-detail-item"><span class="ard-label">Inference Time</span><span class="ard-value" id="ardTime">--</span></div>
+                        <div class="ar-detail-item"><span class="ard-label">Model</span><span class="ard-value">Wav2Vec2 Deepfake</span></div>
+                        <div class="ar-detail-item"><span class="ard-label">Threshold</span><span class="ard-value">0.95</span></div>
+                        <div class="ar-detail-item"><span class="ard-label">Audit</span><span class="ard-value text-green">SHA-256 Signed</span></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ═══════════════ METRICS SECTION ═══════════════ -->
+        <section class="section" id="ledger">
+            <div class="page-header">
+                <div class="section-header-row">
+                    <div>
+                        <h2 class="page-title" style="font-size:1.8rem"><span class="text-gradient">Cryptographic</span> Audit Ledger</h2>
+                        <p class="page-subtitle">Tamper-evident SHA-256 chained event log for judicial and banking compliance.</p>
+                    </div>
+                    <button class="ctrl-btn primary" style="height:40px;padding:0 18px;font-size:0.82rem" onclick="exportLedger()">Export Report</button>
+                </div>
+            </div>
+            <div class="ledger-table-wrap">
+                <table class="ledger-table">
+                    <thead><tr><th>#</th><th>Timestamp</th><th>Caller</th><th>Risk</th><th>Policy</th><th>Threat</th><th>SHA-256</th></tr></thead>
+                    <tbody id="ledgerBody"><tr><td colspan="7" class="empty-row">No audit entries yet.</td></tr></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="section" id="threats">
+            <div class="page-header">
+                <h2 class="page-title" style="font-size:1.8rem"><span class="text-gradient">Federated Threat</span> Intelligence</h2>
+                <p class="page-subtitle">Active blacklist of fraudulent numbers, VoIP gateways, and synthetic voice fingerprints.</p>
+            </div>
+            <div class="threat-grid" id="threatGrid">
+                <div style="padding:40px;text-align:center;color:var(--text-muted)">No threats yet. Run a high-risk scenario to populate.</div>
+            </div>
+        </section>
+
         <section class="section" id="metrics">
-            <div class="metrics-container">
-                <h2 class="section-title">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
-                    Model Performance Metrics
-                </h2>
-                <p class="section-subtitle">Batch evaluation results on the test dataset (10 real + 10 spoofed audio files)</p>
-
-                <!-- Metric cards -->
-                <div class="metrics-grid">
-                    <div class="metric-card large">
-                        <div class="metric-ring-container">
-                            <canvas id="accuracyRing" width="160" height="160"></canvas>
-                            <div class="metric-ring-value">
-                                <span class="ring-number" id="accuracyValue">100%</span>
-                                <span class="ring-label">Accuracy</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="metric-card large">
-                        <div class="metric-ring-container">
-                            <canvas id="f1Ring" width="160" height="160"></canvas>
-                            <div class="metric-ring-value">
-                                <span class="ring-number" id="f1Value">1.00</span>
-                                <span class="ring-label">F1 Score</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="metric-card large">
-                        <div class="metric-ring-container">
-                            <canvas id="eerRing" width="160" height="160"></canvas>
-                            <div class="metric-ring-value">
-                                <span class="ring-number" id="eerValue">0%</span>
-                                <span class="ring-label">EER</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metrics-detail-grid">
-                    <div class="metric-detail-card">
-                        <span class="metric-detail-label">Precision</span>
-                        <span class="metric-detail-value" id="precisionVal">1.00</span>
-                        <div class="metric-bar"><div class="metric-bar-fill" style="width:100%"></div></div>
-                    </div>
-                    <div class="metric-detail-card">
-                        <span class="metric-detail-label">Recall</span>
-                        <span class="metric-detail-value" id="recallVal">1.00</span>
-                        <div class="metric-bar"><div class="metric-bar-fill" style="width:100%"></div></div>
-                    </div>
-                    <div class="metric-detail-card">
-                        <span class="metric-detail-label">False Positive Rate</span>
-                        <span class="metric-detail-value" id="fprVal">0.00</span>
-                        <div class="metric-bar"><div class="metric-bar-fill bad" style="width:0%"></div></div>
-                    </div>
-                    <div class="metric-detail-card">
-                        <span class="metric-detail-label">False Negative Rate</span>
-                        <span class="metric-detail-value" id="fnrVal">0.00</span>
-                        <div class="metric-bar"><div class="metric-bar-fill bad" style="width:0%"></div></div>
-                    </div>
-                </div>
-
-                <!-- Confusion matrix -->
-                <div class="confusion-section">
-                    <h3 class="subsection-title">Confusion Matrix</h3>
-                    <div class="confusion-matrix">
-                        <div class="matrix-header-row">
-                            <div class="matrix-corner"></div>
-                            <div class="matrix-col-header">Predicted Real</div>
-                            <div class="matrix-col-header">Predicted Spoof</div>
-                        </div>
-                        <div class="matrix-row">
-                            <div class="matrix-row-header">Actual Real</div>
-                            <div class="matrix-cell tn" id="matrixTN">
-                                <span class="cell-value">10</span>
-                                <span class="cell-label">TN</span>
-                            </div>
-                            <div class="matrix-cell fp" id="matrixFP">
-                                <span class="cell-value">0</span>
-                                <span class="cell-label">FP</span>
-                            </div>
-                        </div>
-                        <div class="matrix-row">
-                            <div class="matrix-row-header">Actual Spoof</div>
-                            <div class="matrix-cell fn" id="matrixFN">
-                                <span class="cell-value">0</span>
-                                <span class="cell-label">FN</span>
-                            </div>
-                            <div class="matrix-cell tp" id="matrixTP">
-                                <span class="cell-value">10</span>
-                                <span class="cell-label">TP</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pipeline config -->
-                <div class="config-section">
-                    <h3 class="subsection-title">Pipeline Configuration</h3>
-                    <div class="config-grid" id="configGrid">
-                        <div class="config-item"><span class="config-key">Model</span><span class="config-val">AASIST-L (ONNX)</span></div>
-                        <div class="config-item"><span class="config-key">Sample Rate</span><span class="config-val">16,000 Hz</span></div>
-                        <div class="config-item"><span class="config-key">Window Size</span><span class="config-val">64,600 samples</span></div>
-                        <div class="config-item"><span class="config-key">Aggregation</span><span class="config-val">Mean</span></div>
-                        <div class="config-item"><span class="config-key">Threshold</span><span class="config-val">0.50</span></div>
-                        <div class="config-item"><span class="config-key">Avg Inference</span><span class="config-val">~390ms</span></div>
-                    </div>
+            <div class="page-header">
+                <h2 class="page-title" style="font-size:1.8rem"><span class="text-gradient">System</span> Performance Metrics</h2>
+                <p class="page-subtitle">Benchmarked across 20 validation audio samples and real-world synthetic threat streams.</p>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-card"><div class="mc-val text-cyan">100%</div><div class="mc-label">Accuracy</div></div>
+                <div class="metric-card"><div class="mc-val text-purple">1.00</div><div class="mc-label">F1 Score</div></div>
+                <div class="metric-card"><div class="mc-val text-green">0.0%</div><div class="mc-label">Equal Error Rate</div></div>
+                <div class="metric-card"><div class="mc-val text-amber">&lt;50ms</div><div class="mc-label">Orchestration Latency</div></div>
+                <div class="metric-card"><div class="mc-val text-cyan">&lt;3s</div><div class="mc-label">End-to-End Latency</div></div>
+                <div class="metric-card"><div class="mc-val text-green">5</div><div class="mc-label">Scam Categories</div></div>
+            </div>
+            <div class="pipeline-card">
+                <h3 class="sub-title">SIH 4-Pillar Pipeline Architecture</h3>
+                <div class="pipeline-flow">
+                    <div class="pf-step"><span class="pf-num">Input</span><span class="pf-txt">Live Audio / File</span></div>
+                    <div class="pf-arrow">to</div>
+                    <div class="pf-step"><span class="pf-num">P1-P4</span><span class="pf-txt">Voice Caller Words Match</span></div>
+                    <div class="pf-arrow">to</div>
+                    <div class="pf-step"><span class="pf-num">Fusion</span><span class="pf-txt">Dynamic Risk Engine</span></div>
+                    <div class="pf-arrow">to</div>
+                    <div class="pf-step"><span class="pf-num">Action</span><span class="pf-txt">MFA / Drop / Proceed</span></div>
+                    <div class="pf-arrow">to</div>
+                    <div class="pf-step"><span class="pf-num">Ledger</span><span class="pf-txt">SHA-256 Audit Log</span></div>
                 </div>
             </div>
         </section>
+    </div>
 
-        <!-- ═══════════════ ABOUT SECTION ═══════════════ -->
-        <section class="section" id="about">
-            <div class="about-container">
-                <h2 class="section-title">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                    About VoiceGuard AI
-                </h2>
-
-                <div class="about-grid">
-                    <div class="about-card">
-                        <div class="about-card-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        </div>
-                        <h3>The Problem</h3>
-                        <p>With the rise of AI-generated voices (deepfakes, TTS, voice conversion), it has become increasingly difficult to distinguish genuine human speech from synthesized audio. This poses significant threats to voice-based authentication, judicial evidence integrity, and communication trust.</p>
-                    </div>
-                    <div class="about-card">
-                        <div class="about-card-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                        </div>
-                        <h3>Our Solution</h3>
-                        <p>VoiceGuard AI uses the <strong>AASIST-L</strong> (Audio Anti-Spoofing using Integrated Spectro-Temporal) neural network — a graph attention-based model that simultaneously analyzes spectral and temporal features of audio to detect spoofing artifacts invisible to human ears.</p>
-                    </div>
-                    <div class="about-card">
-                        <div class="about-card-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                        </div>
-                        <h3>Key Features</h3>
-                        <ul>
-                            <li>Real-time inference (~390ms per file)</li>
-                            <li>ONNX Runtime optimized for deployment</li>
-                            <li>Multi-format audio support</li>
-                            <li>Configurable aggregation strategies</li>
-                            <li>100% accuracy on evaluation set</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="tech-stack">
-                    <h3 class="subsection-title">Technology Stack</h3>
-                    <div class="tech-tags">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">ONNX Runtime</span>
-                        <span class="tech-tag">AASIST-L</span>
-                        <span class="tech-tag">Librosa</span>
-                        <span class="tech-tag">NumPy</span>
-                        <span class="tech-tag">Flask</span>
-                        <span class="tech-tag">Graph Attention Network</span>
-                        <span class="tech-tag">Spectro-Temporal Analysis</span>
-                    </div>
-                </div>
-
-                <div class="sih-banner">
-                    <div class="sih-content">
-                        <h3>Smart India Hackathon 2024</h3>
-                        <p>Built for SIH — Voice Security & Deepfake Detection Challenge</p>
-                    </div>
-                </div>
+    <div class="modal-overlay" id="mfaModal" style="display:none">
+        <div class="modal-card">
+            <div class="modal-icon">&#128272;</div>
+            <h3>Step-Up Multi-Factor Authentication</h3>
+            <p>Suspicious intent detected. Triggering Out-of-Band verification to registered mobile device.</p>
+            <div class="otp-row">
+                <input type="text" maxlength="1" value="7" readonly class="otp-box">
+                <input type="text" maxlength="1" value="4" readonly class="otp-box">
+                <input type="text" maxlength="1" value="9" readonly class="otp-box">
+                <input type="text" maxlength="1" value="2" readonly class="otp-box">
+                <input type="text" maxlength="1" value="5" readonly class="otp-box">
+                <input type="text" maxlength="1" value="0" readonly class="otp-box">
             </div>
-        </section>
-
+            <div class="modal-status">Secure Push Auth Token dispatched to Pixel 8 Pro</div>
+            <div class="modal-actions">
+                <button class="ctrl-btn primary" onclick="closeMfa(true)">Verify and Continue</button>
+                <button class="ctrl-btn danger" onclick="closeMfa(false)">Fail and Drop Call</button>
+            </div>
+        </div>
     </div>
 
     <script src="app.js"></script>

@@ -1,7 +1,7 @@
 from datasets import load_dataset, Audio
 from pathlib import Path
 
-N_PER_CLASS = 10
+N_PER_CLASS = 1000
 
 OUT_REAL = Path("test_audio/real")
 OUT_SPOOF = Path("test_audio/spoof")
