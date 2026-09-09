@@ -137,3 +137,16 @@ Once the baseline metrics in `results/metrics.json` are in hand:
 - **Not good enough** → that's the evidence needed to justify collecting
   more training data and fine-tuning AASIST-L — a Phase 2 concern, not
   Phase 1.
+| Metric    |     Result | Meaning                                                                     |
+| --------- | ---------: | --------------------------------------------------------------------------- |
+| Accuracy  |    **90%** | 18/20 classified correctly                                                  |
+| Precision |   **100%** | Every file predicted as spoof was actually spoof                            |
+| Recall    |    **80%** | 8/10 spoof files detected                                                   |
+| F1        | **88.89%** | Good overall spoof detection                                                |
+| EER       |   **0.0%** | Score distributions have a perfect separating threshold on these 20 samples |
+| FPR       |     **0%** | No real sample was incorrectly called spoof                                 |
+| FNR       |    **20%** | 2 spoof samples were incorrectly called real                                |
+| TP        |          8 | Spoofs correctly detected                                                   |
+| TN        |         10 | Real correctly detected                                                     |
+| FP        |          0 | Real incorrectly called spoof                                               |
+| FN        |          2 | Spoof incorrectly called real                                               |

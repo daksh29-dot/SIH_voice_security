@@ -14,21 +14,35 @@ import numpy as np
 
 import _pathfix  # noqa: F401
 import config
-
-
 def pad_fixed(waveform: np.ndarray, window_samples: int = config.FIXED_WINDOW_SAMPLES) -> np.ndarray:
-    """Take first `window_samples` samples, or tile-repeat if audio is shorter."""
+    """
+    Fixed-window transform: take the first `window_samples` samples.
+
+    DIAGNOSTIC CHANGE: audio shorter than window_samples is now REJECTED
+    rather than tile-repeated. Tiling a short out-of-domain recording to
+    fill 64600 samples creates an artificial waveform with unnatural
+    periodicity the model never saw in training — suspected of
+    contributing to short real recordings scoring as SPOOF.
+
+    Note: tile-repeating IS the original upstream clovaai/aasist eval
+    convention and is not inherently wrong — this stricter behavior is
+    temporary, for isolating this one variable.
+    """
     if waveform.ndim != 1:
         raise ValueError(f"Expected 1D mono waveform, got shape {waveform.shape}")
 
     waveform = waveform.astype(np.float32)
     n = waveform.shape[0]
 
-    if n >= window_samples:
-        return waveform[:window_samples]
+    if n < window_samples:
+        raise ValueError(
+            f"Audio is too short for AASIST-L: "
+            f"{n / config.TARGET_SAMPLE_RATE:.2f}s available, "
+            f"{window_samples / config.TARGET_SAMPLE_RATE:.2f}s required. "
+            f"Use a recording at least {window_samples / config.TARGET_SAMPLE_RATE:.2f}s long."
+        )
 
-    reps = window_samples // n + 1
-    return np.tile(waveform, reps)[:window_samples].astype(np.float32)
+    return waveform[:window_samples]
 
 
 def segment_waveform_sliding(

@@ -15,8 +15,8 @@ PROJECT_ROOT = Path(__file__).resolve().parent
 MODEL_PATH = PROJECT_ROOT / "models" / "aasist-l.onnx"
 
 TEST_AUDIO_DIR = PROJECT_ROOT / "test_audio"
-REAL_AUDIO_DIR = TEST_AUDIO_DIR / "real"
-SPOOF_AUDIO_DIR = TEST_AUDIO_DIR / "spoof"
+REAL_AUDIO_DIR = TEST_AUDIO_DIR / "real_asvspoof"
+SPOOF_AUDIO_DIR = TEST_AUDIO_DIR / "spoof_4sec"
 
 RESULTS_DIR = PROJECT_ROOT / "results"
 PREDICTIONS_CSV = RESULTS_DIR / "predictions.csv"
