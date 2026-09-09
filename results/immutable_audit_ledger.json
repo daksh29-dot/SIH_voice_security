@@ -1,5 +1,359 @@
 [
   {
+    "index": 80,
+    "timestamp": "2026-09-09 17:40:59 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 22-67123984",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "CUSTOMS_PARCEL_FEDEX",
+    "transcript_snippet": "This is FedEx Customs Clearance at Mumbai Airport. A courier parcel sent under your PAN card to Taiwan contains five illegal passports and contraband ",
+    "pillar_details": {
+      "voice_clone_risk": 0.96,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.842,
+      "matched_keywords": [
+        "courier",
+        "mumbai airport",
+        "customs",
+        "contraband",
+        "customs clearance",
+        "customs officer",
+        "taiwan",
+        "parcel",
+        "fedex",
+        "illegal passport"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "40068f13035737377557784c4ba10415802212cccaade8a277f64649cf40189b"
+  },
+  {
+    "index": 79,
+    "timestamp": "2026-09-09 17:40:40 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9845012345",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "URGENT_FAMILY_SOS",
+    "transcript_snippet": "Papa, police ne pakad liya hai mujhe. Accident ho gaya car se. Hospital me hu, bail money chahiye fifty thousand rupees emergency. Please kisi ko mat ",
+    "pillar_details": {
+      "voice_clone_risk": 0.99,
+      "caller_cli_risk": 0.2,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.848,
+      "matched_keywords": [
+        "bail money",
+        "police",
+        "police ne pakad liya",
+        "hospital me hu",
+        "accident ho gaya"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "ad4664910c384240bb1402228e0baecae7c0e0c4b4d39b77656c31375f7d7f2e"
+  },
+  {
+    "index": 78,
+    "timestamp": "2026-09-09 17:40:19 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 11-23459812",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
+    "pillar_details": {
+      "voice_clone_risk": 0.985,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.847,
+      "matched_keywords": [
+        "arrest warrant",
+        "narcotics",
+        "money laundering",
+        "cyber crime",
+        "central bureau",
+        "digital arrest",
+        "skype call",
+        "cbi"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "52a65051d41d451e1e3f1ffb4222bce570f9d5f515df874b4cc249b4def1e265"
+  },
+  {
+    "index": 77,
+    "timestamp": "2026-09-09 17:28:31 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 22-67123984",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "CUSTOMS_PARCEL_FEDEX",
+    "transcript_snippet": "This is FedEx Customs Clearance at Mumbai Airport. A courier parcel sent under your PAN card to Taiwan contains five illegal passports and contraband ",
+    "pillar_details": {
+      "voice_clone_risk": 0.96,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.842,
+      "matched_keywords": [
+        "courier",
+        "mumbai airport",
+        "customs",
+        "contraband",
+        "customs clearance",
+        "customs officer",
+        "taiwan",
+        "parcel",
+        "fedex",
+        "illegal passport"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "f1b396ba0cbea4ed49bf4fa2e316dce788d4cb986545361d1d3b904ca1a10545"
+  },
+  {
+    "index": 76,
+    "timestamp": "2026-09-09 17:27:51 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9845012345",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "URGENT_FAMILY_SOS",
+    "transcript_snippet": "Papa, police ne pakad liya hai mujhe. Accident ho gaya car se. Hospital me hu, bail money chahiye fifty thousand rupees emergency. Please kisi ko mat ",
+    "pillar_details": {
+      "voice_clone_risk": 0.99,
+      "caller_cli_risk": 0.2,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.848,
+      "matched_keywords": [
+        "bail money",
+        "police",
+        "police ne pakad liya",
+        "hospital me hu",
+        "accident ho gaya"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "5bcb74f4ccff627cee79bf35634b7c350fd3012bbc08774dcb406faba3b15add"
+  },
+  {
+    "index": 75,
+    "timestamp": "2026-09-09 17:23:03 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.258,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello, this is Inspector from CBI. You are under digital arrest.",
+    "pillar_details": {
+      "voice_clone_risk": 0.016088593751192093,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.8,
+      "biometric_risk": 0.058,
+      "matched_keywords": [
+        "digital arrest",
+        "cbi"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "e14a29f7eb1479bf78c6d45d91e93dab69717f0f66557b89ea1e4629cf4c07f0"
+  },
+  {
+    "index": 74,
+    "timestamp": "2026-09-09 17:17:20 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.002053,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: soundtools-clone-1788962405365.mp3.mpeg",
+    "pillar_details": {
+      "voice_clone_score": 0.002053
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "a33ce04fab8abad1c347ae4996a2d4fb79a260d5347933ef92e43a3f3b2da962"
+  },
+  {
+    "index": 73,
+    "timestamp": "2026-09-09 17:16:14 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.034215,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: blob",
+    "pillar_details": {
+      "voice_clone_score": 0.034215
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "13f5b717c961b34c18ec8fba050c25776f1f2a1756a18e44385c515e1f664889"
+  },
+  {
+    "index": 72,
+    "timestamp": "2026-09-09 17:15:31 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.988337,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_6841754.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.988337
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "1dcbffd9a5764e609bcdf0c48cc37fed428cc5bcf248db9419bdf262137fb25c"
+  },
+  {
+    "index": 71,
+    "timestamp": "2026-09-09 17:15:03 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.995495,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_6163791.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.995495
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "a95109f66f9a06a0383a6593421e1ec1649101959747f83be37bb52797457b37"
+  },
+  {
+    "index": 70,
+    "timestamp": "2026-09-09 16:21:46 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9823411092",
+    "composite_risk": 0.722,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "BANK_KYC_OTP_THEFT",
+    "transcript_snippet": "Dear customer, your State Bank of India Net Banking KYC has expired today. Your bank account will be frozen within two hours. Please share the six dig",
+    "pillar_details": {
+      "voice_clone_risk": 0.92,
+      "caller_cli_risk": 0.55,
+      "scam_words_risk": 0.55,
+      "biometric_risk": 0.834,
+      "matched_keywords": [
+        "otp"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "a06e84a328c8dad543c8905e4f45f7cc8beb0140f372fcc956a16a915007bad0"
+  },
+  {
+    "index": 69,
+    "timestamp": "2026-09-09 16:21:40 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 22-67123984",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "CUSTOMS_PARCEL_FEDEX",
+    "transcript_snippet": "This is FedEx Customs Clearance at Mumbai Airport. A courier parcel sent under your PAN card to Taiwan contains five illegal passports and contraband ",
+    "pillar_details": {
+      "voice_clone_risk": 0.96,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.842,
+      "matched_keywords": [
+        "courier",
+        "mumbai airport",
+        "customs",
+        "contraband",
+        "customs clearance",
+        "customs officer",
+        "taiwan",
+        "parcel",
+        "fedex",
+        "illegal passport"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "278a1bce8f3e4ede308f49f14e821c3030583aeed5c0c3a1ad65c1869a9cf732"
+  },
+  {
+    "index": 68,
+    "timestamp": "2026-09-09 16:21:34 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9823411092",
+    "composite_risk": 0.722,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "BANK_KYC_OTP_THEFT",
+    "transcript_snippet": "Dear customer, your State Bank of India Net Banking KYC has expired today. Your bank account will be frozen within two hours. Please share the six dig",
+    "pillar_details": {
+      "voice_clone_risk": 0.92,
+      "caller_cli_risk": 0.55,
+      "scam_words_risk": 0.55,
+      "biometric_risk": 0.834,
+      "matched_keywords": [
+        "otp"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "9888564e6a9b07c252b52d356ea4e87149cd1db5a85cf84ae0c5c56f62a33d41"
+  },
+  {
+    "index": 67,
+    "timestamp": "2026-09-09 16:21:18 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.222,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "BANK_KYC_OTP_THEFT",
+    "transcript_snippet": "Dear customer, Your SBI bank account KYC has been expired. Your bank account will be freezed in 2 hours. Please share the given OTP.",
+    "pillar_details": {
+      "voice_clone_risk": 0.10764030367136002,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.55,
+      "biometric_risk": 0.104,
+      "matched_keywords": [
+        "otp"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "165bd5becf148dcd641ef187ede794824ceeb52fcd855b3bc6b16a0fb5f7737c"
+  },
+  {
+    "index": 66,
+    "timestamp": "2026-09-09 16:20:21 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.226,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "Hello, I'm Utsav Jha. i went to sports good night",
+    "pillar_details": {
+      "voice_clone_risk": 0.4197412133216858,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "ecb45072b88f038a090ea0a3b02a8b84c463d27e62147f5d2ce77d33c0541b86"
+  },
+  {
+    "index": 65,
+    "timestamp": "2026-09-09 16:19:34 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.395,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello, this is Inspector from CBI. You're under digital arrest.",
+    "pillar_details": {
+      "voice_clone_risk": 0.21790894865989685,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.8,
+      "biometric_risk": 0.5,
+      "matched_keywords": [
+        "digital arrest",
+        "cbi"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "c0699c1950906bb3b74223f1e445c0201290f4bb6fa39cffc9d8de2229429719"
+  },
+  {
     "index": 64,
     "timestamp": "2026-09-09 16:09:13 UTC",
     "event_type": "LIVE_CALL_VERIFICATION",

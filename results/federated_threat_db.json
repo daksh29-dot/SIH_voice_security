@@ -1,5 +1,93 @@
 [
   {
+    "id": "THREAT-C20F5A",
+    "phone_number": "+91 22-67123984",
+    "reported_as": "Customs / FedEx Illegal Parcel Scam",
+    "risk_level": "CRITICAL",
+    "scam_type": "CUSTOMS_PARCEL_FEDEX",
+    "voice_signature_hash": "40068f13035737377557784c4ba10415",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-9F2935",
+    "phone_number": "+91 9845012345",
+    "reported_as": "Voice Cloned Relative SOS Emergency",
+    "risk_level": "CRITICAL",
+    "scam_type": "URGENT_FAMILY_SOS",
+    "voice_signature_hash": "ad4664910c384240bb1402228e0baeca",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-1FD3AC",
+    "phone_number": "+91 11-23459812",
+    "reported_as": "CBI / Police Digital Arrest Extortion",
+    "risk_level": "CRITICAL",
+    "scam_type": "DIGITAL_ARREST_CBI",
+    "voice_signature_hash": "52a65051d41d451e1e3f1ffb4222bce5",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-4C4A28",
+    "phone_number": "+91 22-67123984",
+    "reported_as": "Customs / FedEx Illegal Parcel Scam",
+    "risk_level": "CRITICAL",
+    "scam_type": "CUSTOMS_PARCEL_FEDEX",
+    "voice_signature_hash": "f1b396ba0cbea4ed49bf4fa2e316dce7",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-1E621D",
+    "phone_number": "+91 9845012345",
+    "reported_as": "Voice Cloned Relative SOS Emergency",
+    "risk_level": "CRITICAL",
+    "scam_type": "URGENT_FAMILY_SOS",
+    "voice_signature_hash": "5bcb74f4ccff627cee79bf35634b7c35",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-F1A965",
+    "phone_number": "+91 9823411092",
+    "reported_as": "Bank Account KYC & OTP Theft",
+    "risk_level": "CRITICAL",
+    "scam_type": "BANK_KYC_OTP_THEFT",
+    "voice_signature_hash": "a06e84a328c8dad543c8905e4f45f7cc",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-E25EF5",
+    "phone_number": "+91 22-67123984",
+    "reported_as": "Customs / FedEx Illegal Parcel Scam",
+    "risk_level": "CRITICAL",
+    "scam_type": "CUSTOMS_PARCEL_FEDEX",
+    "voice_signature_hash": "278a1bce8f3e4ede308f49f14e821c30",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-E2E057",
+    "phone_number": "+91 9823411092",
+    "reported_as": "Bank Account KYC & OTP Theft",
+    "risk_level": "CRITICAL",
+    "scam_type": "BANK_KYC_OTP_THEFT",
+    "voice_signature_hash": "9888564e6a9b07c252b52d356ea4e871",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
     "id": "THREAT-4A6BDA",
     "phone_number": "+91 11-23459812",
     "reported_as": "CBI / Police Digital Arrest Extortion",

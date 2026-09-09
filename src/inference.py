@@ -38,7 +38,12 @@ class VoiceSpoofDetector:
     """
 
     def __init__(self, model_name: str = config.MODEL_NAME):
-        self.model = Wav2Vec2SpoofDetector(model_name)
+        if "aasist" in str(model_name).lower():
+            from aasist_onnx import AasistOnnxModel
+            print(f"[*] Initializing ultra-lightweight AASIST-L (85k parameters) from {config.MODEL_PATH}")
+            self.model = AasistOnnxModel(config.MODEL_PATH)
+        else:
+            self.model = Wav2Vec2SpoofDetector(model_name)
 
     def analyze(self, audio_path: str | Path) -> InferenceResult:
         audio_path = str(audio_path)
