@@ -40,6 +40,7 @@ let recordSeconds = 0;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', async () => {
+    initTheme();
     initNavigation();
     initParticleCanvas();
     startWaveformLoop();
@@ -48,6 +49,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupFileUpload();
     drawGauge(null);
 });
+
+// Theme Management (Dark / Light Mode)
+function initTheme() {
+    const saved = localStorage.getItem('visor-theme') || 'dark';
+    applyTheme(saved);
+}
+
+function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+}
+
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('visor-theme', theme);
+}
 
 // Navigation
 function initNavigation() {
@@ -686,12 +704,22 @@ function startWaveformLoop() {
         const w = canvas.width, h = canvas.height, cy = h / 2;
 
         ctx.beginPath();
-        ctx.lineWidth = 1.8;
+        ctx.lineWidth = 2.2;
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
         const grad = ctx.createLinearGradient(0, 0, w, 0);
-        grad.addColorStop(0, 'rgba(0,240,255,0.4)');
-        grad.addColorStop(0.5, 'rgba(123,47,247,0.9)');
-        grad.addColorStop(1, 'rgba(0,240,255,0.4)');
+        if (isLight) {
+            grad.addColorStop(0, 'rgba(0, 143, 36, 0.25)');
+            grad.addColorStop(0.5, 'rgba(0, 184, 46, 0.95)');
+            grad.addColorStop(1, 'rgba(0, 143, 36, 0.25)');
+            ctx.shadowColor = 'rgba(0, 143, 36, 0.35)';
+        } else {
+            grad.addColorStop(0, 'rgba(239, 192, 123, 0.25)');
+            grad.addColorStop(0.5, 'rgba(239, 192, 123, 0.95)');
+            grad.addColorStop(1, 'rgba(239, 192, 123, 0.25)');
+            ctx.shadowColor = 'rgba(239, 192, 123, 0.6)';
+        }
         ctx.strokeStyle = grad;
+        ctx.shadowBlur = 8;
 
         // If real headset mic audio analyser is available, draw real-time mic frequencies!
         if (liveMicActive && audioAnalyser && analyserDataArray) {
@@ -711,7 +739,7 @@ function startWaveformLoop() {
         }
 
         // Idle or Demo Audio sine animation
-        const amp = waveActive ? 22 : 6;
+        const amp = waveActive ? 24 : 7;
         for (let x = 0; x < w; x++) {
             const y = cy + Math.sin(x * 0.022 + phase) * amp + Math.sin(x * 0.048 + phase * 1.7) * (amp * 0.4);
             if (x === 0) ctx.moveTo(x, y);
@@ -731,13 +759,14 @@ function drawGauge(risk) {
     const w = canvas.width, h = canvas.height;
     const cx = w / 2, cy = h / 2;
     const r = Math.min(w, h) / 2 - 14;
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
 
     ctx.clearRect(0, 0, w, h);
 
     ctx.beginPath();
     ctx.arc(cx, cy, r, 0.75 * Math.PI, 2.25 * Math.PI);
     ctx.lineWidth = 12;
-    ctx.strokeStyle = 'rgba(255,255,255,0.07)';
+    ctx.strokeStyle = isLight ? 'rgba(0, 143, 36, 0.15)' : 'rgba(15, 52, 96, 0.4)';
     ctx.lineCap = 'round';
     ctx.stroke();
 
@@ -745,15 +774,12 @@ function drawGauge(risk) {
 
     const end = 0.75 * Math.PI + 1.5 * Math.PI * Math.min(1, Math.max(0.01, risk));
     const grad = ctx.createLinearGradient(0, h, w, 0);
-    if (risk >= 0.6) {
-        grad.addColorStop(0, '#f59e0b');
-        grad.addColorStop(1, '#ef4444');
-    } else if (risk >= 0.25) {
-        grad.addColorStop(0, '#10b981');
-        grad.addColorStop(1, '#f59e0b');
+    if (isLight) {
+        grad.addColorStop(0, '#00bf33');
+        grad.addColorStop(1, '#008f24');
     } else {
-        grad.addColorStop(0, '#00f0ff');
-        grad.addColorStop(1, '#10b981');
+        grad.addColorStop(0, '#0f3460');
+        grad.addColorStop(1, '#efc07b');
     }
 
     ctx.beginPath();
@@ -761,7 +787,10 @@ function drawGauge(risk) {
     ctx.lineWidth = 12;
     ctx.strokeStyle = grad;
     ctx.lineCap = 'round';
+    ctx.shadowColor = isLight ? 'rgba(0, 143, 36, 0.45)' : 'rgba(239, 192, 123, 0.55)';
+    ctx.shadowBlur = 10;
     ctx.stroke();
+    ctx.shadowBlur = 0;
 }
 
 // Actions
@@ -958,7 +987,8 @@ function initParticleCanvas() {
     }));
     function loop() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = 'rgba(0,240,255,0.35)';
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        ctx.fillStyle = isLight ? 'rgba(0, 143, 36, 0.40)' : 'rgba(239, 192, 123, 0.45)';
         pts.forEach(p => {
             p.x += p.vx; p.y += p.vy;
             if (p.x < 0) p.x = canvas.width;

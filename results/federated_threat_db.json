@@ -1,5 +1,27 @@
 [
   {
+    "id": "THREAT-086D3A",
+    "phone_number": "+91 9845012345",
+    "reported_as": "Voice Cloned Relative SOS Emergency",
+    "risk_level": "CRITICAL",
+    "scam_type": "URGENT_FAMILY_SOS",
+    "voice_signature_hash": "a6609fd65ab5588ca47a1add8c9672e9",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-7CC503",
+    "phone_number": "+91 11-23459812",
+    "reported_as": "CBI / Police Digital Arrest Extortion",
+    "risk_level": "CRITICAL",
+    "scam_type": "DIGITAL_ARREST_CBI",
+    "voice_signature_hash": "b97a3620aabd34e1881c0426c7a41406",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
     "id": "THREAT-1524E1",
     "phone_number": "+91 9845012345",
     "reported_as": "Voice Cloned Relative SOS Emergency",

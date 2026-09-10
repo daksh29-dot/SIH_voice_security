@@ -466,7 +466,7 @@ def pipeline_info():
 
 if __name__ == "__main__":
     print("\n" + "="*60)
-    print(" [!] VOICEGUARD AI -- SIH 4-PILLAR VOICE SECURITY SYSTEM")
+    print(" [!] VISOR -- TACTICAL VOICE INTELLIGENCE & SECURITY DEFENSE")
     print("="*60)
     print(f" [*] Model: {config.MODEL_NAME}")
     print(f" [*] Upload Directory: {UPLOAD_DIR}")
