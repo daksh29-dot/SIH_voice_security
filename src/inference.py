@@ -18,7 +18,8 @@ import _pathfix  # noqa: F401
 import config
 from audio_preprocessing import preprocess_audio
 from segment_audio import segment_waveform
-from model import Wav2Vec2SpoofDetector
+# from model import Wav2Vec2SpoofDetector
+from model import W2V2AASISTSpoofDetector
 from aggregation import aggregate
 from decision import decide, Decision
 
@@ -31,19 +32,29 @@ class InferenceResult:
     decision: Decision = Decision.UNCERTAIN
 
 
+# class VoiceSpoofDetector:
+#     """
+#     High-level pipeline object. Loads the model once, then can process
+#     any number of audio files via `analyze()`.
+#     """
+
+#     def __init__(self, model_name: str = config.MODEL_NAME):
+#         if "aasist" in str(model_name).lower():
+#             from aasist_onnx import AasistOnnxModel
+#             print(f"[*] Initializing ultra-lightweight AASIST-L (85k parameters) from {config.MODEL_PATH}")
+#             self.model = AasistOnnxModel(config.MODEL_PATH)
+#         else:
+#             from model import Wav2Vec2SpoofDetector
+#             self.model = Wav2Vec2SpoofDetector(model_name)
 class VoiceSpoofDetector:
     """
     High-level pipeline object. Loads the model once, then can process
     any number of audio files via `analyze()`.
     """
 
-    def __init__(self, model_name: str = config.MODEL_NAME):
-        if "aasist" in str(model_name).lower():
-            from aasist_onnx import AasistOnnxModel
-            print(f"[*] Initializing ultra-lightweight AASIST-L (85k parameters) from {config.MODEL_PATH}")
-            self.model = AasistOnnxModel(config.MODEL_PATH)
-        else:
-            self.model = Wav2Vec2SpoofDetector(model_name)
+    def __init__(self):
+        print(f"[*] Initializing W2V2-AASIST ONNX from {config.MODEL_PATH}")
+        self.model = W2V2AASISTSpoofDetector(config.MODEL_PATH)
 
     def analyze(self, audio_path: str | Path) -> InferenceResult:
         audio_path = str(audio_path)

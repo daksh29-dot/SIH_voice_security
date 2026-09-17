@@ -1,5 +1,60 @@
 [
   {
+    "id": "THREAT-F97382",
+    "phone_number": "+91 9845012345",
+    "reported_as": "Voice Cloned Relative SOS Emergency",
+    "risk_level": "CRITICAL",
+    "scam_type": "URGENT_FAMILY_SOS",
+    "voice_signature_hash": "60609ac81cfec64dd94218c865de2163",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-9414C6",
+    "phone_number": "+91 9845012345",
+    "reported_as": "Voice Cloned Relative SOS Emergency",
+    "risk_level": "CRITICAL",
+    "scam_type": "URGENT_FAMILY_SOS",
+    "voice_signature_hash": "35bf099e0ab59dabdc2b6c52889471d0",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-B6BB18",
+    "phone_number": "+91 9845012345",
+    "reported_as": "Voice Cloned Relative SOS Emergency",
+    "risk_level": "CRITICAL",
+    "scam_type": "URGENT_FAMILY_SOS",
+    "voice_signature_hash": "523bd17494b634822fdd831cf6c81ba0",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-7DF72F",
+    "phone_number": "+91 9845012345",
+    "reported_as": "Voice Cloned Relative SOS Emergency",
+    "risk_level": "CRITICAL",
+    "scam_type": "URGENT_FAMILY_SOS",
+    "voice_signature_hash": "f595dc92b283aae3c231dea084eed543",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
+    "id": "THREAT-659CA8",
+    "phone_number": "+91 9845012345",
+    "reported_as": "Voice Cloned Relative SOS Emergency",
+    "risk_level": "CRITICAL",
+    "scam_type": "URGENT_FAMILY_SOS",
+    "voice_signature_hash": "ca795d0dbc3a70e929ec789d185b244e",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
     "id": "THREAT-086D3A",
     "phone_number": "+91 9845012345",
     "reported_as": "Voice Cloned Relative SOS Emergency",

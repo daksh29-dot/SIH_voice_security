@@ -48,3 +48,6 @@ Thumbs.db
 # ==============================
 *.tmp
 *.temp
+
+
+models/w2v2-aasist.onnx

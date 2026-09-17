@@ -12,8 +12,11 @@ from pathlib import Path
 # ---------------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parent
 
-MODEL_PATH = PROJECT_ROOT / "models" / "aasist-l.onnx"  # Legacy, kept for reference
-MODEL_NAME = "garystafford/wav2vec2-deepfake-voice-detector"
+# MODEL_PATH = PROJECT_ROOT / "models" / "aasist-l.onnx"  # Legacy, kept for reference
+# MODEL_NAME = "garystafford/wav2vec2-deepfake-voice-detector"
+MODEL_PATH = PROJECT_ROOT / "models" / "w2v2-aasist.onnx"
+MODEL_TYPE = "w2v2-aasist-onnx"
+
 
 TEST_AUDIO_DIR = PROJECT_ROOT / "test_audio"
 REAL_AUDIO_DIR = TEST_AUDIO_DIR / "real"
@@ -40,8 +43,8 @@ FIXED_WINDOW_SAMPLES = 64600
 
 # Upstream clovaai/aasist eval convention: audio >= 64600 -> first 64600
 # samples; audio < 64600 -> tile-repeat to fill. Keep False for baseline.
-USE_SLIDING_WINDOWS = False
-SEGMENT_OVERLAP_SECONDS = 0.0
+USE_SLIDING_WINDOWS = True
+SEGMENT_OVERLAP_SECONDS = 2.0
 
 # ---------------------------------------------------------------------------
 # Aggregation

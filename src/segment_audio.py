@@ -16,10 +16,29 @@ import _pathfix  # noqa: F401
 import config
 
 
-def pad_fixed(waveform: np.ndarray, window_samples: int = config.FIXED_WINDOW_SAMPLES) -> np.ndarray:
-    """Take first `window_samples` samples, or tile-repeat if audio is shorter."""
+# def pad_fixed(waveform: np.ndarray, window_samples: int = config.FIXED_WINDOW_SAMPLES) -> np.ndarray:
+#     """Take first `window_samples` samples, or tile-repeat if audio is shorter."""
+#     if waveform.ndim != 1:
+#         raise ValueError(f"Expected 1D mono waveform, got shape {waveform.shape}")
+
+#     waveform = waveform.astype(np.float32)
+#     n = waveform.shape[0]
+
+#     if n >= window_samples:
+#         return waveform[:window_samples]
+
+#     reps = window_samples // n + 1
+#     return np.tile(waveform, reps)[:window_samples].astype(np.float32)
+def pad_fixed(waveform, window_samples=64600):
+    """
+    Convert any audio shorter than the model window into exactly
+    window_samples using zero-padding.
+
+    Long audio is NOT truncated here.
+    Long audio should be handled by segment_audio().
+    """
     if waveform.ndim != 1:
-        raise ValueError(f"Expected 1D mono waveform, got shape {waveform.shape}")
+        raise ValueError("Expected mono 1D waveform")
 
     waveform = waveform.astype(np.float32)
     n = waveform.shape[0]
@@ -27,9 +46,10 @@ def pad_fixed(waveform: np.ndarray, window_samples: int = config.FIXED_WINDOW_SA
     if n >= window_samples:
         return waveform[:window_samples]
 
-    reps = window_samples // n + 1
-    return np.tile(waveform, reps)[:window_samples].astype(np.float32)
+    padded = np.zeros(window_samples, dtype=np.float32)
+    padded[:n] = waveform
 
+    return padded
 
 def segment_waveform_sliding(
     waveform: np.ndarray,

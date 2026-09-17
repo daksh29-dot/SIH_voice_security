@@ -1,5 +1,351 @@
 [
   {
+    "index": 109,
+    "timestamp": "2026-09-17 11:16:34 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999996,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: yashveer-clone-1788962405365.mp3",
+    "pillar_details": {
+      "voice_clone_score": 0.999996
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "e8e4a9df4a934cbc3f3aa021e0c128937cf432d5ddf54bd2a4483ecafdf5c571"
+  },
+  {
+    "index": 108,
+    "timestamp": "2026-09-17 11:16:22 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999998,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_5932896.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.999998
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "2e029a1de4e489cc549faa2503041002171edc4d014c1c4d7af18cd1d769ed5c"
+  },
+  {
+    "index": 107,
+    "timestamp": "2026-09-17 11:16:11 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999998,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_1837629.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.999998
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "6b4243b5614cc1f80ffaaef5b61a9f0fa0153a8f4eb68a84f6c7861cc0382a2c"
+  },
+  {
+    "index": 106,
+    "timestamp": "2026-09-17 11:15:58 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 1e-06,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: real_06.flac",
+    "pillar_details": {
+      "voice_clone_score": 1e-06
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "a94b3355ffa461a7411e38339541a5fcf5d29d56350953c77d582fbe2e9fb2b3"
+  },
+  {
+    "index": 105,
+    "timestamp": "2026-09-17 11:15:45 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 7e-06,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: real_03.flac",
+    "pillar_details": {
+      "voice_clone_score": 7e-06
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "1fcf358db2744b5197634d2f5dcc44b848baf5147221dcfb79631e38a5e2fc88"
+  },
+  {
+    "index": 104,
+    "timestamp": "2026-09-10 06:39:21 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.92771,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: real_05.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.92771
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "9a94fbb935050dc62a7cb8b512ad0658ac8549bdf5e9b0425bee1135ee620715"
+  },
+  {
+    "index": 103,
+    "timestamp": "2026-09-10 06:39:13 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.987372,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_1837629.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.987372
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "a8e03a9ed7f3455a95f034124d871713311b2a85319a10b5d13c50f087fc8f9b"
+  },
+  {
+    "index": 102,
+    "timestamp": "2026-09-10 06:39:02 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.997025,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_4557471.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.997025
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "557277ee53b8f05239f136439faf6742ecfecd8c0920a9a2d70e69cc6f92d1bd"
+  },
+  {
+    "index": 101,
+    "timestamp": "2026-09-10 06:36:53 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.175,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "Hello, I am the principal of the school and your board hasn't deployed the fees.",
+    "pillar_details": {
+      "voice_clone_risk": 0.275196373462677,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "27919e0b5090edc0044d8415accf44edd0e5c58013839d3c0a09b61f5b7450fd"
+  },
+  {
+    "index": 100,
+    "timestamp": "2026-09-10 06:35:56 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.291,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello, this is Inspector Rathore from CBI. You are under digital arrest.",
+    "pillar_details": {
+      "voice_clone_risk": 0.09369739145040512,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.8,
+      "biometric_risk": 0.097,
+      "matched_keywords": [
+        "cbi",
+        "digital arrest"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "0bbddf7c4ee29ddb40ca098b063e04098119952601f785de401a5f5638a903ef"
+  },
+  {
+    "index": 99,
+    "timestamp": "2026-09-10 06:15:47 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9845012345",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "URGENT_FAMILY_SOS",
+    "transcript_snippet": "Papa, police ne pakad liya hai mujhe. Accident ho gaya car se. Hospital me hu, bail money chahiye fifty thousand rupees emergency. Please kisi ko mat ",
+    "pillar_details": {
+      "voice_clone_risk": 0.99,
+      "caller_cli_risk": 0.2,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.848,
+      "matched_keywords": [
+        "police",
+        "police ne pakad liya",
+        "hospital me hu",
+        "accident ho gaya",
+        "bail money"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "60609ac81cfec64dd94218c865de2163a5f9757e23bdcea17704354752da87c8"
+  },
+  {
+    "index": 98,
+    "timestamp": "2026-09-10 06:15:19 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9845012345",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "URGENT_FAMILY_SOS",
+    "transcript_snippet": "Papa, police ne pakad liya hai mujhe. Accident ho gaya car se. Hospital me hu, bail money chahiye fifty thousand rupees emergency. Please kisi ko mat ",
+    "pillar_details": {
+      "voice_clone_risk": 0.99,
+      "caller_cli_risk": 0.2,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.848,
+      "matched_keywords": [
+        "police",
+        "police ne pakad liya",
+        "hospital me hu",
+        "accident ho gaya",
+        "bail money"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "35bf099e0ab59dabdc2b6c52889471d0bcb2c732a6baaa00c8fe8b96df4be2f7"
+  },
+  {
+    "index": 97,
+    "timestamp": "2026-09-10 06:15:00 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9845012345",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "URGENT_FAMILY_SOS",
+    "transcript_snippet": "Papa, police ne pakad liya hai mujhe. Accident ho gaya car se. Hospital me hu, bail money chahiye fifty thousand rupees emergency. Please kisi ko mat ",
+    "pillar_details": {
+      "voice_clone_risk": 0.99,
+      "caller_cli_risk": 0.2,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.848,
+      "matched_keywords": [
+        "police",
+        "police ne pakad liya",
+        "hospital me hu",
+        "accident ho gaya",
+        "bail money"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "523bd17494b634822fdd831cf6c81ba082768a1e4b81707f660e7f930f9e4a46"
+  },
+  {
+    "index": 96,
+    "timestamp": "2026-09-10 06:14:47 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9845012345",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "URGENT_FAMILY_SOS",
+    "transcript_snippet": "Papa, police ne pakad liya hai mujhe. Accident ho gaya car se. Hospital me hu, bail money chahiye fifty thousand rupees emergency. Please kisi ko mat ",
+    "pillar_details": {
+      "voice_clone_risk": 0.99,
+      "caller_cli_risk": 0.2,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.848,
+      "matched_keywords": [
+        "police",
+        "police ne pakad liya",
+        "hospital me hu",
+        "accident ho gaya",
+        "bail money"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "f595dc92b283aae3c231dea084eed543115f25f13e1b37a61881eb562c62609f"
+  },
+  {
+    "index": 95,
+    "timestamp": "2026-09-10 06:14:33 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.988092,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_2775552.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.988092
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "bae097c7743c541c7dd8f100822f721834cd03ce46209c456221fb27c7043245"
+  },
+  {
+    "index": 94,
+    "timestamp": "2026-09-10 06:14:23 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.091152,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: LA_E_5323454.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.091152
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "0a7967806cf42c4213c107ab037c48681c908e3aff003fb9f844435eeabd72cd"
+  },
+  {
+    "index": 93,
+    "timestamp": "2026-09-10 05:10:02 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.219154,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: LA_E_4581379.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.219154
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "192d64c81d63bae5e0c9f614479d421c09a33624e8dd12fa6633b7da5197d538"
+  },
+  {
+    "index": 92,
+    "timestamp": "2026-09-10 05:09:51 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.219154,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: LA_E_4581379.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.219154
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "fb274df8889a0b30f201b27d32c95d253b14d9fb4bc7608d244d32f35fdda2f9"
+  },
+  {
+    "index": 91,
+    "timestamp": "2026-09-10 05:09:16 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9845012345",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "URGENT_FAMILY_SOS",
+    "transcript_snippet": "Papa, police ne pakad liya hai mujhe. Accident ho gaya car se. Hospital me hu, bail money chahiye fifty thousand rupees emergency. Please kisi ko mat ",
+    "pillar_details": {
+      "voice_clone_risk": 0.99,
+      "caller_cli_risk": 0.2,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.848,
+      "matched_keywords": [
+        "police ne pakad liya",
+        "bail money",
+        "hospital me hu",
+        "accident ho gaya",
+        "police"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "ca795d0dbc3a70e929ec789d185b244eba5e97bce97d50e48bd657d7d24176b3"
+  },
+  {
     "index": 90,
     "timestamp": "2026-09-09 19:48:10 UTC",
     "event_type": "LIVE_CALL_VERIFICATION",
