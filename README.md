@@ -1,3 +1,7 @@
+model onnx download
+https://huggingface.co/SpeechAntiSpoofingBenchmarks/W2V2-AASIST/blob/main/w2v2-aasist.onnx
+
+
 # 🛡️ VoiceGuard AI — Multi-Modal Voice Deepfake & Scam Defense System
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
