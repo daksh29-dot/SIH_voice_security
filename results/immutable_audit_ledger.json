@@ -1,5 +1,20 @@
 [
   {
+    "index": 110,
+    "timestamp": "2026-09-18 17:42:44 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999996,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: yashveer-clone-1788962405365.mp3",
+    "pillar_details": {
+      "voice_clone_score": 0.999996
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "59f24ee0d5a2ee184a17c93e4e16837f3d1f63ca3e8df469fae0eb2a03554554"
+  },
+  {
     "index": 109,
     "timestamp": "2026-09-17 11:16:34 UTC",
     "event_type": "AUDIO_FILE_ANALYSIS",
