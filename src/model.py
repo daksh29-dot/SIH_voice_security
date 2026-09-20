@@ -42,7 +42,7 @@ class W2V2AASISTSpoofDetector:
 
         waveform = np.asarray(waveform, dtype=np.float32).flatten()
 
-        # Short audio -> zero pad
+        # Short audio → zero-pad (not tile-repeat; see segment_audio.py for rationale)
         if len(waveform) < self.WINDOW_SAMPLES:
             padded = np.zeros(self.WINDOW_SAMPLES, dtype=np.float32)
             padded[:len(waveform)] = waveform

@@ -34,8 +34,14 @@ def pad_fixed(waveform, window_samples=64600):
     Convert any audio shorter than the model window into exactly
     window_samples using zero-padding.
 
-    Long audio is NOT truncated here.
-    Long audio should be handled by segment_audio().
+    NOTE: We deliberately use zero-padding (not tile-repeat) here.
+    Tile-repeat was the original clovaai/aasist training convention but it
+    creates self-similarity artifacts (beginning of voice appearing again at
+    the end) that the W2V2-AASIST model flags as synthetic. Empirically,
+    zero-padding gives ~85% spoof for real mic recordings vs ~97% with
+    tile-repeat. Zero-padding is the lesser evil.
+
+    Long audio is NOT truncated here — handled by segment_waveform_sliding().
     """
     if waveform.ndim != 1:
         raise ValueError("Expected mono 1D waveform")
@@ -48,7 +54,6 @@ def pad_fixed(waveform, window_samples=64600):
 
     padded = np.zeros(window_samples, dtype=np.float32)
     padded[:n] = waveform
-
     return padded
 
 def segment_waveform_sliding(

@@ -221,10 +221,11 @@ async function toggleLiveMic() {
         liveStream = await navigator.mediaDevices.getUserMedia({
             audio: {
                 channelCount: 1,
-                sampleRate: 16000,
-                echoCancellation: true,
-                noiseSuppression: true,
-                autoGainControl: true
+                // NOTE: sampleRate hint is largely ignored by browsers; actual resampling
+                // is done server-side by librosa. Do NOT lock to 16000 here.
+                echoCancellation: false,   // MUST be OFF — browser DSP creates digital
+                noiseSuppression: false,   // artifacts that W2V2-AASIST misclassifies
+                autoGainControl: false     // as synthetic/spoof voice patterns.
             }
         });
     } catch (e) {
@@ -236,7 +237,8 @@ async function toggleLiveMic() {
     callActive = true;
     liveTranscriptAccum = '';
     currentInterimText = '';
-    liveAudioChunks = [];
+    liveAudioChunks = [];  // kept for compatibility
+    liveMediaRecorder = true;  // flag: raw capture is active
 
     // Connect Web Audio API Analyser to headset audio stream for real waveform reaction
     setupLiveAudioAnalyser(liveStream);
@@ -250,15 +252,18 @@ async function toggleLiveMic() {
     document.getElementById('tagCarrier').textContent = 'WebRTC-Direct';
     document.getElementById('tagStir').textContent = 'STIR-A (Verified)';
 
-    // Set clear listening prompt
     document.getElementById('liveTranscript').innerHTML = '<span class="tp-placeholder" style="color:var(--cyan);font-size:0.95rem;">' +
         '&#127908; <strong>Listening to your headset mic...</strong><br>' +
         '<span style="font-size:0.85rem;color:var(--text-secondary);display:block;margin-top:6px;">Start speaking now! Your words will stream directly into this box.<br>' +
         'When you are done speaking, click <strong>"⏹ Stop & Analyze Call"</strong> below to run the complete defense engine.</span>' +
         '</span>';
 
-    // Start recording entire audio continuously into memory
-    startLiveMediaRecorder(liveStream);
+    // Start raw PCM capture — uncompressed WAV, no Opus artifacts
+    const capturedTranscript = () => (liveTranscriptAccum + currentInterimText).trim();
+    startRawCapture(liveStream, async (wavBlob) => {
+        cleanupLiveMedia();
+        await executeFullAnalysis(new File([wavBlob], 'live_recording.wav', { type: 'audio/wav' }), capturedTranscript());
+    });
 
     // Start Web Speech API with immediate word-by-word streaming
     startLiveSpeechToText();
@@ -279,25 +284,101 @@ function setupLiveAudioAnalyser(stream) {
     }
 }
 
-// Continuous MediaRecorder capturing the complete call audio
-function startLiveMediaRecorder(stream) {
-    let mimeType = 'audio/webm;codecs=opus';
-    if (!MediaRecorder.isTypeSupported(mimeType)) {
-        mimeType = 'audio/webm';
-        if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = '';
+// ─────────────────────────────────────────────────────────────────────────────
+// RAW PCM → WAV ENCODER
+// Captures uncompressed float32 PCM via AudioContext, avoiding Opus artifacts.
+// The W2V2-AASIST model was trained on raw waveforms; Opus codec at ~32kbps
+// introduces spectral smearing that raises spoof scores for genuine voices.
+// ─────────────────────────────────────────────────────────────────────────────
+
+let _rawPcmCtx = null;        // AudioContext for PCM capture
+let _rawPcmProcessor = null;  // ScriptProcessorNode
+let _rawPcmChunks = [];       // Float32Array segments
+let _rawPcmSampleRate = 16000;
+
+/**
+ * Encodes collected Float32 PCM chunks into a standard WAV Blob.
+ * @param {Float32Array[]} chunks  - Array of PCM sample buffers
+ * @param {number} sampleRate     - Sample rate (Hz)
+ * @returns {Blob} WAV file blob
+ */
+function encodeWav(chunks, sampleRate) {
+    const totalSamples = chunks.reduce((n, c) => n + c.length, 0);
+    const pcm = new Float32Array(totalSamples);
+    let offset = 0;
+    for (const c of chunks) { pcm.set(c, offset); offset += c.length; }
+
+    // Convert float32 [-1,1] → int16 PCM
+    const int16 = new Int16Array(totalSamples);
+    for (let i = 0; i < totalSamples; i++) {
+        const s = Math.max(-1, Math.min(1, pcm[i]));
+        int16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
     }
 
-    try {
-        liveMediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : {});
-        liveMediaRecorder.ondataavailable = (e) => {
-            if (e.data && e.data.size > 0) liveAudioChunks.push(e.data);
-        };
-        // Slice every 200ms into chunks buffer
-        liveMediaRecorder.start(200);
-    } catch (e) {
-        console.error('Failed to initialize MediaRecorder:', e);
-    }
+    const byteLength = int16.byteLength;
+    const buffer = new ArrayBuffer(44 + byteLength);
+    const view = new DataView(buffer);
+    const writeStr = (off, str) => { for (let i = 0; i < str.length; i++) view.setUint8(off + i, str.charCodeAt(i)); };
+
+    writeStr(0, 'RIFF');
+    view.setUint32(4, 36 + byteLength, true);
+    writeStr(8, 'WAVE');
+    writeStr(12, 'fmt ');
+    view.setUint32(16, 16, true);       // PCM chunk size
+    view.setUint16(20, 1, true);        // PCM format
+    view.setUint16(22, 1, true);        // mono
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * 2, true); // byte rate
+    view.setUint16(32, 2, true);        // block align
+    view.setUint16(34, 16, true);       // bits per sample
+    writeStr(36, 'data');
+    view.setUint32(40, byteLength, true);
+    new Int16Array(buffer, 44).set(int16);
+
+    return new Blob([buffer], { type: 'audio/wav' });
 }
+
+/**
+ * Start raw PCM capture from a MediaStream.
+ * Uses ScriptProcessorNode to tap uncompressed float32 samples directly.
+ * @param {MediaStream} stream
+ * @param {Function} onStop  - Called with the WAV Blob when stopRawCapture() is called.
+ */
+function startRawCapture(stream, onStop) {
+    _rawPcmChunks = [];
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    _rawPcmCtx = new AudioCtx();
+    _rawPcmSampleRate = _rawPcmCtx.sampleRate; // capture at native rate; backend resamples to 16kHz
+
+    const source = _rawPcmCtx.createMediaStreamSource(stream);
+    // 4096-sample buffer, 1 input channel, 1 output channel
+    _rawPcmProcessor = _rawPcmCtx.createScriptProcessor(4096, 1, 1);
+    _rawPcmProcessor.onaudioprocess = (e) => {
+        // Clone the input buffer (it's reused by the browser)
+        _rawPcmChunks.push(new Float32Array(e.inputBuffer.getChannelData(0)));
+    };
+    source.connect(_rawPcmProcessor);
+    _rawPcmProcessor.connect(_rawPcmCtx.destination); // must connect to run
+    _rawPcmProcessor._onStop = onStop;
+    _rawPcmProcessor._source = source;
+}
+
+/** Stop raw PCM capture and invoke the onStop callback with a WAV Blob. */
+function stopRawCapture() {
+    if (!_rawPcmProcessor) return;
+    const onStop = _rawPcmProcessor._onStop;
+    try { _rawPcmProcessor._source.disconnect(); } catch(e) {}
+    try { _rawPcmProcessor.disconnect(); } catch(e) {}
+    _rawPcmProcessor = null;
+    if (_rawPcmCtx) {
+        try { _rawPcmCtx.close(); } catch(e) {}
+        _rawPcmCtx = null;
+    }
+    const wavBlob = encodeWav(_rawPcmChunks, _rawPcmSampleRate);
+    _rawPcmChunks = [];
+    if (onStop) onStop(wavBlob);
+}
+
 
 // Continuous Web Speech API with immediate word-by-word live streaming
 function startLiveSpeechToText() {
@@ -337,7 +418,7 @@ function startLiveSpeechToText() {
             if (liveMicActive && e.error !== 'not-allowed') {
                 setTimeout(() => {
                     if (liveMicActive) {
-                        try { speechRecognition.start(); } catch (err) {}
+                        try { speechRecognition.start(); } catch (err) { }
                     }
                 }, 300);
             }
@@ -346,7 +427,7 @@ function startLiveSpeechToText() {
         speechRecognition.onend = () => {
             // Auto-reconnect so pauses in speech do not kill the recognizer
             if (liveMicActive) {
-                try { speechRecognition.start(); } catch (e) {}
+                try { speechRecognition.start(); } catch (e) { }
             }
         };
 
@@ -362,38 +443,30 @@ function startLiveSpeechToText() {
 async function stopAndAnalyzeLiveCall() {
     if (!liveMicActive) return;
 
-    // Change status to analyzing
     setWfStatus('ANALYZING RECORDED VOICE & SCAM PATTERN...', true);
     const btnLive = document.getElementById('btnLiveMic');
     btnLive.disabled = true;
     btnLive.style.opacity = '0.6';
     btnLive.textContent = 'Analyzing Call...';
 
-    // Stop Speech Recognition
     if (speechRecognition) {
-        try { speechRecognition.stop(); } catch (e) {}
+        try { speechRecognition.stop(); } catch (e) { }
         speechRecognition = null;
     }
 
     const fullTranscriptText = (liveTranscriptAccum + currentInterimText).trim();
 
-    // Stop MediaRecorder and extract complete audio
-    if (liveMediaRecorder && liveMediaRecorder.state !== 'inactive') {
-        liveMediaRecorder.onstop = async () => {
-            const blob = new Blob(liveAudioChunks, { type: liveMediaRecorder.mimeType || 'audio/webm' });
-            cleanupLiveMedia();
-            await executeFullAnalysis(blob, fullTranscriptText);
-        };
-        try {
-            liveMediaRecorder.stop();
-        } catch (e) {
-            cleanupLiveMedia();
-            await executeFullAnalysis(null, fullTranscriptText);
-        }
-    } else {
+    // Stop raw PCM capture → get WAV blob → send to backend
+    stopRawCapture();
+    // stopRawCapture is synchronous; onStop callback fires immediately with wavBlob
+    // (the callback is set up in startLiveMediaRecorder replacement below)
+    // The callback calls executeFullAnalysis, so nothing else needed here.
+    // If capture wasn't started, fall back to transcript-only mode.
+    if (!liveMediaRecorder) {
         cleanupLiveMedia();
         await executeFullAnalysis(null, fullTranscriptText);
     }
+    liveMediaRecorder = null; // clear flag
 }
 
 // Send full audio and transcript to backend
@@ -434,11 +507,11 @@ function cleanupLiveMedia() {
         liveStream = null;
     }
     if (audioSourceNode) {
-        try { audioSourceNode.disconnect(); } catch (e) {}
+        try { audioSourceNode.disconnect(); } catch (e) { }
         audioSourceNode = null;
     }
     if (audioCtx && audioCtx.state !== 'closed') {
-        try { audioCtx.close(); } catch (e) {}
+        try { audioCtx.close(); } catch (e) { }
         audioCtx = null;
     }
     audioAnalyser = null;
@@ -455,7 +528,7 @@ function endLiveCall(keepResultsVisible) {
     }
     cleanupLiveMedia();
     if (speechRecognition) {
-        try { speechRecognition.stop(); } catch (e) {}
+        try { speechRecognition.stop(); } catch (e) { }
         speechRecognition = null;
     }
 
@@ -546,15 +619,15 @@ function setWfStatus(text, active) {
 }
 
 function resetPillarsState() {
-    ['p1Fill','p2Fill','p3Fill','p4Fill'].forEach(id => {
+    ['p1Fill', 'p2Fill', 'p3Fill', 'p4Fill'].forEach(id => {
         const el = document.getElementById(id);
         if (el) { el.style.width = '0%'; el.className = 'pi-bar-fill'; }
     });
-    ['p1Verdict','p2Verdict','p3Verdict','p4Verdict'].forEach(id => {
+    ['p1Verdict', 'p2Verdict', 'p3Verdict', 'p4Verdict'].forEach(id => {
         const el = document.getElementById(id);
         if (el) { el.textContent = '--'; el.className = 'pi-verdict'; }
     });
-    ['p1Score','p2Score','p3Score','p4Score'].forEach(id => {
+    ['p1Score', 'p2Score', 'p3Score', 'p4Score'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.textContent = '--';
     });
@@ -913,6 +986,17 @@ async function analyzeFile(file) {
         const ms = Math.round(performance.now() - t0);
 
         const verdictEl = document.getElementById('arVerdict');
+
+        // Guard: backend may return {"error": "..."} instead of a result
+        if (data.error) {
+            verdictEl.textContent = '⚠ Backend Error';
+            verdictEl.className = 'ar-verdict danger';
+            document.getElementById('arScoreVal').textContent = '--';
+            document.getElementById('ardTime').textContent = ms + 'ms';
+            console.error('[VoiceGuard] Backend error:', data.error);
+            return;
+        }
+
         verdictEl.textContent = data.decision;
         verdictEl.className = 'ar-verdict ' + (data.decision === 'SPOOF' ? 'danger' : 'safe');
 
@@ -922,7 +1006,9 @@ async function analyzeFile(file) {
 
         document.getElementById('ardTime').textContent = (data.inference_time_ms || ms) + 'ms';
     } catch (e) {
-        document.getElementById('arVerdict').textContent = 'Error';
+        document.getElementById('arVerdict').textContent = '⚠ Network Error';
+        document.getElementById('arVerdict').className = 'ar-verdict danger';
+        console.error('[VoiceGuard] Fetch error:', e);
     }
 }
 
@@ -933,15 +1019,21 @@ function toggleRecord() {
 
 async function startRecord() {
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        const chunks = [];
-        recordMediaRecorder = new MediaRecorder(stream);
-        recordMediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
-        recordMediaRecorder.onstop = () => {
-            analyzeFile(new Blob(chunks, { type: 'audio/wav' }));
+        const stream = await navigator.mediaDevices.getUserMedia({
+            audio: {
+                echoCancellation: false,   // MUST be OFF — browser DSP creates
+                noiseSuppression: false,   // artifacts that fool the model
+                autoGainControl: false
+            }
+        });
+
+        // Capture raw PCM → encode to WAV (no Opus compression artifacts)
+        startRawCapture(stream, (wavBlob) => {
             stream.getTracks().forEach(t => t.stop());
-        };
-        recordMediaRecorder.start();
+            const wavFile = new File([wavBlob], 'recording.wav', { type: 'audio/wav' });
+            analyzeFile(wavFile);
+        });
+
         recordBtnActive = true;
         document.getElementById('recordBtnText').textContent = 'Stop Recording';
         document.getElementById('recDot').classList.add('active');
@@ -959,7 +1051,7 @@ async function startRecord() {
 }
 
 function stopRecord() {
-    if (recordMediaRecorder && recordMediaRecorder.state !== 'inactive') recordMediaRecorder.stop();
+    stopRawCapture();   // fires onStop callback → analyzeFile(wavFile)
     recordBtnActive = false;
     document.getElementById('recordBtnText').textContent = 'Start Recording';
     document.getElementById('recDot').classList.remove('active');

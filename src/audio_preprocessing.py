@@ -35,15 +35,17 @@ def load_audio(path: str | Path) -> Tuple[np.ndarray, int]:
     if not path.exists():
         raise AudioLoadError(f"Audio file not found: {path}")
 
-    # Try librosa first for standard formats
-    if path.suffix.lower() not in ('.webm', '.ogg'):
-        try:
-            waveform, sample_rate = librosa.load(str(path), sr=None, mono=False)
+    # Try librosa first for ALL formats (librosa uses ffmpeg under the hood and
+    # handles WebM/Opus, OGG, WAV, MP3, FLAC, etc.). This is the preferred path
+    # because it preserves the native sample rate correctly.
+    try:
+        waveform, sample_rate = librosa.load(str(path), sr=None, mono=False)
+        if waveform is not None and len(waveform.flat) > 0:
             return waveform.astype(np.float32), sample_rate
-        except Exception:
-            pass
+    except Exception as librosa_err:
+        print(f"[!] librosa.load failed for {path.name}: {librosa_err}. Trying PyAV fallback...")
 
-    # PyAV fallback: handles WebM/Opus, OGG, and all media streams
+    # PyAV fallback: handles WebM/Opus, OGG, and all media streams that librosa misses
     try:
         import av
         container = av.open(str(path))
@@ -63,14 +65,15 @@ def load_audio(path: str | Path) -> Tuple[np.ndarray, int]:
             raise AudioLoadError(f"Empty audio decoded from {path}")
 
         waveform = np.concatenate(frames, axis=1).squeeze(0).astype(np.float32)
+        print(f"[+] PyAV decoded {path.name}: {len(waveform)} samples at {target_sr}Hz")
         return waveform, target_sr
-    except Exception as e:
-        # Final attempt: try librosa.load as last resort
-        try:
-            waveform, sample_rate = librosa.load(str(path), sr=None, mono=False)
-            return waveform.astype(np.float32), sample_rate
-        except Exception:
-            raise AudioLoadError(f"Failed to decode audio file {path}: {e}") from e
+    except ImportError:
+        raise AudioLoadError(
+            f"Cannot decode {path.name}: librosa failed and PyAV is not installed. "
+            f"Run: pip install av"
+        )
+    except Exception as av_err:
+        raise AudioLoadError(f"Failed to decode audio file {path}: {av_err}") from av_err
 
 
 

@@ -1,5 +1,140 @@
 [
   {
+    "index": 119,
+    "timestamp": "2026-09-20 16:30:36 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.895746,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: FineVoice_test_hello, this is Inspector Rathore fro_UTC_2026-09-20 16_26_42.mp3.mpeg",
+    "pillar_details": {
+      "voice_clone_score": 0.895746
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "c3cd0aabef56ed9212776f138d76594e8219547835d077e02c716c5344d99b80"
+  },
+  {
+    "index": 118,
+    "timestamp": "2026-09-20 16:29:04 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.99997,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: WhatsApp Audio 2026-09-20 at 9.56.15 PM.mpeg",
+    "pillar_details": {
+      "voice_clone_score": 0.99997
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "9bb7c7aa59ce0f676251ed323d51497b2baa881aaa8aacece5ca880e71c1a63b"
+  },
+  {
+    "index": 117,
+    "timestamp": "2026-09-20 16:19:24 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.849312,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: recording.wav",
+    "pillar_details": {
+      "voice_clone_score": 0.849312
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "1acfc87c1b95e3fc49b8396abc4b15e47e291f311de5124a9e8f279f9bc034eb"
+  },
+  {
+    "index": 116,
+    "timestamp": "2026-09-20 16:17:09 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999996,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: yashveer-clone-1788962405365.mp3",
+    "pillar_details": {
+      "voice_clone_score": 0.999996
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "f66cf78ecd4f5c2cc41ea18eb98615491706a3d103120079ad95482ee4c2ca4a"
+  },
+  {
+    "index": 115,
+    "timestamp": "2026-09-20 15:33:25 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.6448,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: recording.wav",
+    "pillar_details": {
+      "voice_clone_score": 0.6448
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "fe864265d5e5e71a6aa90dda6e9d5bf906561b5a640e4e4a70137694317c3e45"
+  },
+  {
+    "index": 114,
+    "timestamp": "2026-09-20 15:29:07 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.973828,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: recording.wav",
+    "pillar_details": {
+      "voice_clone_score": 0.973828
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "c75963f5cf0447ea44064976b00667ae8b6680d0347cac35737df62e0175c3dc"
+  },
+  {
+    "index": 113,
+    "timestamp": "2026-09-20 15:15:31 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.852686,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: recording.wav",
+    "pillar_details": {
+      "voice_clone_score": 0.852686
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "7fc63457b4e3841c7c3a8d26ea6ff4ef6bd9443a56dca583ffd14042eb305465"
+  },
+  {
+    "index": 112,
+    "timestamp": "2026-09-20 15:12:05 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.897302,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: recording.webm",
+    "pillar_details": {
+      "voice_clone_score": 0.897302
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "376ba15a3b264c4adec817af7a923ad87506f8822ec9d81ef175ebf156f5dc5a"
+  },
+  {
+    "index": 111,
+    "timestamp": "2026-09-19 16:12:09 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.99989,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: recording.webm",
+    "pillar_details": {
+      "voice_clone_score": 0.99989
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "7a219b77409b20da19c498053db2fc8333ef0cf31e8b168231c04f679bdd620f"
+  },
+  {
     "index": 110,
     "timestamp": "2026-09-18 17:42:44 UTC",
     "event_type": "AUDIO_FILE_ANALYSIS",
