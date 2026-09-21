@@ -9,6 +9,7 @@ dataset (test_audio/real, test_audio/spoof) and compute metrics.
 Writes:
     results/predictions.csv  — per-file scores and decisions
     results/metrics.json     — aggregate metrics (accuracy, F1, EER, etc.)
+    results/evaluation_results.xlsx — Excel version of predictions
 """
 
 import csv
@@ -18,6 +19,7 @@ from pathlib import Path
 from typing import List, Tuple
 
 import numpy as np
+import pandas as pd
 
 import _pathfix  # noqa: F401
 import config
@@ -110,6 +112,10 @@ def run_evaluation() -> dict:
         writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
         writer.writeheader()
         writer.writerows(rows)
+
+    # Save predictions to Excel
+    excel_path = config.RESULTS_DIR / "evaluation_results.xlsx"
+    pd.DataFrame(rows).to_excel(excel_path, index=False)
 
     metrics = compute_metrics(y_true, y_scores)
     metrics["avg_inference_time_s"] = round(total_time / max(len(rows), 1), 4)

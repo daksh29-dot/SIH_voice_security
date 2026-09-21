@@ -1,5 +1,180 @@
 [
   {
+    "index": 130,
+    "timestamp": "2026-09-21 13:44:42 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.895712,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: FineVoice_test_hello, this is Inspector Rathore fro_UTC_2026-09-20 16_26_42s.mp3",
+    "pillar_details": {
+      "voice_clone_score": 0.895712
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "9697dc4439f070b49fc1df541849b93aa45218a25ab795baec2b1dfe58981724"
+  },
+  {
+    "index": 129,
+    "timestamp": "2026-09-21 13:44:35 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.895712,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: FineVoice_test_hello, this is Inspector Rathore fro_UTC_2026-09-20 16_26_42s.mp3",
+    "pillar_details": {
+      "voice_clone_score": 0.895712
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "501d7d91c7cd88b58cc512c24c735fbff04523a17e2418555f56b146bb510f53"
+  },
+  {
+    "index": 128,
+    "timestamp": "2026-09-21 13:44:28 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999996,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: yashveer-clone-1788962405365.mp3",
+    "pillar_details": {
+      "voice_clone_score": 0.999996
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "59eb1061840d66fdcfa5fdaccaeeeb517f156bdb4e6b9e903024d31b832d83e4"
+  },
+  {
+    "index": 127,
+    "timestamp": "2026-09-21 13:44:17 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 2e-06,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: LA_E_6314733.flac",
+    "pillar_details": {
+      "voice_clone_score": 2e-06
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "81c59949841c7d97ee1363d262fe3cb163c5bcf68daac7d54fde15d6275fc025"
+  },
+  {
+    "index": 126,
+    "timestamp": "2026-09-21 13:40:19 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999997,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_2775552.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.999997
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "768bfc9728f7cf61b012aaa9484f4fef909fa66c7f3b3f7294d3f480e9211f20"
+  },
+  {
+    "index": 125,
+    "timestamp": "2026-09-21 13:40:07 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.895712,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: FineVoice_test_hello, this is Inspector Rathore fro_UTC_2026-09-20 16_26_42s.mp3",
+    "pillar_details": {
+      "voice_clone_score": 0.895712
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "adf4c5bde90701e5a5eb991efb30fa1f187c11568c1cc3b2ff85b514dbfcdde4"
+  },
+  {
+    "index": 124,
+    "timestamp": "2026-09-21 12:28:31 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.895746,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: FineVoice_test_hello, this is Inspector Rathore fro_UTC_2026-09-20 16_26_42s.mp3",
+    "pillar_details": {
+      "voice_clone_score": 0.895746
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "157691e60980c3973357399f99daba8529f6956335a3d0df03fa4a2578725045"
+  },
+  {
+    "index": 123,
+    "timestamp": "2026-09-21 12:28:17 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999996,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: yashveer-clone-1788962405365.mp3",
+    "pillar_details": {
+      "voice_clone_score": 0.999996
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "7741f413ebd112edc847b545e00ac0fc42f3d00201eb2b109eb5c4052105d986"
+  },
+  {
+    "index": 122,
+    "timestamp": "2026-09-21 12:28:03 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999998,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_5932896.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.999998
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "84d5b4c5445c5adba1a4c885a181f24ca97a009ef2f9f8d632eada208377734e"
+  },
+  {
+    "index": 121,
+    "timestamp": "2026-09-21 12:26:52 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9988776655",
+    "composite_risk": 0.027,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 1.9610669234663788e-07,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.05,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "d4e4d492f97e3bb3702fb4faee798830887948abe9ceb88733e11a1450544785"
+  },
+  {
+    "index": 120,
+    "timestamp": "2026-09-21 12:26:18 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9823411092",
+    "composite_risk": 0.722,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "BANK_KYC_OTP_THEFT",
+    "transcript_snippet": "Dear customer, your State Bank of India Net Banking KYC has expired today. Your bank account will be frozen within two hours. Please share the six dig",
+    "pillar_details": {
+      "voice_clone_risk": 0.92,
+      "caller_cli_risk": 0.55,
+      "scam_words_risk": 0.55,
+      "biometric_risk": 0.834,
+      "matched_keywords": [
+        "otp"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "e8495c633d912c159780bda4ab9bdd3abde47a380662c832ad1ec45cee66f310"
+  },
+  {
     "index": 119,
     "timestamp": "2026-09-20 16:30:36 UTC",
     "event_type": "AUDIO_FILE_ANALYSIS",

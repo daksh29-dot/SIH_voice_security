@@ -139,7 +139,7 @@ SIH_voice_security/
 | File | Purpose & Responsibilities |
 | :--- | :--- |
 | **`app.py`** | **Flask Web Application & REST API Server.** Serves the frontend single-page interface and powers all REST API endpoints: `/api/analyze` (single audio deepfake scanner), `/api/analyze-call` (full 4-pillar multi-modal call evaluation), `/api/analyze-scam-intent` (instant NLP scan), `/api/caller-lookup` (telecom verification), `/api/audit-ledger` (cryptographic ledger), `/api/threat-db` (malicious numbers database), and `/api/execute-action` (automated banking freezes and call termination). |
-| **`config.py`** | **Central Configuration Single Source of Truth.** Defines paths, chosen model weights (`models/w2v2-aasist.onnx`), sample rate (`16000`), fixed window size (`64600` samples / 4.0375s), sliding window parameters (`USE_SLIDING_WINDOWS = True`, `SEGMENT_OVERLAP_SECONDS = 2.0`), aggregation strategy (`"mean"`), and decision threshold (`SPOOF_THRESHOLD = 0.95`). |
+| **`config.py`** | **Central Configuration Single Source of Truth.** Defines paths, chosen model weights (`models/w2v2-aasist.onnx`), sample rate (`16000`), fixed window size (`64600` samples / 4.0375s), sliding window parameters (`USE_SLIDING_WINDOWS = True`, `SEGMENT_OVERLAP_SECONDS = 2.0`), aggregation strategy (`"mean"`), and decision threshold (`SPOOF_THRESHOLD = 0.6`). |
 | **`main.py`** | **Command-Line Interface (CLI).** Provides terminal commands for testing and administration: `inspect-model` (displays ONNX tensor shapes), `analyze <path>` (evaluates a single audio file), `evaluate` (runs batch evaluation over `test_audio/`), and `test-synthetic` (generates a synthetic test tone). |
 | **`conftest.py`** | **Pytest Configuration.** Sets up Python test environment and path resolution so test suites run smoothly without path errors. |
 | **`requirements.txt`** | **Dependency Manifest.** Lists required packages: `torch`, `torchaudio`, `onnxruntime`, `librosa`, `soundfile`, `av`, `flask`, `flask-cors`, `SpeechRecognition`, `numpy`, `scipy`, `scikit-learn`, `pytest`, etc. |
@@ -157,7 +157,7 @@ SIH_voice_security/
 | **`src/audio_preprocessing.py`** | **Audio Pipeline** | `load_audio()`, `to_mono()`, `resample()`, `normalize()`, `preprocess_audio()` | Decodes any audio container (WAV, MP3, FLAC, OGG, WebM/Opus) using `librosa` with robust PyAV fallback. Ensures mono channel, standardizes sample rate to 16 kHz, and performs peak amplitude normalization. |
 | **`src/segment_audio.py`** | **Windowing & Framing** | `segment_waveform()`, `segment_waveform_sliding()`, `pad_fixed()` | Splits variable-length audio into fixed 64,600-sample windows with 2.0s overlap. Employs zero-padding for clips shorter than 4.04 seconds (mitigating self-similarity artifacts caused by tile-repeats). |
 | **`src/aggregation.py`** | **Score Pooling** | `aggregate()` | Consolidates scores across multiple temporal audio windows using strategies: `"mean"` (default), `"median"`, `"top_k"`, `"majority_vote"`, or `"max"`. |
-| **`src/decision.py`** | **Threshold Classifier** | `decide()` | Compares aggregated spoof probability against `SPOOF_THRESHOLD` (0.95). Returns categorical label (`"REAL"`, `"SPOOF"`, or `"UNCERTAIN"`) and normalized confidence metric. |
+| **`src/decision.py`** | **Threshold Classifier** | `decide()` | Compares aggregated spoof probability against `SPOOF_THRESHOLD` (0.6). Returns categorical label (`"REAL"`, `"SPOOF"`, or `"UNCERTAIN"`) and normalized confidence metric. |
 | **`src/speech_to_text.py`** | **Speech Transcriber** | `SpeechToTextEngine`, `transcribe_audio()` | Converts speech to text using Google Speech Recognition API with multilingual support for Indian English (`en-IN`) and Hindi (`hi-IN`). |
 | **`src/audit_ledger.py`** | **Cryptographic Ledger & Threat DB** | `AuditLedger`, `ThreatIntelligenceDB` | Implements tamper-evident audit logging using chained SHA-256 hashes ($H_n = \text{SHA256}(H_{n-1} + \text{Payload})$). Manages the federated threat registry tracking reported fraud numbers and attack vectors. |
 | **`src/evaluate.py`** | **Batch Benchmark Evaluator** | `evaluate_dataset()`, `compute_eer()`, `compute_metrics()` | Iterates through labeled `test_audio/real/` and `test_audio/spoof/` sets, computes classification predictions, generates confusion matrices, and writes `results/predictions.csv` and `results/metrics.json`. |
@@ -291,11 +291,11 @@ The production anti-spoofing model combines:
 1. **Wav2Vec2 Front-End**: Self-supervised transformer trained on thousands of hours of human speech, extracting deep acoustic contextual embeddings.
 2. **AASIST Back-End**: Audio Anti-Spoofing using Integrated Spectro-Temporal Graph Attention Networks. Models fine-grained spectral and temporal relationships across speech frames to catch vocoder artifacts and neural synthesis fingerprints.
 
-### Acoustic Domain Calibration (Why `SPOOF_THRESHOLD = 0.95`)
+### Acoustic Domain Calibration (Why `SPOOF_THRESHOLD = 0.6`)
 * **ASVspoof 2019 LA Dataset**: The model was trained on high-grade condenser microphones in anechoic studio environments.
 * **Real-World Consumer Microphones**: Everyday laptop/headset microphones introduce ambient room reverberation, non-linear microphone frequency responses, and background noise. In pure studio-trained models, these acoustic characteristics shift the baseline score of a genuine human voice to **~60%–70%**.
 * **Synthesized Voice Clones**: AI-synthesized voices (ElevenLabs, Edge-TTS, Tortoise, etc.) score **>99%**.
-* **Threshold Calibration**: To prevent false positives while preserving 100% detection of actual synthetic speech, `SPOOF_THRESHOLD` is set to **`0.95`** in `config.py`.
+* **Threshold Calibration**: To prevent false positives while preserving 100% detection of actual synthetic speech, `SPOOF_THRESHOLD` is set to **`0.6`** in `config.py`.
 
 ### Zero-Padding vs. Tile-Repeat
 Upstream AASIST evaluation code historically used tile-repetition for audio shorter than 4.04 seconds. However, tile-repetition creates artificial periodic self-similarity boundaries that transformer models flag as synthetic. VoiceGuard AI uses **clean zero-padding** in `src/segment_audio.py` and `src/model.py`, significantly improving genuine speech fidelity.

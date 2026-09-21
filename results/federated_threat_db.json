@@ -1,5 +1,16 @@
 [
   {
+    "id": "THREAT-B2858C",
+    "phone_number": "+91 9823411092",
+    "reported_as": "Bank Account KYC & OTP Theft",
+    "risk_level": "CRITICAL",
+    "scam_type": "BANK_KYC_OTP_THEFT",
+    "voice_signature_hash": "e8495c633d912c159780bda4ab9bdd3a",
+    "flagged_count": 1,
+    "status": "ACTIVE_BLACKLIST",
+    "last_seen": "Just now"
+  },
+  {
     "id": "THREAT-F97382",
     "phone_number": "+91 9845012345",
     "reported_as": "Voice Cloned Relative SOS Emergency",

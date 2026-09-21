@@ -1,19 +1,19 @@
 {
-  "accuracy": 1.0,
+  "accuracy": 0.869,
   "precision": 1.0,
-  "recall": 1.0,
-  "f1": 1.0,
-  "eer": 0.0,
+  "recall": 0.7381,
+  "f1": 0.8493,
+  "eer": 0.0429,
   "false_positive_rate": 0.0,
-  "false_negative_rate": 0.0,
-  "threshold_used": 0.5,
+  "false_negative_rate": 0.2619,
+  "threshold_used": 0.6,
   "aggregation_strategy": "mean",
   "confusion_matrix": {
-    "tp": 10,
-    "tn": 10,
+    "tp": 155,
+    "tn": 210,
     "fp": 0,
-    "fn": 0
+    "fn": 55
   },
-  "avg_inference_time_s": 0.3903,
-  "num_files": 20
+  "avg_inference_time_s": 0.1049,
+  "num_files": 420
 }

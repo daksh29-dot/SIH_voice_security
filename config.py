@@ -60,7 +60,7 @@ TOP_K = 3
 # Model outputs logits[:, 1] = bona fide (higher = more real). aasist_onnx.py
 # converts this to a spoof probability so "higher = more spoof-like" holds
 # throughout the pipeline.
-SPOOF_THRESHOLD = 0.95
+SPOOF_THRESHOLD = 0.6
 UNCERTAIN_MARGIN = 0.0
 # ---------------------------------------------------------------------------
 # Misc

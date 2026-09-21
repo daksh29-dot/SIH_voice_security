@@ -1,6 +1,8 @@
 import numpy as np
 import onnxruntime as ort
 
+# Load NVIDIA CUDA/cuDNN DLLs installed through Python packages
+ort.preload_dlls()
 
 class W2V2AASISTSpoofDetector:
     """
@@ -20,9 +22,13 @@ class W2V2AASISTSpoofDetector:
     def __init__(self, model_path):
         self.model_path = str(model_path)
 
+        # GPU first, CPU fallback
         self.session = ort.InferenceSession(
             self.model_path,
-            providers=["CPUExecutionProvider"]
+            providers=[
+                "CUDAExecutionProvider",
+                "CPUExecutionProvider"
+            ]
         )
 
         self.input_name = self.session.get_inputs()[0].name
@@ -31,6 +37,7 @@ class W2V2AASISTSpoofDetector:
         print("[+] W2V2-AASIST ONNX loaded successfully")
         print(f"    Input : {self.input_name}")
         print(f"    Output: {self.output_name}")
+        print(f"    Providers: {self.session.get_providers()}")
 
     def predict_segment(self, waveform):
         """
@@ -42,14 +49,18 @@ class W2V2AASISTSpoofDetector:
 
         waveform = np.asarray(waveform, dtype=np.float32).flatten()
 
-        # Short audio → zero-pad (not tile-repeat; see segment_audio.py for rationale)
+        # Short audio → zero-pad
+        # Not tile-repeat; see segment_audio.py for rationale
         if len(waveform) < self.WINDOW_SAMPLES:
-            padded = np.zeros(self.WINDOW_SAMPLES, dtype=np.float32)
+            padded = np.zeros(
+                self.WINDOW_SAMPLES,
+                dtype=np.float32
+            )
             padded[:len(waveform)] = waveform
             waveform = padded
 
-        # Long audio -> use only the first model window here.
-        # Long-audio handling will be done by segment_audio.py.
+        # Long audio → use only the first model window here.
+        # Long-audio handling is done by segment_audio.py.
         elif len(waveform) > self.WINDOW_SAMPLES:
             waveform = waveform[:self.WINDOW_SAMPLES]
 
@@ -66,8 +77,14 @@ class W2V2AASISTSpoofDetector:
         # Convert logits -> probabilities
         logits = logits.astype(np.float64)
 
-        logits = logits - np.max(logits, axis=1, keepdims=True)
+        logits = logits - np.max(
+            logits,
+            axis=1,
+            keepdims=True
+        )
+
         exp_logits = np.exp(logits)
+
         probabilities = exp_logits / np.sum(
             exp_logits,
             axis=1,
