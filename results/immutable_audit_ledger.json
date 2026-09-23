@@ -1,5 +1,409 @@
 [
   {
+    "index": 152,
+    "timestamp": "2026-09-23 20:33:32 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.457,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.8957124449383101,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.829,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "285fea19ae6816458ce692bf7a44be133b6871ab431a491d6bf204581879f67d"
+  },
+  {
+    "index": 151,
+    "timestamp": "2026-09-23 20:33:05 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.496,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.9999961207713192,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.85,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "41c549c29f484ef8da8dc3753932bfc8c8b86e2e5eca41c6e75518619201328b"
+  },
+  {
+    "index": 150,
+    "timestamp": "2026-09-23 20:32:45 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.012,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "we have waited a long time for this",
+    "pillar_details": {
+      "voice_clone_risk": 9.595553456105013e-07,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.05,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "eaf5973a0ec87abf591717a660a7cdd86797b8f8f1737feafb24a182d394da82"
+  },
+  {
+    "index": 149,
+    "timestamp": "2026-09-23 20:18:52 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.012,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "the final decision was between Scotland and the Republic of Ireland",
+    "pillar_details": {
+      "voice_clone_risk": 1.058898123988899e-06,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.05,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "3241c870b3bffdcc0fb74b25749b915deb81c636456650e824231299be2264cd"
+  },
+  {
+    "index": 148,
+    "timestamp": "2026-09-23 20:18:34 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.254,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "get me a lot to stay tonight in the house in West London after falling out with his girlfriend",
+    "pillar_details": {
+      "voice_clone_risk": 0.4995019650178029,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "4b63e6bd4fe09a2cbe2185f9671b806b00aabcf56d6af6287be325fb91f2946d"
+  },
+  {
+    "index": 147,
+    "timestamp": "2026-09-23 18:19:35 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999998,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_8469160.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.999998
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "786ff502f16accafb5a25cc29840395e7f6068d14c5d5b714a49b4b3f7c05a25"
+  },
+  {
+    "index": 146,
+    "timestamp": "2026-09-23 18:19:29 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999997,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_2775552.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.999997
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "e35f39974a9b68e9fabf889581aeb1ca4f538de98969fded40957f142dc71426"
+  },
+  {
+    "index": 145,
+    "timestamp": "2026-09-23 18:17:14 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 11-23459812",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
+    "pillar_details": {
+      "voice_clone_risk": 0.985,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.847,
+      "matched_keywords": [
+        "arrest warrant",
+        "cyber crime",
+        "skype call",
+        "money laundering",
+        "narcotics",
+        "central bureau",
+        "cbi",
+        "digital arrest"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "c536765eab5833679235d67e9398f48f9a6db657dcf7445b4d4b88814a7f2bbf"
+  },
+  {
+    "index": 144,
+    "timestamp": "2026-09-23 18:04:36 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999998,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_8469160.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.999998
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "f783d2d9a8e0e8d50a3399c09765e7b53fbed25ffab3b41e55b020466bc133a5"
+  },
+  {
+    "index": 143,
+    "timestamp": "2026-09-23 17:57:24 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 22-67123984",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "CUSTOMS_PARCEL_FEDEX",
+    "transcript_snippet": "This is FedEx Customs Clearance at Mumbai Airport. A courier parcel sent under your PAN card to Taiwan contains five illegal passports and contraband ",
+    "pillar_details": {
+      "voice_clone_risk": 0.96,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.842,
+      "matched_keywords": [
+        "illegal passport",
+        "taiwan",
+        "mumbai airport",
+        "parcel",
+        "customs clearance",
+        "customs",
+        "courier",
+        "customs officer",
+        "fedex",
+        "contraband"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "b6c7ffc85311229e29738a5549a12ff21421aa8be42d4802b7817979aace2a90"
+  },
+  {
+    "index": 142,
+    "timestamp": "2026-09-23 17:57:18 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 11-23459812",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
+    "pillar_details": {
+      "voice_clone_risk": 0.985,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.847,
+      "matched_keywords": [
+        "narcotics",
+        "digital arrest",
+        "arrest warrant",
+        "cbi",
+        "money laundering",
+        "cyber crime",
+        "central bureau",
+        "skype call"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "e4b131309ac70b562e0a27e1463064b930c2d18b607ec0462c97520e40b1a695"
+  },
+  {
+    "index": 141,
+    "timestamp": "2026-09-23 17:55:50 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.895712,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: FineVoice_test_hello, this is Inspector Rathore fro_UTC_2026-09-20 16_26_42s.mp3",
+    "pillar_details": {
+      "voice_clone_score": 0.895712
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "5988e266b500a92d98fb846cc53adf9233fcac9cadd12b636957ed91601aefb8"
+  },
+  {
+    "index": 140,
+    "timestamp": "2026-09-23 17:55:41 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999998,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_1611480.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.999998
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "605a723146b63fdd9bba97b07686730cf97735617b8fa26e189eb4487c76bded"
+  },
+  {
+    "index": 139,
+    "timestamp": "2026-09-23 17:55:35 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999997,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_2775552.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.999997
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "7ae085115b017195992ad1ab1691e49d49fea90127fc6c35822cbd21f5448082"
+  },
+  {
+    "index": 138,
+    "timestamp": "2026-09-23 17:55:29 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999875,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_8844552.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.999875
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "70ef08bba5c470808fb6f09e1f47be00fcfacb798b7400c62bad1d5afc220184"
+  },
+  {
+    "index": 137,
+    "timestamp": "2026-09-23 17:55:20 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.103877,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: LA_E_8617121.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.103877
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "ee25a8349fa39935a2f13e7c6b97cea4a75b59f6aeee95aac4eabf86a93bbc09"
+  },
+  {
+    "index": 136,
+    "timestamp": "2026-09-23 17:55:14 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999998,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_1611480.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.999998
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "ab077f125bb38c70b7514a5cab76deb15f85fa85ca76a5be8fc796194a83b4ee"
+  },
+  {
+    "index": 135,
+    "timestamp": "2026-09-23 17:55:09 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999998,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: LA_E_5932896.flac",
+    "pillar_details": {
+      "voice_clone_score": 0.999998
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "82539930745b3646fe03359c800e771a24da562623de9d9025326a45400a9258"
+  },
+  {
+    "index": 134,
+    "timestamp": "2026-09-23 17:54:54 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.999996,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: yashveer-clone-1788962405365.mp3",
+    "pillar_details": {
+      "voice_clone_score": 0.999996
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "5cc020d03fecabe33d5b8de2323716a7ce7761e1c2280c70b8987a9b867273e1"
+  },
+  {
+    "index": 133,
+    "timestamp": "2026-09-23 17:54:40 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.895712,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: FineVoice_test_hello, this is Inspector Rathore fro_UTC_2026-09-20 16_26_42s.mp3",
+    "pillar_details": {
+      "voice_clone_score": 0.895712
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "bfe1c5d4c3ba774c0a2f0e9e28ac6d91adb867793daecf2914f8a96c25afdafd"
+  },
+  {
+    "index": 132,
+    "timestamp": "2026-09-23 17:54:24 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.895712,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: FineVoice_test_hello, this is Inspector Rathore fro_UTC_2026-09-20 16_26_42s.mp3",
+    "pillar_details": {
+      "voice_clone_score": 0.895712
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "6b126c9c54bb89b64ca4e2eeae85417b41d50c50b008e4d8737b6f6182827c6c"
+  },
+  {
+    "index": 131,
+    "timestamp": "2026-09-23 17:53:44 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 11-23459812",
+    "composite_risk": 0.94,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "DIGITAL_ARREST_CBI",
+    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
+    "pillar_details": {
+      "voice_clone_risk": 0.985,
+      "caller_cli_risk": 0.8,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.847,
+      "matched_keywords": [
+        "narcotics",
+        "digital arrest",
+        "arrest warrant",
+        "cbi",
+        "money laundering",
+        "cyber crime",
+        "central bureau",
+        "skype call"
+      ]
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "fb18418acac81a4adef486556a51e74e0ed5e63086b6fc874b4eb604dca74293"
+  },
+  {
     "index": 130,
     "timestamp": "2026-09-21 13:44:42 UTC",
     "event_type": "AUDIO_FILE_ANALYSIS",

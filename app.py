@@ -72,10 +72,22 @@ def get_detector():
 
 
 # ── Serve Frontend & Static Audio ────────────────────────────────────
-@app.route("/")
-def index():
+@app.route("/", defaults={'path': ''})
+@app.route("/<path:path>")
+def catch_all(path):
+    if path.startswith("api/") or path.startswith("audio/"):
+        return jsonify({"error": "Not found"}), 404
+    
+    # Check if a specific HTML file exists for this route (Next.js static export behavior)
+    if path and not path.endswith('.html') and Path(app.static_folder, path + '.html').is_file():
+        return send_from_directory(app.static_folder, path + '.html')
+        
+    # If the exact file exists in static folder (like CSS/JS chunks), serve it
+    if path and Path(app.static_folder, path).is_file():
+        return send_from_directory(app.static_folder, path)
+        
+    # Otherwise fallback to React index.html for client-side routing
     return send_from_directory(app.static_folder, "index.html")
-
 
 @app.route("/audio/<path:filename>")
 def serve_audio(filename):
