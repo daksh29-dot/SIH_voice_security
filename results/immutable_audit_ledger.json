@@ -1,7 +1,311 @@
 [
   {
+    "index": 165,
+    "timestamp": "2026-09-24 20:57:57 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.363,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello good morning my name is Utsav Jha and I am leaving in Delhi I study BTech from GGSIPU University from 2024 year to 2028 I love to play sports an",
+    "pillar_details": {
+      "voice_clone_risk": 0.9291612671285958,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.228,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "4dcef3c3c89dc319932012cebd8db1bb63b020db7e262fbb159d8033c8ac0b00"
+  },
+  {
+    "index": 164,
+    "timestamp": "2026-09-24 20:46:06 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.349,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha and I am live in Delhi I am doing BTech in information and technology from GGSIPU gtbit college I love to play sports and I",
+    "pillar_details": {
+      "voice_clone_risk": 0.9631443794398774,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.05,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "aba212978819b180b2c66bb2e77223fe526e46571f6ead701172a7dc290f222d"
+  },
+  {
+    "index": 163,
+    "timestamp": "2026-09-24 20:33:55 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.153,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "refrigerator easy target",
+    "pillar_details": {
+      "voice_clone_risk": 1.1298234272331097e-06,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.99,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "487c1bcba3c419c1888d241bb0009b9fdd3e1694c4bc001fad4606bcb90e9e2b"
+  },
+  {
+    "index": 162,
+    "timestamp": "2026-09-24 20:30:13 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.153,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "the US is a diverse and colourful Nation",
+    "pillar_details": {
+      "voice_clone_risk": 1.1717921919973e-06,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.99,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "b82795128e9a48c18725f89878e3a6ca07c15084c7f427ebf8952d839f4c6f13"
+  },
+  {
+    "index": 161,
+    "timestamp": "2026-09-24 20:23:39 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.335,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha and I am from Delhi I study in gtbit college from ITP University and I love to play sports like cricket volleyball football",
+    "pillar_details": {
+      "voice_clone_risk": 0.875200976701642,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.164,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "74bfd8986a94875696fe9b0ccf754515dc55df755b02a826b64f8bd8a0cf5c47"
+  },
+  {
+    "index": 160,
+    "timestamp": "2026-09-24 20:13:48 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.275,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello good morning my name is Utsav Jha and I am from New Delhi I study BTech from gtbit college IP University and I love to play sports and to eat fo",
+    "pillar_details": {
+      "voice_clone_risk": 0.7692296981134774,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.01,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "e83b9dc7272cfe9e56447be56670ff0cce0018fb17c28a2f38d3b6d8d9ee8ed7"
+  },
+  {
+    "index": 159,
+    "timestamp": "2026-09-24 20:02:30 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.511,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.9812022183846869,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.99,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "afd09e4ec94916780e78ebdadb64e6cfe68ad98134487fac060b5278182b2066"
+  },
+  {
+    "index": 158,
+    "timestamp": "2026-09-24 20:01:20 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.502,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hepatitis will be asked to review this case and any implications for Patient Safety",
+    "pillar_details": {
+      "voice_clone_risk": 0.9999968026808661,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.99,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "e8a97139b021d18f16017e1139e8bd3c683c466be1719c18880438abe827bda7"
+  },
+  {
+    "index": 157,
+    "timestamp": "2026-09-24 20:00:14 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.153,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "what lies",
+    "pillar_details": {
+      "voice_clone_risk": 0.00015272854027659,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.99,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "b2e3ece322238cc51cc18806a7bbe1132adecf56e366e029d529eb773a0d9eef"
+  },
+  {
+    "index": 156,
+    "timestamp": "2026-09-24 19:59:28 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.153,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "it is the Temptation what should be registered",
+    "pillar_details": {
+      "voice_clone_risk": 2.231681453759435e-06,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.99,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "1111427cebdb945b889be246230b9e0f5fc4392bbeb0acb10555ce728360021c"
+  },
+  {
+    "index": 155,
+    "timestamp": "2026-09-24 19:56:08 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.481,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.8957456742147103,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.99,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "20284d1022d72bd679dcf0c34588f2ca3edb35d8f5d068071963e5c67cc8d95e"
+  },
+  {
+    "index": 154,
+    "timestamp": "2026-09-24 19:54:12 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.304,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello I am Utsav and I study BTech information and technology from gtbit college I love to play sports cricket football badminton volleyball everythin",
+    "pillar_details": {
+      "voice_clone_risk": 0.7856835821096048,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.168,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "f7471b20cfaf27171464d86658c566cbb58b02c8250ec575beee669025ab6841"
+  },
+  {
+    "index": 153,
+    "timestamp": "2026-09-24 19:53:21 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.308,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello I am Utsav Jha and I am from gdpd college I study do I in information",
+    "pillar_details": {
+      "voice_clone_risk": 0.7338616572518117,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.311,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "12b7c9886e803d49c713294a6dda1420aa0466bf2869a28d802c54e0e409cdd5"
+  },
+  {
     "index": 152,
-    "timestamp": "2026-09-23 20:33:32 UTC",
+    "timestamp": "2026-09-24 19:51:37 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.302,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha and I am from GTA college and I study BTech in information and technology I love to play sports and love cooking so good ni",
+    "pillar_details": {
+      "voice_clone_risk": 0.8164244927096261,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.084,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "b949b03087df30315dc91c17e9e4fb2d2ace003a72a7d10c00b22ccbe51c00d5"
+  },
+  {
+    "index": 151,
+    "timestamp": "2026-09-24 19:43:03 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.517,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.9999701577081691,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.99,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "521c3bca9e2b053e6519350d2a1bfa227fd44cc06e876cfa1c7546ca68222a08"
+  },
+  {
+    "index": 150,
+    "timestamp": "2026-09-24 19:41:04 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.334,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha and I am from gtbit I love playing sports and playing and cooking so good night bye-bye and tomorrow is Saturday bye-bye",
+    "pillar_details": {
+      "voice_clone_risk": 0.7714327551403337,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.401,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "c526ceaa127c86a0b925b08f4b34ba918771d0b2248ceb7a4bded116562e7f15"
+  },
+  {
+    "index": 149,
+    "timestamp": "2026-09-24 19:10:21 UTC",
     "event_type": "LIVE_CALL_VERIFICATION",
     "phone_number": "Web Microphone",
     "composite_risk": 0.457,
@@ -9,18 +313,56 @@
     "threat_category": "CLEAN",
     "transcript_snippet": "",
     "pillar_details": {
-      "voice_clone_risk": 0.8957124449383101,
+      "voice_clone_risk": 0.8957456742147103,
       "caller_cli_risk": 0.02,
       "scam_words_risk": 0.05,
       "biometric_risk": 0.829,
       "matched_keywords": []
     },
     "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "285fea19ae6816458ce692bf7a44be133b6871ab431a491d6bf204581879f67d"
+    "block_hash": "2023c1f0378e5274085d9431495e0184a039d20268776970c1896f84f2bbc1e6"
   },
   {
-    "index": 151,
-    "timestamp": "2026-09-23 20:33:05 UTC",
+    "index": 148,
+    "timestamp": "2026-09-24 18:50:32 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.322,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello good morning my name is Utsav Jha I am from gtbit college Delhi and today is Friday so I am going to sleep tonight bye-bye",
+    "pillar_details": {
+      "voice_clone_risk": 0.6930997023862734,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.5,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "5c8b899987e888e51689185dcf5d889f6bf8868baf1d93b3d1b6820604d73d17"
+  },
+  {
+    "index": 147,
+    "timestamp": "2026-09-24 18:48:40 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.457,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.8957456742147103,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.829,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "048fe2fefbd11eb01334e2a9fc98dafac435e5c04e513600dabcfddf6add6ef7"
+  },
+  {
+    "index": 146,
+    "timestamp": "2026-09-24 18:46:31 UTC",
     "event_type": "LIVE_CALL_VERIFICATION",
     "phone_number": "Web Microphone",
     "composite_risk": 0.496,
@@ -28,148 +370,205 @@
     "threat_category": "CLEAN",
     "transcript_snippet": "",
     "pillar_details": {
-      "voice_clone_risk": 0.9999961207713192,
+      "voice_clone_risk": 0.9999701577081691,
       "caller_cli_risk": 0.02,
       "scam_words_risk": 0.05,
       "biometric_risk": 0.85,
       "matched_keywords": []
     },
     "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "41c549c29f484ef8da8dc3753932bfc8c8b86e2e5eca41c6e75518619201328b"
+    "block_hash": "e762f978b366e305e20236d391d44ff3c062fb5fabc3ed52f6b54f466381e629"
   },
   {
-    "index": 150,
-    "timestamp": "2026-09-23 20:32:45 UTC",
+    "index": 145,
+    "timestamp": "2026-09-24 18:45:11 UTC",
     "event_type": "LIVE_CALL_VERIFICATION",
     "phone_number": "Web Microphone",
-    "composite_risk": 0.012,
-    "policy_action": "PROCEED_NORMALLY",
-    "threat_category": "CLEAN",
-    "transcript_snippet": "we have waited a long time for this",
-    "pillar_details": {
-      "voice_clone_risk": 9.595553456105013e-07,
-      "caller_cli_risk": 0.02,
-      "scam_words_risk": 0.0,
-      "biometric_risk": 0.05,
-      "matched_keywords": []
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "eaf5973a0ec87abf591717a660a7cdd86797b8f8f1737feafb24a182d394da82"
-  },
-  {
-    "index": 149,
-    "timestamp": "2026-09-23 20:18:52 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "Web Microphone",
-    "composite_risk": 0.012,
-    "policy_action": "PROCEED_NORMALLY",
-    "threat_category": "CLEAN",
-    "transcript_snippet": "the final decision was between Scotland and the Republic of Ireland",
-    "pillar_details": {
-      "voice_clone_risk": 1.058898123988899e-06,
-      "caller_cli_risk": 0.02,
-      "scam_words_risk": 0.0,
-      "biometric_risk": 0.05,
-      "matched_keywords": []
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "3241c870b3bffdcc0fb74b25749b915deb81c636456650e824231299be2264cd"
-  },
-  {
-    "index": 148,
-    "timestamp": "2026-09-23 20:18:34 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "Web Microphone",
-    "composite_risk": 0.254,
+    "composite_risk": 0.314,
     "policy_action": "STEP_UP_MFA",
     "threat_category": "CLEAN",
-    "transcript_snippet": "get me a lot to stay tonight in the house in West London after falling out with his girlfriend",
+    "transcript_snippet": "hello my name is Utsav I am from gtbit college Delhi and I study BTech from gtbit college and today is Tuesday so good night good bye-bye bye-bye",
     "pillar_details": {
-      "voice_clone_risk": 0.4995019650178029,
+      "voice_clone_risk": 0.6722951930620932,
       "caller_cli_risk": 0.02,
       "scam_words_risk": 0.0,
       "biometric_risk": 0.5,
       "matched_keywords": []
     },
     "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "4b63e6bd4fe09a2cbe2185f9671b806b00aabcf56d6af6287be325fb91f2946d"
-  },
-  {
-    "index": 147,
-    "timestamp": "2026-09-23 18:19:35 UTC",
-    "event_type": "AUDIO_FILE_ANALYSIS",
-    "phone_number": "N/A (Direct File)",
-    "composite_risk": 0.999998,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "SPOOF_VOICE",
-    "transcript_snippet": "File: LA_E_8469160.flac",
-    "pillar_details": {
-      "voice_clone_score": 0.999998
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "786ff502f16accafb5a25cc29840395e7f6068d14c5d5b714a49b4b3f7c05a25"
-  },
-  {
-    "index": 146,
-    "timestamp": "2026-09-23 18:19:29 UTC",
-    "event_type": "AUDIO_FILE_ANALYSIS",
-    "phone_number": "N/A (Direct File)",
-    "composite_risk": 0.999997,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "SPOOF_VOICE",
-    "transcript_snippet": "File: LA_E_2775552.flac",
-    "pillar_details": {
-      "voice_clone_score": 0.999997
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "e35f39974a9b68e9fabf889581aeb1ca4f538de98969fded40957f142dc71426"
-  },
-  {
-    "index": 145,
-    "timestamp": "2026-09-23 18:17:14 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 11-23459812",
-    "composite_risk": 0.94,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "DIGITAL_ARREST_CBI",
-    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
-    "pillar_details": {
-      "voice_clone_risk": 0.985,
-      "caller_cli_risk": 0.8,
-      "scam_words_risk": 0.99,
-      "biometric_risk": 0.847,
-      "matched_keywords": [
-        "arrest warrant",
-        "cyber crime",
-        "skype call",
-        "money laundering",
-        "narcotics",
-        "central bureau",
-        "cbi",
-        "digital arrest"
-      ]
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "c536765eab5833679235d67e9398f48f9a6db657dcf7445b4d4b88814a7f2bbf"
+    "block_hash": "6b1c63b776bbc686a4e51d3b098059e8b1d03bb28db1bbe26eb0150ea83a42a6"
   },
   {
     "index": 144,
-    "timestamp": "2026-09-23 18:04:36 UTC",
-    "event_type": "AUDIO_FILE_ANALYSIS",
-    "phone_number": "N/A (Direct File)",
-    "composite_risk": 0.999998,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "SPOOF_VOICE",
-    "transcript_snippet": "File: LA_E_8469160.flac",
+    "timestamp": "2026-09-24 18:41:43 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.457,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
     "pillar_details": {
-      "voice_clone_score": 0.999998
+      "voice_clone_risk": 0.8957456742147103,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.829,
+      "matched_keywords": []
     },
     "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "f783d2d9a8e0e8d50a3399c09765e7b53fbed25ffab3b41e55b020466bc133a5"
+    "block_hash": "a086181c1729ee61c2eea1acf4ed0fad15b60eb626738b8b465f989f953f4c0c"
   },
   {
     "index": 143,
-    "timestamp": "2026-09-23 17:57:24 UTC",
+    "timestamp": "2026-09-24 18:36:18 UTC",
+    "event_type": "LIVE_STREAM_INFERENCE",
+    "phone_number": "WS_SESSION_5d4f4e4e57d1",
+    "composite_risk": 0.6,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello good morning my name",
+    "pillar_details": {
+      "deepfake_score": 0.9999974270374835,
+      "scam_score": 0.0,
+      "decision": "SPOOF"
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "4badacf66b1f247782777a1c20abcb59e71f79085a0cf7aaef02df6c54b08f40"
+  },
+  {
+    "index": 142,
+    "timestamp": "2026-09-24 18:36:16 UTC",
+    "event_type": "LIVE_STREAM_INFERENCE",
+    "phone_number": "WS_SESSION_ee263776086c",
+    "composite_risk": 0.6,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello good morning my name is Utsav hello hello good morning",
+    "pillar_details": {
+      "deepfake_score": 0.9999418818269128,
+      "scam_score": 0.0,
+      "decision": "SPOOF"
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "ae6955b03cd1c37fa1d9f9a6cac38903c396209d173b91407a09144d4d7f528b"
+  },
+  {
+    "index": 141,
+    "timestamp": "2026-09-24 18:31:23 UTC",
+    "event_type": "LIVE_STREAM_INFERENCE",
+    "phone_number": "WS_SESSION_e9fe71f09246",
+    "composite_risk": 0.6,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha I am from gtbit College Delhi and study BTech",
+    "pillar_details": {
+      "deepfake_score": 0.9999965896661457,
+      "scam_score": 0.0,
+      "decision": "SPOOF"
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "5a3d16c7a19c9be622063dde65d8a916f2ad3ee368ea8eb9e4b46555ea29d327"
+  },
+  {
+    "index": 140,
+    "timestamp": "2026-09-24 18:31:13 UTC",
+    "event_type": "LIVE_STREAM_INFERENCE",
+    "phone_number": "WS_SESSION_e9fe71f09246",
+    "composite_risk": 0.6,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha I am from gtbit",
+    "pillar_details": {
+      "deepfake_score": 0.9999842686343497,
+      "scam_score": 0.0,
+      "decision": "SPOOF"
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "e97cbb432e001834348b939fe9f60be30739ea4a99b15eabd4e0e9cc2feeefba"
+  },
+  {
+    "index": 139,
+    "timestamp": "2026-09-24 18:31:06 UTC",
+    "event_type": "LIVE_STREAM_INFERENCE",
+    "phone_number": "WS_SESSION_9e7e12f8c3ed",
+    "composite_risk": 0.6,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello hello good morning my name is Utsav I am",
+    "pillar_details": {
+      "deepfake_score": 0.9999963669347174,
+      "scam_score": 0.0,
+      "decision": "SPOOF"
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "ff131bcf3ef604da549d290794742d99778aadc94cef45ea62f7aab47776122d"
+  },
+  {
+    "index": 138,
+    "timestamp": "2026-09-24 13:40:37 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.278421,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: recording.wav",
+    "pillar_details": {
+      "voice_clone_score": 0.278421
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "fe9c4fe5843eaf3ba2eb6ab1c2cabf62eeb44149c2716240c6e5bb1fd0a14343"
+  },
+  {
+    "index": 137,
+    "timestamp": "2026-09-24 13:39:25 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.727986,
+    "policy_action": "BLOCK_AND_HOLD",
+    "threat_category": "SPOOF_VOICE",
+    "transcript_snippet": "File: recording.wav",
+    "pillar_details": {
+      "voice_clone_score": 0.727986
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "4f9eeb030b328420aa21734d8ab67ab573546a91d4555fc27cc509a13e663a45"
+  },
+  {
+    "index": 136,
+    "timestamp": "2026-09-24 13:38:22 UTC",
+    "event_type": "AUDIO_FILE_ANALYSIS",
+    "phone_number": "N/A (Direct File)",
+    "composite_risk": 0.500087,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "File: recording.wav",
+    "pillar_details": {
+      "voice_clone_score": 0.500087
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "ab4009cbfe36c4e3835be7d35c2e5964ef159c60cd248003e3fc011f861d0867"
+  },
+  {
+    "index": 135,
+    "timestamp": "2026-09-23 12:35:55 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9811223344",
+    "composite_risk": 0.02,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "Hey, good afternoon! Just checking if we are still on for the project presentation and team sync at 4 PM today? Let me know once you review the slides",
+    "pillar_details": {
+      "voice_clone_risk": 0.02,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.06,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "69679de10af203577aaad59001fe1b3b82af2f621b2ed8b59748e176b4ed2869"
+  },
+  {
+    "index": 134,
+    "timestamp": "2026-09-23 12:35:49 UTC",
     "event_type": "LIVE_CALL_VERIFICATION",
     "phone_number": "+91 22-67123984",
     "composite_risk": 0.94,
@@ -182,202 +581,70 @@
       "scam_words_risk": 0.99,
       "biometric_risk": 0.842,
       "matched_keywords": [
-        "illegal passport",
         "taiwan",
-        "mumbai airport",
         "parcel",
-        "customs clearance",
-        "customs",
-        "courier",
-        "customs officer",
+        "illegal passport",
         "fedex",
-        "contraband"
+        "customs officer",
+        "mumbai airport",
+        "customs clearance",
+        "contraband",
+        "customs",
+        "courier"
       ]
     },
     "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "b6c7ffc85311229e29738a5549a12ff21421aa8be42d4802b7817979aace2a90"
-  },
-  {
-    "index": 142,
-    "timestamp": "2026-09-23 17:57:18 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 11-23459812",
-    "composite_risk": 0.94,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "DIGITAL_ARREST_CBI",
-    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
-    "pillar_details": {
-      "voice_clone_risk": 0.985,
-      "caller_cli_risk": 0.8,
-      "scam_words_risk": 0.99,
-      "biometric_risk": 0.847,
-      "matched_keywords": [
-        "narcotics",
-        "digital arrest",
-        "arrest warrant",
-        "cbi",
-        "money laundering",
-        "cyber crime",
-        "central bureau",
-        "skype call"
-      ]
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "e4b131309ac70b562e0a27e1463064b930c2d18b607ec0462c97520e40b1a695"
-  },
-  {
-    "index": 141,
-    "timestamp": "2026-09-23 17:55:50 UTC",
-    "event_type": "AUDIO_FILE_ANALYSIS",
-    "phone_number": "N/A (Direct File)",
-    "composite_risk": 0.895712,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "SPOOF_VOICE",
-    "transcript_snippet": "File: FineVoice_test_hello, this is Inspector Rathore fro_UTC_2026-09-20 16_26_42s.mp3",
-    "pillar_details": {
-      "voice_clone_score": 0.895712
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "5988e266b500a92d98fb846cc53adf9233fcac9cadd12b636957ed91601aefb8"
-  },
-  {
-    "index": 140,
-    "timestamp": "2026-09-23 17:55:41 UTC",
-    "event_type": "AUDIO_FILE_ANALYSIS",
-    "phone_number": "N/A (Direct File)",
-    "composite_risk": 0.999998,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "SPOOF_VOICE",
-    "transcript_snippet": "File: LA_E_1611480.flac",
-    "pillar_details": {
-      "voice_clone_score": 0.999998
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "605a723146b63fdd9bba97b07686730cf97735617b8fa26e189eb4487c76bded"
-  },
-  {
-    "index": 139,
-    "timestamp": "2026-09-23 17:55:35 UTC",
-    "event_type": "AUDIO_FILE_ANALYSIS",
-    "phone_number": "N/A (Direct File)",
-    "composite_risk": 0.999997,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "SPOOF_VOICE",
-    "transcript_snippet": "File: LA_E_2775552.flac",
-    "pillar_details": {
-      "voice_clone_score": 0.999997
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "7ae085115b017195992ad1ab1691e49d49fea90127fc6c35822cbd21f5448082"
-  },
-  {
-    "index": 138,
-    "timestamp": "2026-09-23 17:55:29 UTC",
-    "event_type": "AUDIO_FILE_ANALYSIS",
-    "phone_number": "N/A (Direct File)",
-    "composite_risk": 0.999875,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "SPOOF_VOICE",
-    "transcript_snippet": "File: LA_E_8844552.flac",
-    "pillar_details": {
-      "voice_clone_score": 0.999875
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "70ef08bba5c470808fb6f09e1f47be00fcfacb798b7400c62bad1d5afc220184"
-  },
-  {
-    "index": 137,
-    "timestamp": "2026-09-23 17:55:20 UTC",
-    "event_type": "AUDIO_FILE_ANALYSIS",
-    "phone_number": "N/A (Direct File)",
-    "composite_risk": 0.103877,
-    "policy_action": "PROCEED_NORMALLY",
-    "threat_category": "CLEAN",
-    "transcript_snippet": "File: LA_E_8617121.flac",
-    "pillar_details": {
-      "voice_clone_score": 0.103877
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "ee25a8349fa39935a2f13e7c6b97cea4a75b59f6aeee95aac4eabf86a93bbc09"
-  },
-  {
-    "index": 136,
-    "timestamp": "2026-09-23 17:55:14 UTC",
-    "event_type": "AUDIO_FILE_ANALYSIS",
-    "phone_number": "N/A (Direct File)",
-    "composite_risk": 0.999998,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "SPOOF_VOICE",
-    "transcript_snippet": "File: LA_E_1611480.flac",
-    "pillar_details": {
-      "voice_clone_score": 0.999998
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "ab077f125bb38c70b7514a5cab76deb15f85fa85ca76a5be8fc796194a83b4ee"
-  },
-  {
-    "index": 135,
-    "timestamp": "2026-09-23 17:55:09 UTC",
-    "event_type": "AUDIO_FILE_ANALYSIS",
-    "phone_number": "N/A (Direct File)",
-    "composite_risk": 0.999998,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "SPOOF_VOICE",
-    "transcript_snippet": "File: LA_E_5932896.flac",
-    "pillar_details": {
-      "voice_clone_score": 0.999998
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "82539930745b3646fe03359c800e771a24da562623de9d9025326a45400a9258"
-  },
-  {
-    "index": 134,
-    "timestamp": "2026-09-23 17:54:54 UTC",
-    "event_type": "AUDIO_FILE_ANALYSIS",
-    "phone_number": "N/A (Direct File)",
-    "composite_risk": 0.999996,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "SPOOF_VOICE",
-    "transcript_snippet": "File: yashveer-clone-1788962405365.mp3",
-    "pillar_details": {
-      "voice_clone_score": 0.999996
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "5cc020d03fecabe33d5b8de2323716a7ce7761e1c2280c70b8987a9b867273e1"
+    "block_hash": "c2d60706bcf9ac063abf640c419aeb98f9f2b423f31f09be05934ab239edf4b5"
   },
   {
     "index": 133,
-    "timestamp": "2026-09-23 17:54:40 UTC",
-    "event_type": "AUDIO_FILE_ANALYSIS",
-    "phone_number": "N/A (Direct File)",
-    "composite_risk": 0.895712,
+    "timestamp": "2026-09-23 12:35:36 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9845012345",
+    "composite_risk": 0.94,
     "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "SPOOF_VOICE",
-    "transcript_snippet": "File: FineVoice_test_hello, this is Inspector Rathore fro_UTC_2026-09-20 16_26_42s.mp3",
+    "threat_category": "URGENT_FAMILY_SOS",
+    "transcript_snippet": "Papa, police ne pakad liya hai mujhe. Accident ho gaya car se. Hospital me hu, bail money chahiye fifty thousand rupees emergency. Please kisi ko mat ",
     "pillar_details": {
-      "voice_clone_score": 0.895712
+      "voice_clone_risk": 0.99,
+      "caller_cli_risk": 0.2,
+      "scam_words_risk": 0.99,
+      "biometric_risk": 0.848,
+      "matched_keywords": [
+        "police ne pakad liya",
+        "bail money",
+        "police",
+        "accident ho gaya",
+        "hospital me hu"
+      ]
     },
     "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "bfe1c5d4c3ba774c0a2f0e9e28ac6d91adb867793daecf2914f8a96c25afdafd"
+    "block_hash": "54c46a5aac356de407306fa293085f561508d5e99fa909477b3a7411585b0888"
   },
   {
     "index": 132,
-    "timestamp": "2026-09-23 17:54:24 UTC",
-    "event_type": "AUDIO_FILE_ANALYSIS",
-    "phone_number": "N/A (Direct File)",
-    "composite_risk": 0.895712,
+    "timestamp": "2026-09-23 12:35:09 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9823411092",
+    "composite_risk": 0.722,
     "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "SPOOF_VOICE",
-    "transcript_snippet": "File: FineVoice_test_hello, this is Inspector Rathore fro_UTC_2026-09-20 16_26_42s.mp3",
+    "threat_category": "BANK_KYC_OTP_THEFT",
+    "transcript_snippet": "Dear customer, your State Bank of India Net Banking KYC has expired today. Your bank account will be frozen within two hours. Please share the six dig",
     "pillar_details": {
-      "voice_clone_score": 0.895712
+      "voice_clone_risk": 0.92,
+      "caller_cli_risk": 0.55,
+      "scam_words_risk": 0.55,
+      "biometric_risk": 0.834,
+      "matched_keywords": [
+        "otp"
+      ]
     },
     "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "6b126c9c54bb89b64ca4e2eeae85417b41d50c50b008e4d8737b6f6182827c6c"
+    "block_hash": "b83228d8458b960868177a4af1eb696726ff10ec26249d0a3f97403d6901f635"
   },
   {
     "index": 131,
-    "timestamp": "2026-09-23 17:53:44 UTC",
+    "timestamp": "2026-09-23 12:34:28 UTC",
     "event_type": "LIVE_CALL_VERIFICATION",
     "phone_number": "+91 11-23459812",
     "composite_risk": 0.94,
@@ -390,18 +657,18 @@
       "scam_words_risk": 0.99,
       "biometric_risk": 0.847,
       "matched_keywords": [
-        "narcotics",
+        "money laundering",
+        "skype call",
+        "cbi",
+        "central bureau",
+        "cyber crime",
         "digital arrest",
         "arrest warrant",
-        "cbi",
-        "money laundering",
-        "cyber crime",
-        "central bureau",
-        "skype call"
+        "narcotics"
       ]
     },
     "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "fb18418acac81a4adef486556a51e74e0ed5e63086b6fc874b4eb604dca74293"
+    "block_hash": "0f1182636bb0fae9c52802f6ee59e8e7b45dffb4deedb6a71db4cf957f31e3d1"
   },
   {
     "index": 130,

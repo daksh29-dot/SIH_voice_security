@@ -7,7 +7,7 @@ const IS_DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
 export const api = {
   getIsDemoMode: () => IS_DEMO_MODE,
 
-  analyze: async (file: File): Promise<Analysis> => {
+  analyze: async (file: File, enrolled_speaker_id?: string): Promise<Analysis> => {
     if (IS_DEMO_MODE) {
       return analysisService.simulateAnalysis(file);
     }
@@ -16,6 +16,9 @@ export const api = {
     formData.append("audio", file);
     formData.append("phone_number", "Web Microphone");
     formData.append("carrier", "WebRTC");
+    if (enrolled_speaker_id) {
+      formData.append("enrolled_speaker_id", enrolled_speaker_id);
+    }
 
     try {
       const response = await fetch(`${API_URL}/api/analyze-call`, {
@@ -53,8 +56,8 @@ export const api = {
             keywords: data.pillars?.scam_nlp?.matched_keywords || []
           },
           voice_biometrics: {
-            risk_score: data.pillars?.voice_biometrics?.risk_score || 0,
-            match: (data.pillars?.voice_biometrics?.risk_score || 0) < 0.5
+            risk_score: data.pillars?.voice_biometrics?.risk_score,
+            match: data.pillars?.voice_biometrics?.is_enrolled_match || false
           }
         },
         signalContext: {
@@ -71,7 +74,7 @@ export const api = {
     }
   },
 
-  analyzePreset: async (preset: any): Promise<Analysis> => {
+  analyzePreset: async (preset: any, enrolled_speaker_id?: string): Promise<Analysis> => {
     const formData = new FormData();
     formData.append("phone_number", preset.phone_number);
     formData.append("carrier", preset.carrier);
@@ -79,6 +82,9 @@ export const api = {
     formData.append("voip_flag", preset.voip_flag ? "true" : "false");
     formData.append("transcript", preset.transcript);
     formData.append("preset_voice_score", preset.preset_voice_score.toString());
+    if (enrolled_speaker_id) {
+      formData.append("enrolled_speaker_id", enrolled_speaker_id);
+    }
 
     try {
       const response = await fetch(`${API_URL}/api/analyze-call`, {
@@ -113,8 +119,8 @@ export const api = {
             keywords: data.pillars?.scam_nlp?.matched_keywords || []
           },
           voice_biometrics: {
-            risk_score: data.pillars?.voice_biometrics?.risk_score || 0,
-            match: (data.pillars?.voice_biometrics?.risk_score || 0) < 0.5
+            risk_score: data.pillars?.voice_biometrics?.risk_score,
+            match: data.pillars?.voice_biometrics?.is_enrolled_match || false
           }
         },
         signalContext: {
@@ -230,5 +236,49 @@ export const api = {
       console.error("[API] getPresets error:", error);
       return [];
     }
+  },
+
+  getEnrolledVoices: async (): Promise<string[]> => {
+    if (IS_DEMO_MODE) return [];
+    try {
+      const response = await fetch(`${API_URL}/api/enrolled-voices`);
+      if (!response.ok) throw new Error("Failed to fetch enrolled voices");
+      return await response.json();
+    } catch (error) {
+      console.error("[API] getEnrolledVoices error:", error);
+      return [];
+    }
+  },
+
+  enrollVoice: async (file: Blob, speakerId: string): Promise<boolean> => {
+    if (IS_DEMO_MODE) return true;
+    const formData = new FormData();
+    formData.append("audio", file, "enrollment.wav");
+    formData.append("speaker_id", speakerId);
+    
+    try {
+      const response = await fetch(`${API_URL}/api/enroll-voice`, {
+        method: "POST",
+        body: formData,
+      });
+      return response.ok;
+    } catch (error) {
+      console.error("[API] enrollVoice error:", error);
+      return false;
+    }
+  },
+
+  deleteEnrolledVoice: async (speakerId: string): Promise<boolean> => {
+    if (IS_DEMO_MODE) return true;
+    try {
+      const response = await fetch(`${API_URL}/api/enrolled-voices/${speakerId}`, {
+        method: "DELETE"
+      });
+      return response.ok;
+    } catch (error) {
+      console.error("[API] deleteEnrolledVoice error:", error);
+      return false;
+    }
   }
 };
+

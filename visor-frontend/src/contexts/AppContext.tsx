@@ -22,9 +22,9 @@ interface AppState {
 
 interface AppContextActions {
   startRecording: () => Promise<void>;
-  stopRecording: () => Promise<void>;
-  uploadFile: (file: File) => Promise<void>;
-  analyzePreset: (preset: any) => Promise<void>;
+  stopRecording: (enrolledSpeakerId?: string) => Promise<void>;
+  uploadFile: (file: File, enrolledSpeakerId?: string) => Promise<void>;
+  analyzePreset: (preset: any, enrolledSpeakerId?: string) => Promise<void>;
   resetAnalysis: () => void;
   clearHistory: () => void;
 }
@@ -115,10 +115,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setState(prev => ({ ...prev, ...updates }));
   };
 
-  const processAudioFile = async (file: File) => {
+  const processAudioFile = async (file: File, enrolledSpeakerId?: string) => {
     updateState({ analysisState: "ANALYZING" });
     try {
-      const result = await api.analyze(file);
+      const result = await api.analyze(file, enrolledSpeakerId);
       const newHistory = [result, ...state.analysisHistory];
       
       if (api.getIsDemoMode()) {
@@ -151,21 +151,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
       }
     },
     
-    stopRecording: async () => {
+    stopRecording: async (enrolledSpeakerId?: string) => {
       if (timerInterval) clearInterval(timerInterval);
       const file = await audioService.stopRecording();
       updateState({ audioLevel: 0, recordingDuration: 0 });
-      await processAudioFile(file);
+      await processAudioFile(file, enrolledSpeakerId);
     },
 
-    uploadFile: async (file: File) => {
-      await processAudioFile(file);
+    uploadFile: async (file: File, enrolledSpeakerId?: string) => {
+      await processAudioFile(file, enrolledSpeakerId);
     },
 
-    analyzePreset: async (preset: any) => {
+    analyzePreset: async (preset: any, enrolledSpeakerId?: string) => {
       updateState({ analysisState: "ANALYZING" });
       try {
-        const result = await api.analyzePreset(preset);
+        const result = await api.analyzePreset(preset, enrolledSpeakerId);
         const newHistory = [result, ...state.analysisHistory];
         updateState({ 
           analysisState: "RESULT", 

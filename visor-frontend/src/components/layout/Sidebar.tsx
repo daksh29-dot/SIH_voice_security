@@ -16,6 +16,7 @@ export function Sidebar({ onClose }: SidebarProps) {
     { href: "/dashboard", label: "Dashboard", icon: <LayoutDashboard className="w-5 h-5" /> },
     { href: "/analyze", label: "Analysis", icon: <Activity className="w-5 h-5" /> },
     { href: "/threat-intelligence", label: "Threat Intel", icon: <ShieldAlert className="w-5 h-5" /> },
+    { href: "/enrollment", label: "Voice Enrollment", icon: <FileAudio className="w-5 h-5" /> },
     { href: "/history", label: "History", icon: <FileAudio className="w-5 h-5" /> },
   ]
 

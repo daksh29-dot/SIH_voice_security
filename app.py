@@ -51,7 +51,10 @@ from multi_modal_engine import (
 )
 from audit_ledger import ledger, threat_db
 
-app = Flask(__name__, static_folder="frontend", static_url_path="")
+from backend.models.speaker_encoder import get_speaker_encoder
+from backend.audio.preprocessing import AudioPreprocessor
+
+app = Flask(__name__, static_folder="frontend")
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
 CORS(app)
 
@@ -72,21 +75,27 @@ def get_detector():
 
 
 # ── Serve Frontend & Static Audio ────────────────────────────────────
-@app.route("/", defaults={'path': ''})
-@app.route("/<path:path>")
+@app.route("/", defaults={'path': ''}, methods=['GET', 'HEAD', 'OPTIONS'])
+@app.route("/<path:path>", methods=['GET', 'HEAD', 'OPTIONS'])
 def catch_all(path):
+    print(f"[DEBUG] catch_all called with path: '{path}', method: {request.method}")
     if path.startswith("api/") or path.startswith("audio/"):
         return jsonify({"error": "Not found"}), 404
     
     # Check if a specific HTML file exists for this route (Next.js static export behavior)
-    if path and not path.endswith('.html') and Path(app.static_folder, path + '.html').is_file():
+    has_html = path and not path.endswith('.html') and Path(app.static_folder, path + '.html').is_file()
+    print(f"[DEBUG] has_html for {path}: {has_html}")
+    if has_html:
         return send_from_directory(app.static_folder, path + '.html')
         
     # If the exact file exists in static folder (like CSS/JS chunks), serve it
-    if path and Path(app.static_folder, path).is_file():
+    has_exact = path and Path(app.static_folder, path).is_file()
+    print(f"[DEBUG] has_exact for {path}: {has_exact}")
+    if has_exact:
         return send_from_directory(app.static_folder, path)
         
     # Otherwise fallback to React index.html for client-side routing
+    print(f"[DEBUG] fallback to index.html")
     return send_from_directory(app.static_folder, "index.html")
 
 @app.route("/audio/<path:filename>")
@@ -151,6 +160,60 @@ def analyze():
             pass
 
 
+# ── 1.5 Voice Enrollment Endpoints ────────────────────────────────────
+@app.route("/api/enrolled-voices", methods=["GET"])
+def get_enrolled_voices():
+    encoder = get_speaker_encoder()
+    return jsonify(encoder.list_enrolled_speakers())
+
+@app.route("/api/enroll-voice", methods=["POST"])
+def enroll_voice():
+    if "audio" not in request.files or "speaker_id" not in request.form:
+        return jsonify({"error": "Missing audio or speaker_id"}), 400
+    
+    audio_file = request.files["audio"]
+    speaker_id = request.form["speaker_id"].strip()
+    
+    if not speaker_id:
+        return jsonify({"error": "Empty speaker_id"}), 400
+        
+    ext = Path(audio_file.filename).suffix or ".webm"
+    save_path = UPLOAD_DIR / f"{uuid.uuid4().hex}{ext}"
+    audio_file.save(str(save_path))
+    
+    try:
+        from audio_preprocessing import load_audio
+        data_sig, sr = load_audio(str(save_path))
+        preprocessor = AudioPreprocessor(target_sample_rate=16000)
+        audio_16k, valid, _ = preprocessor.process_chunk(data_sig, input_sr=sr)
+        
+        if not valid or len(audio_16k) < 8000:
+            return jsonify({"error": "Audio file too short or silent (need >= 0.5s speech)."}), 400
+            
+        encoder = get_speaker_encoder()
+        encoder.enroll_speaker(speaker_id, audio_16k)
+        return jsonify({"success": True, "speaker_id": speaker_id})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        try:
+            save_path.unlink()
+        except OSError:
+            pass
+
+@app.route("/api/enrolled-voices/<speaker_id>", methods=["DELETE"])
+def delete_enrolled_voice(speaker_id):
+    encoder = get_speaker_encoder()
+    clean_id = speaker_id.strip()
+    if clean_id in encoder.enrolled_speakers:
+        del encoder.enrolled_speakers[clean_id]
+        npy_path = encoder.enrolled_dir / f"{clean_id}.npy"
+        if npy_path.exists():
+            npy_path.unlink()
+        return jsonify({"success": True})
+    return jsonify({"error": "Speaker not found"}), 404
+
+
 # ── 2. Full 4-Pillar Multi-Modal Call Assessment ─────────────────────
 @app.route("/api/analyze-call", methods=["POST"])
 def analyze_call():
@@ -178,6 +241,9 @@ def analyze_call():
     # 1. Check Voice (Clone?) & Speech-to-Text
     voice_inference_ms = 0.0
     transcription_status = "PRESET_TEXT"
+    
+    enrolled_speaker_id = data.get("enrolled_speaker_id")
+    acoustic_consistency = None
     
     if "audio" in request.files and request.files["audio"].filename != "":
         audio_file = request.files["audio"]
@@ -209,6 +275,20 @@ def analyze_call():
         else:
             transcription_status = "CLIENT_STREAMED_TEXT"
 
+        # Biometric check using the saved file
+        if enrolled_speaker_id and enrolled_speaker_id != "none":
+            try:
+                encoder = get_speaker_encoder()
+                from audio_preprocessing import load_audio
+                data_sig, sr = load_audio(str(save_path))
+                preprocessor = AudioPreprocessor(target_sample_rate=16000)
+                audio_16k, valid, _ = preprocessor.process_chunk(data_sig, input_sr=sr)
+                if valid:
+                    spk_res = encoder.verify_speaker(enrolled_speaker_id, audio_16k)
+                    acoustic_consistency = spk_res["speaker_consistency_score"]
+            except Exception as e:
+                print(f"[!] Speaker verification error: {e}")
+
         try:
             save_path.unlink()
         except OSError:
@@ -232,7 +312,10 @@ def analyze_call():
     nlp_result = analyze_scam_intent(transcript)
 
     # 4. Check Match (Is it them?)
-    bio_result = check_voice_biometrics(voice_clone_score=voice_score)
+    bio_result = check_voice_biometrics(
+        voice_clone_score=voice_score,
+        acoustic_consistency_score=acoustic_consistency
+    )
 
     # Dynamic Risk Orchestrator
     orchestration = orchestrate_dynamic_risk(

@@ -15,6 +15,7 @@ from typing import Tuple
 import numpy as np
 import librosa
 
+from vad import trim_silence
 import _pathfix  # noqa: F401
 import config
 
@@ -127,6 +128,12 @@ def preprocess_audio(path: str | Path) -> np.ndarray:
         waveform = to_mono(waveform)
 
     waveform = resample(waveform, sr, config.TARGET_SAMPLE_RATE)
+    
+    # Trim Silence / Noise using Silero VAD
+    # This prevents the W2V2-AASIST model from evaluating background noise
+    # as synthetic generative artifacts.
+    waveform = trim_silence(waveform, sr=config.TARGET_SAMPLE_RATE)
+    
     waveform = normalize(waveform)
 
     return waveform

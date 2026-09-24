@@ -224,15 +224,16 @@ def check_voice_biometrics(
 ) -> Dict[str, Any]:
     """
     Evaluates Zero-Enrollment Acoustic Consistency & Biometric match probability.
+    If no voiceprint was selected (acoustic_consistency_score is None), returns
+    None for risk to exclude it from fusion.
     """
     if acoustic_consistency_score is None:
-        # Synthesize consistency based on naturalness
-        if voice_clone_score > 0.8:
-            acoustic_consistency_score = round(0.15 + (1.0 - voice_clone_score) * 0.2, 3)
-        elif voice_clone_score < 0.2:
-            acoustic_consistency_score = round(0.85 + (0.2 - voice_clone_score) * 0.5, 3)
-        else:
-            acoustic_consistency_score = 0.50
+        return {
+            "risk_score": None,
+            "biometric_trust": None,
+            "is_enrolled_match": None,
+            "acoustic_stability": "NOT_ENABLED"
+        }
 
     # Risk is inverse of biometric match trust
     risk_score = round(max(0.01, min(0.99, 1.0 - acoustic_consistency_score)), 3)
@@ -265,7 +266,7 @@ def orchestrate_dynamic_risk(
     voice_clone_risk: float,
     caller_cli_risk: float,
     scam_words_risk: float,
-    biometric_mismatch_risk: float,
+    biometric_mismatch_risk: Optional[float] = None,
     pillar_weights: Optional[Dict[str, float]] = None
 ) -> Dict[str, Any]:
     """
@@ -282,20 +283,24 @@ def orchestrate_dynamic_risk(
         "biometrics": 0.15
     }
 
+    if biometric_mismatch_risk is None:
+        del weights["biometrics"]
+
     # Normalize weights
     w_sum = sum(weights.values())
-    w_voice = weights["voice"] / w_sum
-    w_scam = weights["scam_words"] / w_sum
-    w_caller = weights["caller"] / w_sum
-    w_bio = weights["biometrics"] / w_sum
+    w_voice = weights.get("voice", 0) / w_sum
+    w_scam = weights.get("scam_words", 0) / w_sum
+    w_caller = weights.get("caller", 0) / w_sum
+    w_bio = weights.get("biometrics", 0) / w_sum if "biometrics" in weights else 0.0
 
     # Base weighted sum
     composite_risk = (
         (voice_clone_risk * w_voice) +
         (scam_words_risk * w_scam) +
-        (caller_cli_risk * w_caller) +
-        (biometric_mismatch_risk * w_bio)
+        (caller_cli_risk * w_caller)
     )
+    if biometric_mismatch_risk is not None:
+        composite_risk += (biometric_mismatch_risk * w_bio)
 
     # Nonlinear Risk Escalation: If Voice Clone + Scam Intent are BOTH severe, escalate risk to critical
     if voice_clone_risk >= 0.85 and scam_words_risk >= 0.75:
@@ -336,6 +341,6 @@ def orchestrate_dynamic_risk(
             "voice_clone_risk": round(voice_clone_risk, 3),
             "caller_cli_risk": round(caller_cli_risk, 3),
             "scam_words_risk": round(scam_words_risk, 3),
-            "biometric_mismatch_risk": round(biometric_mismatch_risk, 3)
+            "biometric_mismatch_risk": round(biometric_mismatch_risk, 3) if biometric_mismatch_risk is not None else None
         }
     }

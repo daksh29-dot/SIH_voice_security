@@ -8,11 +8,14 @@ import { Badge } from "@/components/ui/Badge";
 import { Mic, Upload, Square, Activity, AlertTriangle, ShieldCheck, CheckCircle2, FileAudio, Info } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppState } from "@/contexts/AppContext";
+import { api } from "@/lib/api";
 
 export default function AnalyzePage() {
   const { state, actions } = useAppState();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [presets, setPresets] = useState<any[]>([]);
+  const [enrolledVoices, setEnrolledVoices] = useState<string[]>([]);
+  const [selectedVoice, setSelectedVoice] = useState<string>("none");
   
   // Local UI state for analysis stage animation
   const [analysisStage, setAnalysisStage] = useState(0);
@@ -21,6 +24,7 @@ export default function AnalyzePage() {
   useEffect(() => {
     import("@/lib/api").then((mod) => {
       mod.api.getPresets().then(setPresets);
+      mod.api.getEnrolledVoices().then(setEnrolledVoices);
     });
   }, []);
 
@@ -57,7 +61,7 @@ export default function AnalyzePage() {
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) actions.uploadFile(file);
+    if (file) actions.uploadFile(file, selectedVoice !== "none" ? selectedVoice : undefined);
   };
 
   const formatTime = (seconds: number) => {
@@ -77,6 +81,21 @@ export default function AnalyzePage() {
             <div className="text-center space-y-4">
               <h1 className="text-4xl font-light tracking-tight">Ready to analyze</h1>
               <p className="text-text-secondary">Start a live voice analysis or upload an audio recording.</p>
+            </div>
+
+            <div className="w-full max-w-sm flex flex-col items-center space-y-2 mt-4">
+              <label htmlFor="voiceSelect" className="text-sm font-medium text-text-secondary">Optional: Select Voiceprint to Verify</label>
+              <select 
+                id="voiceSelect"
+                value={selectedVoice}
+                onChange={(e) => setSelectedVoice(e.target.value)}
+                className="w-full bg-surface-secondary border border-border rounded-md px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-accent appearance-none"
+              >
+                <option value="none">-- No Voiceprint (Spoof Detection Only) --</option>
+                {enrolledVoices.map(voice => (
+                  <option key={voice} value={voice}>{voice}</option>
+                ))}
+              </select>
             </div>
 
             <button 
@@ -122,7 +141,7 @@ export default function AnalyzePage() {
               </div>
             </div>
 
-            <Button variant="danger" size="lg" onClick={actions.stopRecording} className="w-48 shadow-lg shadow-danger/20">
+            <Button variant="danger" size="lg" onClick={() => actions.stopRecording(selectedVoice !== "none" ? selectedVoice : undefined)} className="w-48 shadow-lg shadow-danger/20">
               <Square className="w-4 h-4 mr-2 fill-current" /> Stop Recording
             </Button>
           </motion.div>
@@ -199,6 +218,16 @@ export default function AnalyzePage() {
                       <div className="flex justify-between items-center p-4">
                         <div><p className="text-sm font-medium">Threat Indicators</p><p className="text-xs text-text-secondary mt-0.5">Semantic Intent: {result.pillars.scam_nlp.detected_intent}</p></div>
                         <Badge variant={result.pillars.scam_nlp.risk_score > 0.7 ? "danger" : "default"}>{result.pillars.scam_nlp.keywords.length > 0 ? `Flags: ${result.pillars.scam_nlp.keywords.join(', ')}` : "No threats detected"}</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-4">
+                        <div><p className="text-sm font-medium">Biometric Match</p><p className="text-xs text-text-secondary mt-0.5">Zero-Enrollment Voiceprint</p></div>
+                        {result.pillars.voice_biometrics.risk_score === null ? (
+                          <Badge variant="default" className="opacity-50">Not Enabled</Badge>
+                        ) : (
+                          <Badge variant={result.pillars.voice_biometrics.match ? "success" : "danger"}>
+                            {result.pillars.voice_biometrics.match ? "Identity Matched" : "Identity Mismatch"}
+                          </Badge>
+                        )}
                       </div>
                     </div>
                   </CardContent>
