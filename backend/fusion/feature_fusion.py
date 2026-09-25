@@ -15,7 +15,8 @@ from dataclasses import dataclass
 from typing import Optional, Dict, Any
 import numpy as np
 
-from backend.fusion.calibration import ScoreCalibrator
+from typing import Any
+ScoreCalibrator = Any  # Optional explicit adapter; no unverified implicit calibration
 
 
 @dataclass
@@ -46,6 +47,8 @@ class AcousticFusionResult:
             "calibrated_wavlm": float(self.calibrated_wavlm) if self.calibrated_wavlm is not None else None,
             "wavlm_active": bool(self.wavlm_active),
             "active_weights": self.active_weights,
+            "score_kind": "uncalibrated_risk_score",
+            "confidence_available": False,
         }
 
 
@@ -72,7 +75,11 @@ class MultiSignalFusionHead:
         self.prosody_weight = prosody_weight
         self.wavlm_weight = wavlm_weight
         self.decision_threshold = decision_threshold
-        self.calibrator = calibrator or ScoreCalibrator()
+        if not all(np.isfinite(v) and v >= 0 for v in (w2v2_weight,prosody_weight,wavlm_weight)) or w2v2_weight+prosody_weight <= 0:
+            raise ValueError("Invalid fusion weights")
+        if not 0 < decision_threshold < 1:
+            raise ValueError("Invalid fusion threshold")
+        self.calibrator = calibrator
 
     def fuse(
         self,
@@ -94,6 +101,17 @@ class MultiSignalFusionHead:
             AcousticFusionResult: Unified risk score, flags, and feature breakdown.
         """
         # 1. Calibrate raw subsystem probabilities
+        for value in (w2v2_score, prosody_score, wavlm_score):
+            if value is not None and (not np.isfinite(value) or not 0 <= value <= 1):
+                raise ValueError("Fusion requires finite scores in [0,1]")
+        # Without a supplied validated calibration, retain the neural score.
+        # Prosody is an anomaly measure, not a trained spoof probability; adding
+        # it by an arbitrary weight can change genuine-voice decisions.
+        if self.calibrator is None:
+            return AcousticFusionResult(float(w2v2_score), bool(w2v2_score >= self.decision_threshold),
+                0.0, float(w2v2_score), float(w2v2_score), float(prosody_score),
+                float(prosody_score), wavlm_score, None, False,
+                {"w2v2":1.0,"prosody":0.0,"wavlm":0.0})
         cal_w2v2 = self.calibrator.calibrate_w2v2(w2v2_score)
         cal_prosody = self.calibrator.calibrate_prosody(prosody_score)
 
@@ -116,8 +134,8 @@ class MultiSignalFusionHead:
             # Graceful fallback: re-normalize across W2V2 and OpenSMILE
             cal_wavlm = None
             avail_sum = self.w2v2_weight + self.prosody_weight
-            norm_w2v2 = round(self.w2v2_weight / avail_sum, 4)
-            norm_prosody = round(self.prosody_weight / avail_sum, 4)
+            norm_w2v2 = self.w2v2_weight / avail_sum
+            norm_prosody = self.prosody_weight / avail_sum
             active_weights = {
                 "w2v2": norm_w2v2,
                 "prosody": norm_prosody,
@@ -126,9 +144,11 @@ class MultiSignalFusionHead:
             fused_score = (norm_w2v2 * cal_w2v2) + (norm_prosody * cal_prosody)
             wavlm_active = False
 
-        unified_risk = float(np.clip(fused_score, 0.0, 1.0))
+        if not np.isfinite(fused_score) or not 0 <= fused_score <= 1:
+            raise ValueError("Calibration produced invalid fused score")
+        unified_risk = float(fused_score)
         is_spoof = bool(unified_risk >= self.decision_threshold)
-        confidence = float(abs(unified_risk - 0.5) * 2.0)  # Distance from decision boundary
+        confidence = 0.0  # No measured confidence estimator was supplied
 
         return AcousticFusionResult(
             acoustic_spoof_risk=round(unified_risk, 4),
@@ -153,5 +173,8 @@ def get_fusion_head() -> MultiSignalFusionHead:
     """Retrieve or initialize the global shared MultiSignalFusionHead singleton."""
     global _global_fusion_head
     if _global_fusion_head is None:
-        _global_fusion_head = MultiSignalFusionHead()
+        # Uses backend/fusion/live_calibration.json if it has been fitted
+        # (see backend/fusion/live_calibrator.py); otherwise None, same as before.
+        from backend.fusion.live_calibrator import LiveScoreCalibrator
+        _global_fusion_head = MultiSignalFusionHead(calibrator=LiveScoreCalibrator.load_if_available())
     return _global_fusion_head

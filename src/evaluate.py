@@ -22,7 +22,7 @@ import numpy as np
 import pandas as pd
 
 import _pathfix  # noqa: F401
-import config
+import src.config
 from inference import VoiceSpoofDetector
 from decision import Decision
 

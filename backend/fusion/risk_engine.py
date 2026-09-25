@@ -5,13 +5,13 @@ Project VISOR Explainable Risk Engine State Machine (Phase 5).
 Implements a 5-state decision machine with granular, explainable signal breakdowns:
   1. ANALYZING: Waiting for sufficient valid speech frames (buffer filling).
   2. INSUFFICIENT AUDIO: VAD or audio energy below minimum thresholds (silence / non-speech).
-  3. LOW RISK: High speaker consistency (>0.75), low acoustic spoof risk (<0.35), zero scam flags.
+  3. LOW RISK: Explicit speaker match, low acoustic spoof risk (<0.35), zero scam flags.
   4. REVIEW: Borderline spoof score (0.35–0.65) OR unverified speaker identity with neutral intent.
   5. HIGH RISK: Spoof score >= 0.70 OR (Speaker Imposter Detected + Scam Intent Detected).
 
 Every evaluation returns an explainable breakdown of contributing signals:
-  - Acoustic spoof probability & status
-  - Speaker biometric consistency, similarity, and imposter flag
+  - Uncalibrated acoustic score & status
+  - Speaker biometric consistency, similarity, and match result
   - Semantic fraud intent score, triggered categories, and flagged phrases
   - Energy & VAD stream telemetry
 """
@@ -88,6 +88,10 @@ class RiskEngine:
         imposter_speaker_consistency: float = IMPOSTER_SPEAKER_CONSISTENCY,
         scam_threat_thresh: float = SCAM_THREAT_THRESHOLD,
     ):
+        vals = (low_spoof_thresh, high_spoof_thresh, high_speaker_consistency,
+                imposter_speaker_consistency, scam_threat_thresh)
+        if not all(np.isfinite(v) and 0 <= v <= 1 for v in vals) or low_spoof_thresh >= high_spoof_thresh:
+            raise ValueError("Invalid risk thresholds")
         self.low_spoof_thresh = low_spoof_thresh
         self.high_spoof_thresh = high_spoof_thresh
         self.high_speaker_consistency = high_speaker_consistency
@@ -123,7 +127,7 @@ class RiskEngine:
             acoustic_spoof_risk: Multi-signal fused acoustic spoof score [0.0, 1.0].
             speaker_consistency: Biometric speaker consistency score [0.0, 1.0].
             speaker_similarity: Raw cosine similarity against enrolled profile [-1.0, 1.0].
-            speaker_match: True if match, False if imposter, None if unverified/no enrolled speaker.
+            speaker_match: True if match, False if comparison did not match, None if unverified/no enrolled speaker.
             speaker_enrolled: True if an enrolled profile exists for comparison.
             semantic_threat_score: NLP scam intent threat score [0.0, 1.0].
             triggered_intents: List of detected scam intent categories.
@@ -137,6 +141,21 @@ class RiskEngine:
         Returns:
             RiskEvaluationResult: Evaluated state, explanation, composite risk, and signal breakdowns.
         """
+        # Never turn missing/NaN outputs into apparently clean results.
+        for name, value in (("acoustic_spoof_risk", acoustic_spoof_risk),
+                            ("speaker_consistency", speaker_consistency),
+                            ("semantic_threat_score", semantic_threat_score),
+                            ("w2v2_score", w2v2_score), ("prosody_anomaly_score", prosody_anomaly_score)):
+            if not isinstance(value, (int, float, np.number)) or not np.isfinite(value) or not 0 <= value <= 1:
+                raise ValueError(f"{name} must be a finite score in [0,1]")
+        if not np.isfinite(speaker_similarity) or not -1 <= speaker_similarity <= 1:
+            raise ValueError("Invalid cosine similarity")
+        if wavlm_score is not None and (not np.isfinite(wavlm_score) or not 0 <= wavlm_score <= 1):
+            raise ValueError("Invalid WavLM score")
+        if speaker_match is not None:
+            if not isinstance(speaker_match, (bool, np.bool_)):
+                raise ValueError("speaker_match must be bool or None")
+            speaker_match = bool(speaker_match)
         now_ts = timestamp or datetime.datetime.now(datetime.timezone.utc).isoformat()
         triggered_intents = triggered_intents or []
         flagged_phrases = flagged_phrases or []
@@ -206,16 +225,17 @@ class RiskEngine:
         is_spoof_low = acoustic_spoof_risk < self.low_spoof_thresh
 
         # Speaker imposter detection
-        # Imposter detected if an enrolled profile exists and consistency is below threshold or match is explicitly False
-        is_speaker_imposter = speaker_enrolled and (
-            speaker_match is False or speaker_consistency < self.imposter_speaker_consistency
-        )
-        is_speaker_verified_high = speaker_enrolled and (speaker_consistency > self.high_speaker_consistency)
-        is_speaker_unverified = not speaker_enrolled
+        # A non-match is a comparison result, not proof of an impostor.
+        # The speaker encoder owns its threshold. Never contradict its decision
+        # using a second threshold on an arbitrary display-score transformation.
+        # None means unavailable/insufficient evidence, NOT a mismatch.
+        is_speaker_imposter = speaker_enrolled and speaker_match is False
+        is_speaker_verified_high = speaker_enrolled and speaker_match is True
+        is_speaker_unverified = not speaker_enrolled or speaker_match is None
 
         # Scam intent detection
         is_scam_detected = (semantic_threat_score >= self.scam_threat_thresh) or (len(triggered_intents) > 0)
-        has_zero_scam_flags = (len(triggered_intents) == 0) and (semantic_threat_score < self.CLEAN_SCAM_THRESHOLD)
+        has_zero_scam_flags = (len(triggered_intents) == 0) and not flagged_phrases and (semantic_threat_score < self.CLEAN_SCAM_THRESHOLD)
 
         # Evaluate HIGH RISK:
         # Rule: Spoof score >= 0.70 OR (Speaker Imposter Detected + Scam Intent Detected)
@@ -226,7 +246,7 @@ class RiskEngine:
             if is_speaker_imposter and is_scam_detected:
                 intents_str = ", ".join(triggered_intents) if triggered_intents else "telecom fraud intent"
                 explanations.append(
-                    f"Speaker imposter detected (consistency {speaker_consistency:.2f} < {self.imposter_speaker_consistency:.2f}) "
+                    f"Speaker did not match the enrolled profile (cosine {speaker_similarity:.2f}) "
                     f"with concurrent scam intent ({intents_str})"
                 )
 
@@ -258,7 +278,7 @@ class RiskEngine:
             )
 
         # Evaluate LOW RISK:
-        # Rule: High speaker consistency (>0.75), low acoustic spoof risk (<0.35), zero scam flags.
+        # Rule: Explicit speaker match, low acoustic spoof risk (<0.35), zero scam flags.
         if is_speaker_verified_high and is_spoof_low and has_zero_scam_flags:
             factors = self._build_breakdowns(
                 acoustic_risk=acoustic_spoof_risk,
@@ -280,7 +300,7 @@ class RiskEngine:
             return RiskEvaluationResult(
                 state=RiskState.LOW_RISK,
                 explanation=(
-                    f"LOW RISK: High speaker consistency ({speaker_consistency:.2f} > {self.high_speaker_consistency:.2f}), "
+                    f"LOW RISK: Speaker matched the enrolled profile (cosine {speaker_similarity:.2f}), "
                     f"low acoustic spoof risk ({acoustic_spoof_risk:.2f} < {self.low_spoof_thresh:.2f}), zero scam flags."
                 ),
                 composite_risk=round(float(composite), 4),
@@ -360,40 +380,49 @@ class RiskEngine:
         # Acoustic status
         if acoustic_risk >= self.high_spoof_thresh:
             ac_status = "CRITICAL"
-            ac_exp = f"Acoustic spoof risk {acoustic_risk:.2f} >= {self.high_spoof_thresh:.2f}: synthetic voice characteristics detected."
+            ac_exp = f"Acoustic spoof risk {acoustic_risk:.2f} >= {self.high_spoof_thresh:.2f}: elevated model score, not proof of synthetic speech."
         elif acoustic_risk >= self.low_spoof_thresh:
             ac_status = "BORDERLINE"
             ac_exp = f"Acoustic spoof risk {acoustic_risk:.2f} is in borderline range [{self.low_spoof_thresh:.2f}, {self.high_spoof_thresh:.2f})."
         else:
             ac_status = "NORMAL"
-            ac_exp = f"Acoustic spoof risk {acoustic_risk:.2f} is within normal human threshold (< {self.low_spoof_thresh:.2f})."
+            ac_exp = f"Acoustic spoof risk {acoustic_risk:.2f} is below the configured review threshold (< {self.low_spoof_thresh:.2f})."
 
         # Speaker status
         if not speaker_enrolled:
             spk_status = "UNVERIFIED"
             spk_exp = "No enrolled speaker profile provided; identity unverified."
-        elif speaker_match is False or speaker_consistency < self.imposter_speaker_consistency:
-            spk_status = "IMPOSTER"
-            spk_exp = f"Voice does not match enrolled profile (consistency {speaker_consistency:.2f} < {self.imposter_speaker_consistency:.2f})."
-        elif speaker_consistency > self.high_speaker_consistency:
+        elif speaker_match is None:
+            spk_status = "UNVERIFIED"
+            spk_exp = "Speaker comparison unavailable; insufficient audio or invalid enrollment is not an impostor."
+        elif speaker_match is False:
+            spk_status = "NO_MATCH"
+            spk_exp = f"Voice did not pass the encoder matching threshold (cosine {speaker_similarity:.2f}); this alone does not establish impersonation."
+        elif speaker_match is True:
             spk_status = "MATCH"
-            spk_exp = f"Voice biometrics strongly match enrolled profile (consistency {speaker_consistency:.2f} > {self.high_speaker_consistency:.2f})."
+            spk_exp = f"Voice passed the encoder matching threshold (cosine {speaker_similarity:.2f}); speaker identity is separate from spoof detection."
         else:
             spk_status = "BORDERLINE"
             spk_exp = f"Voice similarity inconclusive (consistency {speaker_consistency:.2f})."
 
         # Semantic status
-        if semantic_threat >= self.scam_threat_thresh or len(triggered_intents) > 0:
+        if semantic_threat >= self.scam_threat_thresh or len(triggered_intents) > 0 or flagged_phrases:
             sem_status = "FLAGGED"
             sem_exp = f"Detected scam intent patterns: {', '.join(triggered_intents) if triggered_intents else 'Suspicious phrases'}"
         else:
             sem_status = "CLEAN"
             sem_exp = "Zero telecom fraud or social engineering patterns detected."
 
+        if not is_valid_audio or not vad_active or not window_ready:
+            ac_status = "NOT_EVALUATED"
+            ac_exp = "Current audio has not passed the readiness gates; displayed scores may be stale."
+            spk_status = "UNVERIFIED"
+            spk_exp = "Wait for a valid audio window before interpreting identity."
         return {
             "acoustic_spoof": {
                 "status": ac_status,
                 "fused_risk": round(float(acoustic_risk), 4),
+                "score_kind": "heuristic_risk_not_calibrated_probability",
                 "w2v2_score": round(float(w2v2_score), 4),
                 "prosody_anomaly_score": round(float(prosody_score), 4),
                 "wavlm_score": round(float(wavlm_score), 4) if wavlm_score is not None else None,
@@ -403,8 +432,9 @@ class RiskEngine:
                 "status": spk_status,
                 "enrolled": speaker_enrolled,
                 "consistency_score": round(float(speaker_consistency), 4),
+                "score_kind": "heuristic_display_score",
                 "similarity": round(float(speaker_similarity), 4),
-                "is_match": speaker_match,
+                "is_match": speaker_match if (is_valid_audio and vad_active and window_ready) else None,
                 "explanation": spk_exp,
             },
             "semantic_intent": {

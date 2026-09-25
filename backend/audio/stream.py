@@ -23,7 +23,7 @@ class RollingAudioBuffer:
     def __init__(
         self,
         sample_rate: int = 16000,
-        window_duration_sec: float = 3.0,
+        window_duration_sec: float = 4.0375,
         step_duration_sec: float = 0.5,
     ):
         """
@@ -39,6 +39,8 @@ class RollingAudioBuffer:
         self.window_samples = int(round(window_duration_sec * sample_rate))
         self.step_samples = int(round(step_duration_sec * sample_rate))
 
+        if self.window_samples <= 0 or not 0 < self.step_samples <= self.window_samples:
+            raise ValueError("Invalid buffer window/hop")
         self._lock = threading.RLock()
         self._buffer = np.empty(0, dtype=np.float32)
         self._accumulated_since_step = 0
@@ -57,7 +59,9 @@ class RollingAudioBuffer:
         if chunk is None or len(chunk) == 0:
             return False
 
-        chunk_1d = np.asarray(chunk, dtype=np.float32).flatten()
+        chunk_1d = np.asarray(chunk, dtype=np.float32)
+        if chunk_1d.ndim != 1 or not np.isfinite(chunk_1d).all():
+            raise ValueError("Buffer requires finite mono PCM")
         num_new_samples = len(chunk_1d)
 
         with self._lock:
@@ -93,7 +97,7 @@ class RollingAudioBuffer:
         """
         Retrieve a copy of the latest rolling window and reset the hop-size accumulator.
 
-        If the buffer is not yet full, zero-pads up to window_samples to enable early inference.
+        If the buffer is not full, raises instead of manufacturing silence.
 
         Returns:
             np.ndarray: 1D float32 array of shape (window_samples,)
@@ -101,31 +105,14 @@ class RollingAudioBuffer:
         with self._lock:
             self._accumulated_since_step = 0
 
-            if len(self._buffer) == 0:
-                return np.zeros(self.window_samples, dtype=np.float32)
-
-            if len(self._buffer) >= self.window_samples:
-                # Return the most recent window_samples
-                return self._buffer[-self.window_samples :].copy()
-            else:
-                # Early partial window: zero-pad to fixed window size
-                padded = np.zeros(self.window_samples, dtype=np.float32)
-                padded[-len(self._buffer) :] = self._buffer
-                return padded
+            if len(self._buffer) < self.window_samples:
+                raise ValueError("Wait for a full contiguous model window")
+            return self._buffer[-self.window_samples:].copy()
 
     def peek_window(self) -> np.ndarray:
-        """
-        Retrieve a copy of the latest window without resetting the hop accumulator.
-        """
+        """Actual buffered samples, without padding or hop reset (enrollment)."""
         with self._lock:
-            if len(self._buffer) == 0:
-                return np.zeros(self.window_samples, dtype=np.float32)
-            if len(self._buffer) >= self.window_samples:
-                return self._buffer[-self.window_samples :].copy()
-            else:
-                padded = np.zeros(self.window_samples, dtype=np.float32)
-                padded[-len(self._buffer) :] = self._buffer
-                return padded
+            return self._buffer.copy()
 
     def clear(self) -> None:
         """Flush buffer and reset state for a new stream."""

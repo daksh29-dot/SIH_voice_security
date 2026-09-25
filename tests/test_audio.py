@@ -9,7 +9,7 @@ import numpy as np
 import soundfile as sf
 import pytest
 
-import config
+import src.config
 from audio_preprocessing import to_mono, resample, normalize, preprocess_audio
 from segment_audio import pad_fixed, segment_waveform, segment_waveform_sliding
 

@@ -218,32 +218,21 @@ def check_caller_telecom(
 # 3. VOICE MATCH / ACOUSTIC BIOMETRICS CHECK
 # ─────────────────────────────────────────────────────────────────────────────
 
-def check_voice_biometrics(
-    voice_clone_score: float,
-    acoustic_consistency_score: Optional[float] = None
-) -> Dict[str, Any]:
-    """
-    Evaluates Zero-Enrollment Acoustic Consistency & Biometric match probability.
-    If no voiceprint was selected (acoustic_consistency_score is None), returns
-    None for risk to exclude it from fusion.
-    """
-    if acoustic_consistency_score is None:
-        return {
-            "risk_score": None,
-            "biometric_trust": None,
-            "is_enrolled_match": None,
-            "acoustic_stability": "NOT_ENABLED"
-        }
-
-    # Risk is inverse of biometric match trust
-    risk_score = round(max(0.01, min(0.99, 1.0 - acoustic_consistency_score)), 3)
-
-    return {
-        "risk_score": risk_score,
-        "biometric_trust": acoustic_consistency_score,
-        "is_enrolled_match": acoustic_consistency_score >= 0.70,
-        "acoustic_stability": "STABLE" if acoustic_consistency_score >= 0.6 else "SYNTHETIC_JITTER"
-    }
+def check_voice_biometrics(voice_clone_score, acoustic_consistency_score=None,
+                           speaker_match=None, speaker_similarity=None):
+    """Identity comes only from an actual speaker comparison, never spoof score."""
+    if acoustic_consistency_score is None or speaker_match is None:
+        return {"risk_score": None, "biometric_trust": None,
+                "is_enrolled_match": None, "acoustic_stability": "UNVERIFIED",
+                "similarity": speaker_similarity}
+    if not math.isfinite(acoustic_consistency_score) or not 0 <= acoustic_consistency_score <= 1:
+        raise ValueError("Invalid speaker display score")
+    return {"risk_score": round(1-acoustic_consistency_score, 3),
+            "biometric_trust": acoustic_consistency_score,
+            "is_enrolled_match": bool(speaker_match),
+            "acoustic_stability": "MATCH" if speaker_match else "NO_MATCH",
+            "similarity": speaker_similarity,
+            "score_kind": "heuristic_not_probability"}
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -276,7 +265,7 @@ def orchestrate_dynamic_risk(
     - Med Risk  (0.25 - 0.60 Risk)         -> STEP_UP_MFA (Amber)
     - High Risk (>0.60 Risk / <0.40 Trust) -> BLOCK_AND_HOLD (Red)
     """
-    weights = pillar_weights or {
+    weights = dict(pillar_weights) if pillar_weights is not None else {
         "voice": 0.35,
         "scam_words": 0.30,
         "caller": 0.20,
@@ -284,8 +273,15 @@ def orchestrate_dynamic_risk(
     }
 
     if biometric_mismatch_risk is None:
-        del weights["biometrics"]
+        weights.pop("biometrics", None)
 
+    for value in (voice_clone_risk,caller_cli_risk,scam_words_risk,biometric_mismatch_risk):
+        if value is not None and (not math.isfinite(value) or not 0 <= value <= 1):
+            raise ValueError("Invalid risk score")
+    if voice_clone_risk is None:
+        weights.pop("voice", None)
+    if not weights or any(not math.isfinite(v) or v < 0 for v in weights.values()) or sum(weights.values()) <= 0:
+        raise ValueError("Invalid pillar weights")
     # Normalize weights
     w_sum = sum(weights.values())
     w_voice = weights.get("voice", 0) / w_sum
@@ -295,7 +291,7 @@ def orchestrate_dynamic_risk(
 
     # Base weighted sum
     composite_risk = (
-        (voice_clone_risk * w_voice) +
+        ((voice_clone_risk if voice_clone_risk is not None else 0.0) * w_voice) +
         (scam_words_risk * w_scam) +
         (caller_cli_risk * w_caller)
     )
@@ -303,7 +299,7 @@ def orchestrate_dynamic_risk(
         composite_risk += (biometric_mismatch_risk * w_bio)
 
     # Nonlinear Risk Escalation: If Voice Clone + Scam Intent are BOTH severe, escalate risk to critical
-    if voice_clone_risk >= 0.85 and scam_words_risk >= 0.75:
+    if voice_clone_risk is not None and voice_clone_risk >= 0.85 and scam_words_risk >= 0.75:
         composite_risk = max(composite_risk, 0.94)
     elif scam_words_risk >= 0.90 and caller_cli_risk >= 0.60:
         composite_risk = max(composite_risk, 0.88)
@@ -328,6 +324,9 @@ def orchestrate_dynamic_risk(
         action_color = "green"
         action_recommendation = "LOW RISK: Voice acoustics natural, caller authenticated, no malicious patterns detected."
 
+    if voice_clone_risk is None and policy_action == "PROCEED_NORMALLY":
+        policy_action,action_label,action_color = "STEP_UP_MFA","Voice assessment unavailable; review required","amber"
+        action_recommendation = "No valid voice assessment; do not interpret missing evidence as genuine."
     return {
         "composite_risk_score": composite_risk,
         "composite_trust_score": composite_trust,
@@ -338,7 +337,7 @@ def orchestrate_dynamic_risk(
         "action_color": action_color,
         "recommendation": action_recommendation,
         "pillar_scores": {
-            "voice_clone_risk": round(voice_clone_risk, 3),
+            "voice_clone_risk": round(voice_clone_risk, 3) if voice_clone_risk is not None else None,
             "caller_cli_risk": round(caller_cli_risk, 3),
             "scam_words_risk": round(scam_words_risk, 3),
             "biometric_mismatch_risk": round(biometric_mismatch_risk, 3) if biometric_mismatch_risk is not None else None

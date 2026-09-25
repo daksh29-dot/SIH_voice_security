@@ -11,49 +11,52 @@
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-danger: var(--danger);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter), var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), var(--font-geist-mono), monospace;
+  --font-display: var(--font-space-grotesk), var(--font-inter), sans-serif;
 }
 
 :root {
-  /* Deep graphite palette */
-  --background: #111214;
-  --foreground: #F0F1F2;
-  --surface-primary: #18191B;
-  --surface-secondary: #212225;
-  --border: #2A2B2E;
-  --text-secondary: #8E9297;
+  /* VISOR Precise Theme Palette */
+  --background: #0D041C;
+  --surface-primary: rgba(88, 45, 135, 0.16);
+  --surface-secondary: #160B28;
+  --border: rgba(208, 179, 255, 0.18);
   
-  /* Restrained, muted semantic colors */
-  --accent: #58799C;
-  --success: #4E8062;
-  --warning: #A17646;
-  --danger: #964F52;
+  --foreground: #F4EEFA;
+  --text-secondary: #B8A9CB;
+  
+  --accent: #8B3DFF;
+  --lavender: #D9A3FF;
+  --lime: #D5FF45;
+
+  /* Semantic colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background-color: var(--background);
+  background: linear-gradient(135deg, #0a0512 0%, #180936 50%, #0a0512 100%);
+  background-attachment: fixed;
   color: var(--foreground);
-  font-family: var(--font-sans), sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.012em;
 }
 
-/* Custom Scrollbar for a polished feel */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--surface-secondary); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border); }
 
-::-webkit-scrollbar-track {
-  background: var(--background);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--surface-secondary);
-  border-radius: 2px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--border);
+/* Selection */
+::selection {
+  background-color: color-mix(in srgb, var(--accent) 25%, transparent);
 }

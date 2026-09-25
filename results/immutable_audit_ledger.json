@@ -1,5 +1,1069 @@
 [
   {
+    "index": 201,
+    "timestamp": "2026-09-25 15:57:09 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.225,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha I am from gtbit college and I love to eat cook and sleep so good night bye-bye finish",
+    "pillar_details": {
+      "voice_clone_risk": 0.5355993391590177,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": null,
+      "matched_keywords": []
+    },
+    "prev_hash": "be05d1743e517e6d1585f815b904613a3f8b352306d457482dd49a0575146781",
+    "block_hash": "a26c81f62d5f0ed193c9a1a3538136ba8213b44374d4f92d62d2b95f26f8cb6f"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 15:55:15 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.322,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav I study in gtbit college New Delhi I am pursuing BTech and I love playing Sports like cricket hockey badminton football and I l",
+    "pillar_details": {
+      "voice_clone_risk": 0.8420094404094276,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.156,
+      "matched_keywords": []
+    },
+    "prev_hash": "a289dd5dc5e0e5f49fc4214c71ac2f1b08673bf85f69918f00952e6d256e3918",
+    "block_hash": "3b67cb9f2e07ba67dc1296d11beb129537e211c703c73998fa3e8bbaa50bb357"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 15:52:42 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.438,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.9998938169899924,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.457,
+      "matched_keywords": []
+    },
+    "prev_hash": "23fe1ca29f7fbab81f3c8e856b1c7ea99e1b5b5c8aee85dd7fc847f084e97776",
+    "block_hash": "aaa8fbcd1bc1a217a31759068824100acd4ab29effdbaa3ea7903bf48c64865e"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 15:45:19 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.438,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.9998938169899924,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.457,
+      "matched_keywords": []
+    },
+    "prev_hash": "243d0270c52511957fdde7c5bb89e3becfa8b3b545a6063597e7f7cf30c6defb",
+    "block_hash": "695667f4eebd5d4573930860f6c4a675f8ad478b11f7622cfcb6ec1370d6ae01"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 15:35:42 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.434,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.9998938169899924,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": null,
+      "matched_keywords": []
+    },
+    "prev_hash": "850b03de6ed7b2119707b68a384575e1d63f84ce53b3663a59784ef716216c25",
+    "block_hash": "f0a245dc012ff62c55840304f1ba84849f5a7cdf1b325631ef47ae5659e0c988"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 15:29:54 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.371,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav I said in gtbit College New Delhi I am doing BTech here so let's go good morning bye bye",
+    "pillar_details": {
+      "voice_clone_risk": 0.9891413649998257,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.136,
+      "matched_keywords": []
+    },
+    "prev_hash": "bdc7ccbb61add301f7ba7385e0c9aa6b573e637a7977fce8949771a6b34e23c7",
+    "block_hash": "6110677c46992b3101ca8041d9c224dd81e987b26ee7920c4c3fe727982372a9"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 15:27:44 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.438,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.9998938169899924,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.457,
+      "matched_keywords": []
+    },
+    "prev_hash": "bad480e18e757809a960160fa035e19826d4d42686c685befbcc7cbbebc763ed",
+    "block_hash": "11c7e2164db01209d5c61bada4cc6e985cd337a27cfa1f1dcf2979141fc40cd9"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 15:22:25 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.438,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.9998938169899924,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.457,
+      "matched_keywords": []
+    },
+    "prev_hash": "832aa1909d183e31665dcf701a828a157f839d34c36f5f891d2728abc49c1467",
+    "block_hash": "eb1729d07711f65d782fadd9982df63d7e8d0ac06bedac39c1b1b2106cf9e842"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 15:16:35 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.367,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello good morning my name is Utsav I study in gtbit college New Delhi I love to play sports like cricket hockey football Marathon so good night",
+    "pillar_details": {
+      "voice_clone_risk": 0.9937257095539737,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.104,
+      "matched_keywords": []
+    },
+    "prev_hash": "f5482d31ddadcacb7c69645dc724229dc3807848d26956942bfce18b7837617c",
+    "block_hash": "ae8710a65d37dc49a492a59ea8e82ddb5fd5fd29461498e40af0c7177f076267"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 15:14:48 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.416,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello hello mike testing mike testing number 2 number 2 bye-bye hello my name is Utsav good morning night bye-bye hello hello nice to meet you bye-bye",
+    "pillar_details": {
+      "voice_clone_risk": 0.999147697584281,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": null,
+      "matched_keywords": []
+    },
+    "prev_hash": "f5936943fa1d467ff40d939c12e03ca70a2e9e7f7dbb2edd6833f21279426f56",
+    "block_hash": "10df434e492e41c85aee06ddd748667d6ad07a39a48b6a5885aedd469db6f2fe"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 15:14:18 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.416,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello hello mike testing mike testing hello hello mike testing mike testing hello",
+    "pillar_details": {
+      "voice_clone_risk": 0.9980933392748229,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": null,
+      "matched_keywords": []
+    },
+    "prev_hash": "80689677704a8155d277d8bd858ece28a61ecc6369a24a759982efce0114bf98",
+    "block_hash": "2728aaa15fc1fb9138496252fdef559234d33f31ef33411f814cc37f02361f23"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 15:03:12 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.01,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "Achcha yah bhi",
+    "pillar_details": {
+      "voice_clone_risk": 4.683297361059659e-06,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": null,
+      "matched_keywords": []
+    },
+    "prev_hash": "a8ce7ae8c238c24cf6af2de11c5aa575137003df618e92c54983b6df4a48b445",
+    "block_hash": "ce41453a52bab1d1c1fde27ed7e5308687e84a1613b8a9134c3b4c33b8f9a652"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 14:21:20 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.438,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.9998938169899924,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.457,
+      "matched_keywords": []
+    },
+    "prev_hash": "76543e0b303d23ce156b2e695d38baf35247bd7b1736598cc99503f39fe94426",
+    "block_hash": "463e11c684ac0e3dfebd7a6de62d085a413e83f359779ac792aec5e2b4dc940c"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 14:14:09 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.135,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": null,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.457,
+      "matched_keywords": []
+    },
+    "prev_hash": "012d7f861ef01a992086859f09573f70712ad576a5e408cb468dea31ec88a566",
+    "block_hash": "fbaf648a1c5b2df284afd5b5a8967295bfbd0f76adf9cddd3fdfbbd63a661b54"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 14:12:31 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.135,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": null,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.457,
+      "matched_keywords": []
+    },
+    "prev_hash": "931a54f5268208c5a30fd5cd5b7b23159ef6a01b52d340ec54db1b1b8bd51825",
+    "block_hash": "d1f13941a3ff579838ba5157162487a717b8cb3a4a4a8576e3c7d5f171c88f73"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 12:58:53 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.277,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello good morning my name is Utsav Jha and I study in gtbit college I love to play sports like football cricket badminton etc and I love eating food",
+    "pillar_details": {
+      "voice_clone_risk": 0.7680936941192504,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.028,
+      "matched_keywords": []
+    },
+    "prev_hash": "69ac47b1d4fddc65ff19fd422877268aeccd91ae458c3a7141088c599f7a5965",
+    "block_hash": "e64604209303ed94cd0220837bbd63fe47cf162c6d99f1c9e19ce110bcbcddff"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 12:58:00 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.257,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello good morning my name is Utsav Jha and I study in gtbit college I love to play sports I love taking care of people good morning good night bye-by",
+    "pillar_details": {
+      "voice_clone_risk": 0.6694076815845088,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.126,
+      "matched_keywords": []
+    },
+    "prev_hash": "879ac5e2a9211a0a3819402c4d841effe8b30d59855c985da0031f6e8b811c56",
+    "block_hash": "2d881fec8cef7e2e7a3ef8c4818a96a834b94e91f31d2db884cbc9d8728f568a"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 12:57:24 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.222,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello good morning my name is Utsav Jha and I study in gtbit college New Delhi I love to play sports like cricket volleyball badminton I love to take ",
+    "pillar_details": {
+      "voice_clone_risk": 0.6137564819493733,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.024,
+      "matched_keywords": []
+    },
+    "prev_hash": "5f92ad00367ec5ed89a371cee44e265ef7c5d05eaf81f3f5ccda9f084f52229c",
+    "block_hash": "f1393e77538899d24150f1bf6dbbe77341d1c825bdc16dfdb12fba428dc3f4af"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 12:56:19 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.248,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello good morning my name is Utsav and I study in gtbit college New Delhi goodbye I love to play cricket football badminton nice to meet you bye",
+    "pillar_details": {
+      "voice_clone_risk": 0.6960059648705901,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.0,
+      "matched_keywords": []
+    },
+    "prev_hash": "0e2d66824ab67490ea9f6deec3c2490011ccbee587a972ec7cac32070652d2f6",
+    "block_hash": "84b06edf6cdf136484e47e648abc4a381ef6b7b4f6491a30af32739f8e18d76a"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 12:53:18 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.067,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello good morning my name is Utsav jar I study in gtbit college Delhi so today we are going to test this good night good bye",
+    "pillar_details": {
+      "voice_clone_risk": 0.1543541225001982,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.062,
+      "matched_keywords": []
+    },
+    "prev_hash": "26b80acefbe3e3570ebc048d2b4393fbd83f89ba973eef3fcacea7180f99954e",
+    "block_hash": "aac362ca599876d470bff5f301e2f75ca375102decc7a7eae46dc10efdf7937e"
+  },
+  {
+    "index": 201,
+    "timestamp": "2026-09-25 12:37:05 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.267,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello good morning my name is Utsav and I study from gtbit College New Delhi I love playing Sports like cricket Football Volleyball badminton good nig",
+    "pillar_details": {
+      "voice_clone_risk": 0.7258681228193195,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.058,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "03b03b77bad9bb53942b37e7eeba77dd43433db2953d97b8f4c5551cde997f04"
+  },
+  {
+    "index": 200,
+    "timestamp": "2026-09-25 12:36:17 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.403,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav and I love to eat food I am from gtbit College New Delhi and I love playing sports I love fake caring of people bye-bye",
+    "pillar_details": {
+      "voice_clone_risk": 0.999210282033372,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.33,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "4303442c7fa45dd342cdb540fd9fcf62861a9b3b165123a728bda944d4301d1c"
+  },
+  {
+    "index": 199,
+    "timestamp": "2026-09-25 12:34:14 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.29,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav and I love to eat food I'll study BTech from GGSIPU University gtbit College good night bye bye",
+    "pillar_details": {
+      "voice_clone_risk": 0.7920817443053564,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.06,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "ac991531f27ed440f4e7937a96d229cdb2b62b66e99809889f74a33e3b7bb3c2"
+  },
+  {
+    "index": 198,
+    "timestamp": "2026-09-25 12:29:59 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.29,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav and I love cooking and I love eating I study in gtbit college Delhi and I love creating reels good night bye",
+    "pillar_details": {
+      "voice_clone_risk": 0.7812530140855731,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.084,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "b62a68ce30cbde54514b6ced77147aa4733ebbf94a0d6f3edc9b65486f0e2d83"
+  },
+  {
+    "index": 197,
+    "timestamp": "2026-09-25 12:26:25 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.164,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav and I love playing cricket Football Volleyball badminton etc I love eating food I am a foodie and I love chicken good night",
+    "pillar_details": {
+      "voice_clone_risk": 0.4063962994636086,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.121,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "e51b134b87dcf4078ac5ab262a0e5efcba719672c4730b0156f7c676d88dafb4"
+  },
+  {
+    "index": 196,
+    "timestamp": "2026-09-25 12:24:16 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.254,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav and I love playing cricket I study in gtbit college Delhi and I love playing Sports like cricket Football Volleyball badminton",
+    "pillar_details": {
+      "voice_clone_risk": 0.6593452456229988,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.128,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "7baf971519dafce6bbacd676e3b8c4cd86e3108bafb215f47ae2d4d7fdf4a99f"
+  },
+  {
+    "index": 195,
+    "timestamp": "2026-09-25 11:38:38 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.242,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello good morning my name is Utsav and I study in gtbit college in New Delhi I love to play sports like cricket football badminton so good night and ",
+    "pillar_details": {
+      "voice_clone_risk": 0.6339125490560427,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.107,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "0dc4804878acc3da141e4699150945f59c86b25f2903b125250d1b31cf388453"
+  },
+  {
+    "index": 194,
+    "timestamp": "2026-09-25 10:22:42 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.238,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello good morning my name is Utsav and I study in gtbit college Delhi I am pursuing BTech from IP University and I love playing sports good morning a",
+    "pillar_details": {
+      "voice_clone_risk": 0.6375356134374094,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.07,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "b12a78cca2a4aa72ce5aa766f0de1396ac09fdea71c2ddfc610cd828aa988918"
+  },
+  {
+    "index": 193,
+    "timestamp": "2026-09-25 10:20:00 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.192,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav and I study in gtbit college I love to play sports and I love eating I love to hang out with my friends so good morning good ni",
+    "pillar_details": {
+      "voice_clone_risk": 0.515496998946933,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.05,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "ec3809fbe8c5f2ac2e9f027af301f49cabce6cadf7080e88a0310f43929fcbcc"
+  },
+  {
+    "index": 192,
+    "timestamp": "2026-09-25 10:07:58 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.296,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav and I study in gtbit college Delhi I love playing sports and I love to eat cookies good night Goodbye and stay happy",
+    "pillar_details": {
+      "voice_clone_risk": 0.7748361163274304,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.139,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "9e2073315dbb78caf31d29035726a272b478fe10b6748d645c77d4cf538c3ddd"
+  },
+  {
+    "index": 191,
+    "timestamp": "2026-09-25 10:06:42 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.209,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav and I study in gtbit college Delhi I am doing BTech in information technology and I love playing sports I love staying happy go",
+    "pillar_details": {
+      "voice_clone_risk": 0.5700931720218504,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.038,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "30455fb28e100f2c110c674a54f2c7540714420f8730d4d674662b6d377da75a"
+  },
+  {
+    "index": 190,
+    "timestamp": "2026-09-25 10:00:27 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.219,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav and I love to play sports I study in gtbit college Delhi and I love to stay happy I love hanging out with my friends good night",
+    "pillar_details": {
+      "voice_clone_risk": 0.5704800991456225,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.099,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "923519b67048971267215eb8a8facf7a938c4faae14bf42f8c6efa8e8c5ac5ed"
+  },
+  {
+    "index": 189,
+    "timestamp": "2026-09-25 09:59:47 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.293,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav and I study in gtbit college Najafgarh Delhi I love to play sports with my friends and I love hanging around so good morning go",
+    "pillar_details": {
+      "voice_clone_risk": 0.8117772093953208,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.032,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "120a54c41f922b07f8f2f1ead23947dc4c82a31011d7c6fd9f229e85ba3ca6db"
+  },
+  {
+    "index": 188,
+    "timestamp": "2026-09-25 09:56:47 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.27,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav and I love to play sports I am studying in gtbit college Delhi and I love cooking and I love to hang around with friends so goo",
+    "pillar_details": {
+      "voice_clone_risk": 0.7129325979289522,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.112,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "e31a53e96b67e05e1ed208e31336100d66aa2a41f52823e1d32c9386e653f3ba"
+  },
+  {
+    "index": 187,
+    "timestamp": "2026-09-25 09:49:53 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.316,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav and I study in gtbit college Delhi I love to play sports like cricket hockey badminton and I love cooking so now I am going to ",
+    "pillar_details": {
+      "voice_clone_risk": 0.871869069197665,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.046,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "41a06a85c0f01746c2675acd8f1a734ad05da389be94b7e687a622712ad3eedb"
+  },
+  {
+    "index": 186,
+    "timestamp": "2026-09-25 09:48:38 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.16,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav and I study in gtbit college Delhi I love to play sports like cricket badminton hockey and now I am going to play with my frien",
+    "pillar_details": {
+      "voice_clone_risk": 0.4451801976365833,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.0,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "353ba39d40470ad5babc487a2e4b82502822397bfd648ee24f5b469be2a96344"
+  },
+  {
+    "index": 185,
+    "timestamp": "2026-09-25 09:40:27 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.281,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello good morning I study in gtbit college and my name is Utsav today I am going to play cricket with my friends so I am so happy good night Goodbye ",
+    "pillar_details": {
+      "voice_clone_risk": 0.7863470147986145,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.014,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "3ed9c64cb066c31ddf044113d7a105a5b74ca96476235a262edff811eeda204e"
+  },
+  {
+    "index": 184,
+    "timestamp": "2026-09-25 09:37:45 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.088,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha and I study in gtbit college New Delhi Najafgarh so now today I am going to play cricket good night",
+    "pillar_details": {
+      "voice_clone_risk": 0.11588474730088633,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.29,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "edd99bd911a647edd6c5a32c401a7434ea81e0ce227cdea3412e8e029a64bbd2"
+  },
+  {
+    "index": 183,
+    "timestamp": "2026-09-25 08:50:34 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.361,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav and I am from gtbit college I love to play sports like hockey cricket etc etc and I love to listen music Goodbye and have a nic",
+    "pillar_details": {
+      "voice_clone_risk": 0.9756565509585314,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.104,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "61815414d176125c74f91972b428d22af254ce13d6a73aa5f5d314827029e1ac"
+  },
+  {
+    "index": 182,
+    "timestamp": "2026-09-25 00:29:48 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.127,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello good morning my name is Utsav I love to play sports like cricket hockey badminton football etc and I love to sleep and my college name is gtbit ",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.467,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "f21c9b22e9ecca7938f24bbe0ffc5d0d0eea64e06092c4830a6d1c029281e309"
+  },
+  {
+    "index": 181,
+    "timestamp": "2026-09-25 00:23:55 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.109,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha and I am a student of gtbit college New Delhi I love to play sports like cricket hockey badminton etc so today is Saturday ",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.352,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "cbbae7f4c755cbe5d07962e155269da64a7aa5a51afa001c99f6b90742846dce"
+  },
+  {
+    "index": 180,
+    "timestamp": "2026-09-25 00:17:45 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.22,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.99,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "19f972b6e567a62f4f9c540064aa7b1b3399a31b8fad54f96708ff549272ef02"
+  },
+  {
+    "index": 179,
+    "timestamp": "2026-09-25 00:16:54 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.22,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.05,
+      "biometric_risk": 0.99,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "e7421f71999c75829d04fd6aaec6e5cd7e93b986373a075d22ef9c6b2796c484"
+  },
+  {
+    "index": 178,
+    "timestamp": "2026-09-25 00:15:31 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.128,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha and I study in gtbit college New Delhi I love playing Sports like cricket hockey etc so today is Tuesday and now I am takin",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.479,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "de24b7a3af142add2db31b1d58859263aa80fc05171d75812859002fcc248b2c"
+  },
+  {
+    "index": 177,
+    "timestamp": "2026-09-25 00:13:52 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.091,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha and I am from Delhi I study in gtbit college and I love playing Sports like cricket hockey extra so good night and good",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.233,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "f523478b11ed36c032f3d2c268717b6058befa062eafc2fe4f3f0e272684ee0c"
+  },
+  {
+    "index": 176,
+    "timestamp": "2026-09-25 00:12:09 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.086,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav I live in Delhi and I study from gtbit College New Delhi I love to play sports and I love hockey and love eating so good night ",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.198,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "95f2cc30d753c44583040003eaf23abb7f9c5b72fd029de7a2f1a44fcf130411"
+  },
+  {
+    "index": 175,
+    "timestamp": "2026-09-24 23:48:28 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.066,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha I am from gtbit college and I love to eat cook and sleep so good night bye-bye finish",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": null,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "1b1b1180a5d386164a8db03fdad8240a3de46656b878a3bccd2cef273f535736"
+  },
+  {
+    "index": 174,
+    "timestamp": "2026-09-24 23:47:45 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.066,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha I am from gtbit college and I love to eat cook and sleep so good night bye-bye finish",
+    "pillar_details": {
+      "voice_clone_risk": 0.15,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": null,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "026da8ed0e2be23953d781c9cd5bc75975e0d3e8815f98ee4e77c0615ca34002"
+  },
+  {
+    "index": 173,
+    "timestamp": "2026-09-24 23:04:29 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.376,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav I study in gtbit college and I am pursuing it BTech I love to do skating swimming etc etc have a nice day bye",
+    "pillar_details": {
+      "voice_clone_risk": 0.974938650234309,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.206,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "06339a4394913aabe55ff1d4574c8e39a9cb6ef58bd58ed628ef6fcb35da3547"
+  },
+  {
+    "index": 172,
+    "timestamp": "2026-09-24 22:51:01 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.208,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha I am from gtbit college and I love to eat cook and sleep so good night bye-bye finish",
+    "pillar_details": {
+      "voice_clone_risk": 0.5355993391590177,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.109,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "e997b03614a081f424290fe526f685e2ffddce1246f5d4405f375784974957e4"
+  },
+  {
+    "index": 171,
+    "timestamp": "2026-09-24 22:49:00 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.208,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha I am from gtbit college and I love to eat cook and sleep so good night bye-bye finish",
+    "pillar_details": {
+      "voice_clone_risk": 0.5355993391590177,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.109,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "da8e2920d82c1ca091aea5bce97a7fa8003de459019e1ecb4cbc476b0f778483"
+  },
+  {
+    "index": 170,
+    "timestamp": "2026-09-24 22:47:52 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.345,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha I study BTech in it from GGSIPU college I love to play sports and eat and tomorrow is good day so good night",
+    "pillar_details": {
+      "voice_clone_risk": 0.8457421727311569,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.303,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "d88d7137e3d5f97bb0fe5229cecd4364b6c5f18b1e57cce326b58e297f86ec8c"
+  },
+  {
+    "index": 169,
+    "timestamp": "2026-09-24 22:44:37 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.062,
+    "policy_action": "PROCEED_NORMALLY",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha and I am from Delhi I study BTech from GGSIPU gtbit college in New Delhi Subhash Nagar I love to eat play and I love to eat",
+    "pillar_details": {
+      "voice_clone_risk": 0.03365930557399865,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.305,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "59d1b8c099b39cc83f8a5bea2dbf3d98764c161b7fba5bbe358a79354c1710bb"
+  },
+  {
+    "index": 168,
+    "timestamp": "2026-09-24 22:38:14 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "+91 9876500000",
+    "composite_risk": 0.327,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha I am from gtbit college and I love to eat cook and sleep so good night bye-bye finish",
+    "pillar_details": {
+      "voice_clone_risk": 0.7835492690093815,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": null,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "827ae6a08fc2882fdd2e467dd1e6b6c7e4e72d0e58fa8adf8fbeccfff0119c49"
+  },
+  {
+    "index": 167,
+    "timestamp": "2026-09-24 22:35:42 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.295,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha I am from gtbit college and I love to eat cook and sleep so good night bye-bye finish",
+    "pillar_details": {
+      "voice_clone_risk": 0.7835492690093815,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.109,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "01ae6118c45b9c36bb005d9f673177524bb7591d0d3dfb7f9ffab0e3db015a11"
+  },
+  {
+    "index": 166,
+    "timestamp": "2026-09-24 22:29:54 UTC",
+    "event_type": "LIVE_CALL_VERIFICATION",
+    "phone_number": "Web Microphone",
+    "composite_risk": 0.361,
+    "policy_action": "STEP_UP_MFA",
+    "threat_category": "CLEAN",
+    "transcript_snippet": "hello my name is Utsav Jha and I live in Delhi I am studying BTech from IP university in gtbit college I love to play sports music and etc good bye go",
+    "pillar_details": {
+      "voice_clone_risk": 0.9259892503420512,
+      "caller_cli_risk": 0.02,
+      "scam_words_risk": 0.0,
+      "biometric_risk": 0.219,
+      "matched_keywords": []
+    },
+    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
+    "block_hash": "5cc80141d0a971aef0d005fa232c3062c01bf791ef417fa33dd46852fcaa30ff"
+  },
+  {
     "index": 165,
     "timestamp": "2026-09-24 20:57:57 UTC",
     "event_type": "LIVE_CALL_VERIFICATION",
@@ -2747,476 +3811,5 @@
     },
     "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
     "block_hash": "baea69af54563fde4febcecc89f4c7e0453c0b6aafa47b18f9b7f6debf67b8eb"
-  },
-  {
-    "index": 21,
-    "timestamp": "2026-09-09 15:11:04 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 9988776655",
-    "composite_risk": 0.269,
-    "policy_action": "STEP_UP_MFA",
-    "threat_category": "CLEAN",
-    "transcript_snippet": "",
-    "pillar_details": {
-      "voice_clone_risk": 0.5,
-      "caller_cli_risk": 0.02,
-      "scam_words_risk": 0.05,
-      "biometric_risk": 0.5,
-      "matched_keywords": []
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "be05d1743e517e6d1585f815b904613a3f8b352306d457482dd49a0575146781"
-  },
-  {
-    "index": 20,
-    "timestamp": "2026-09-09 15:11:00 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 9988776655",
-    "composite_risk": 0.269,
-    "policy_action": "STEP_UP_MFA",
-    "threat_category": "CLEAN",
-    "transcript_snippet": "",
-    "pillar_details": {
-      "voice_clone_risk": 0.5,
-      "caller_cli_risk": 0.02,
-      "scam_words_risk": 0.05,
-      "biometric_risk": 0.5,
-      "matched_keywords": []
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "a289dd5dc5e0e5f49fc4214c71ac2f1b08673bf85f69918f00952e6d256e3918"
-  },
-  {
-    "index": 19,
-    "timestamp": "2026-09-09 15:10:57 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 9988776655",
-    "composite_risk": 0.269,
-    "policy_action": "STEP_UP_MFA",
-    "threat_category": "CLEAN",
-    "transcript_snippet": "",
-    "pillar_details": {
-      "voice_clone_risk": 0.5,
-      "caller_cli_risk": 0.02,
-      "scam_words_risk": 0.05,
-      "biometric_risk": 0.5,
-      "matched_keywords": []
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "23fe1ca29f7fbab81f3c8e856b1c7ea99e1b5b5c8aee85dd7fc847f084e97776"
-  },
-  {
-    "index": 18,
-    "timestamp": "2026-09-09 15:10:55 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 9988776655",
-    "composite_risk": 0.269,
-    "policy_action": "STEP_UP_MFA",
-    "threat_category": "CLEAN",
-    "transcript_snippet": "",
-    "pillar_details": {
-      "voice_clone_risk": 0.5,
-      "caller_cli_risk": 0.02,
-      "scam_words_risk": 0.05,
-      "biometric_risk": 0.5,
-      "matched_keywords": []
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "243d0270c52511957fdde7c5bb89e3becfa8b3b545a6063597e7f7cf30c6defb"
-  },
-  {
-    "index": 17,
-    "timestamp": "2026-09-09 15:07:58 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 11-23459812",
-    "composite_risk": 0.94,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "DIGITAL_ARREST_CBI",
-    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
-    "pillar_details": {
-      "voice_clone_risk": 0.985,
-      "caller_cli_risk": 0.8,
-      "scam_words_risk": 0.99,
-      "biometric_risk": 0.847,
-      "matched_keywords": [
-        "central bureau",
-        "digital arrest",
-        "arrest warrant",
-        "cyber crime",
-        "cbi",
-        "narcotics",
-        "skype call",
-        "money laundering"
-      ]
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "850b03de6ed7b2119707b68a384575e1d63f84ce53b3663a59784ef716216c25"
-  },
-  {
-    "index": 16,
-    "timestamp": "2026-09-09 15:04:28 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 9988776655",
-    "composite_risk": 0.269,
-    "policy_action": "STEP_UP_MFA",
-    "threat_category": "CLEAN",
-    "transcript_snippet": "",
-    "pillar_details": {
-      "voice_clone_risk": 0.5,
-      "caller_cli_risk": 0.02,
-      "scam_words_risk": 0.05,
-      "biometric_risk": 0.5,
-      "matched_keywords": []
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "bdc7ccbb61add301f7ba7385e0c9aa6b573e637a7977fce8949771a6b34e23c7"
-  },
-  {
-    "index": 15,
-    "timestamp": "2026-09-09 15:04:26 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 9988776655",
-    "composite_risk": 0.269,
-    "policy_action": "STEP_UP_MFA",
-    "threat_category": "CLEAN",
-    "transcript_snippet": "",
-    "pillar_details": {
-      "voice_clone_risk": 0.5,
-      "caller_cli_risk": 0.02,
-      "scam_words_risk": 0.05,
-      "biometric_risk": 0.5,
-      "matched_keywords": []
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "bad480e18e757809a960160fa035e19826d4d42686c685befbcc7cbbebc763ed"
-  },
-  {
-    "index": 14,
-    "timestamp": "2026-09-09 15:02:36 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 9988776655",
-    "composite_risk": 0.269,
-    "policy_action": "STEP_UP_MFA",
-    "threat_category": "CLEAN",
-    "transcript_snippet": "",
-    "pillar_details": {
-      "voice_clone_risk": 0.5,
-      "caller_cli_risk": 0.02,
-      "scam_words_risk": 0.05,
-      "biometric_risk": 0.5,
-      "matched_keywords": []
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "832aa1909d183e31665dcf701a828a157f839d34c36f5f891d2728abc49c1467"
-  },
-  {
-    "index": 13,
-    "timestamp": "2026-09-09 15:01:15 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 9988776655",
-    "composite_risk": 0.269,
-    "policy_action": "STEP_UP_MFA",
-    "threat_category": "CLEAN",
-    "transcript_snippet": "",
-    "pillar_details": {
-      "voice_clone_risk": 0.5,
-      "caller_cli_risk": 0.02,
-      "scam_words_risk": 0.05,
-      "biometric_risk": 0.5,
-      "matched_keywords": []
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "f5482d31ddadcacb7c69645dc724229dc3807848d26956942bfce18b7837617c"
-  },
-  {
-    "index": 12,
-    "timestamp": "2026-09-09 15:01:13 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 9988776655",
-    "composite_risk": 0.269,
-    "policy_action": "STEP_UP_MFA",
-    "threat_category": "CLEAN",
-    "transcript_snippet": "",
-    "pillar_details": {
-      "voice_clone_risk": 0.5,
-      "caller_cli_risk": 0.02,
-      "scam_words_risk": 0.05,
-      "biometric_risk": 0.5,
-      "matched_keywords": []
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "f5936943fa1d467ff40d939c12e03ca70a2e9e7f7dbb2edd6833f21279426f56"
-  },
-  {
-    "index": 11,
-    "timestamp": "2026-09-09 14:51:38 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 11-23459812",
-    "composite_risk": 0.94,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "DIGITAL_ARREST_CBI",
-    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
-    "pillar_details": {
-      "voice_clone_risk": 0.985,
-      "caller_cli_risk": 0.8,
-      "scam_words_risk": 0.99,
-      "biometric_risk": 0.847,
-      "matched_keywords": [
-        "central bureau",
-        "digital arrest",
-        "arrest warrant",
-        "cyber crime",
-        "cbi",
-        "narcotics",
-        "skype call",
-        "money laundering"
-      ]
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "80689677704a8155d277d8bd858ece28a61ecc6369a24a759982efce0114bf98"
-  },
-  {
-    "index": 10,
-    "timestamp": "2026-09-09 14:10:40 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 11-23459812",
-    "composite_risk": 0.94,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "DIGITAL_ARREST_CBI",
-    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
-    "pillar_details": {
-      "voice_clone_risk": 0.985,
-      "caller_cli_risk": 0.8,
-      "scam_words_risk": 0.99,
-      "biometric_risk": 0.847,
-      "matched_keywords": [
-        "central bureau",
-        "digital arrest",
-        "arrest warrant",
-        "cyber crime",
-        "cbi",
-        "narcotics",
-        "skype call",
-        "money laundering"
-      ]
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "a8ce7ae8c238c24cf6af2de11c5aa575137003df618e92c54983b6df4a48b445"
-  },
-  {
-    "index": 9,
-    "timestamp": "2026-09-09 14:08:58 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 9823411092",
-    "composite_risk": 0.722,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "BANK_KYC_OTP_THEFT",
-    "transcript_snippet": "Dear customer, your State Bank of India Net Banking KYC has expired today. Your bank account will be frozen within two hours. Please share the six dig",
-    "pillar_details": {
-      "voice_clone_risk": 0.92,
-      "caller_cli_risk": 0.55,
-      "scam_words_risk": 0.55,
-      "biometric_risk": 0.834,
-      "matched_keywords": [
-        "otp"
-      ]
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "76543e0b303d23ce156b2e695d38baf35247bd7b1736598cc99503f39fe94426"
-  },
-  {
-    "index": 8,
-    "timestamp": "2026-09-09 14:08:50 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 11-23459812",
-    "composite_risk": 0.94,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "DIGITAL_ARREST_CBI",
-    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
-    "pillar_details": {
-      "voice_clone_risk": 0.985,
-      "caller_cli_risk": 0.8,
-      "scam_words_risk": 0.99,
-      "biometric_risk": 0.847,
-      "matched_keywords": [
-        "central bureau",
-        "digital arrest",
-        "arrest warrant",
-        "cyber crime",
-        "cbi",
-        "narcotics",
-        "skype call",
-        "money laundering"
-      ]
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "012d7f861ef01a992086859f09573f70712ad576a5e408cb468dea31ec88a566"
-  },
-  {
-    "index": 7,
-    "timestamp": "2026-09-09 14:08:10 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 9988776655",
-    "composite_risk": 0.269,
-    "policy_action": "STEP_UP_MFA",
-    "threat_category": "CLEAN",
-    "transcript_snippet": "",
-    "pillar_details": {
-      "voice_clone_risk": 0.5,
-      "caller_cli_risk": 0.02,
-      "scam_words_risk": 0.05,
-      "biometric_risk": 0.5,
-      "matched_keywords": []
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "931a54f5268208c5a30fd5cd5b7b23159ef6a01b52d340ec54db1b1b8bd51825"
-  },
-  {
-    "index": 6,
-    "timestamp": "2026-09-09 14:08:09 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 9988776655",
-    "composite_risk": 0.269,
-    "policy_action": "STEP_UP_MFA",
-    "threat_category": "CLEAN",
-    "transcript_snippet": "",
-    "pillar_details": {
-      "voice_clone_risk": 0.5,
-      "caller_cli_risk": 0.02,
-      "scam_words_risk": 0.05,
-      "biometric_risk": 0.5,
-      "matched_keywords": []
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "69ac47b1d4fddc65ff19fd422877268aeccd91ae458c3a7141088c599f7a5965"
-  },
-  {
-    "index": 5,
-    "timestamp": "2026-09-09 14:05:47 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 11-23459812",
-    "composite_risk": 0.94,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "DIGITAL_ARREST_CBI",
-    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
-    "pillar_details": {
-      "voice_clone_risk": 0.985,
-      "caller_cli_risk": 0.8,
-      "scam_words_risk": 0.99,
-      "biometric_risk": 0.847,
-      "matched_keywords": [
-        "central bureau",
-        "digital arrest",
-        "arrest warrant",
-        "cyber crime",
-        "cbi",
-        "narcotics",
-        "skype call",
-        "money laundering"
-      ]
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "879ac5e2a9211a0a3819402c4d841effe8b30d59855c985da0031f6e8b811c56"
-  },
-  {
-    "index": 4,
-    "timestamp": "2026-09-09 14:05:37 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 11-23459812",
-    "composite_risk": 0.94,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "DIGITAL_ARREST_CBI",
-    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
-    "pillar_details": {
-      "voice_clone_risk": 0.985,
-      "caller_cli_risk": 0.8,
-      "scam_words_risk": 0.99,
-      "biometric_risk": 0.847,
-      "matched_keywords": [
-        "central bureau",
-        "digital arrest",
-        "arrest warrant",
-        "cyber crime",
-        "cbi",
-        "narcotics",
-        "skype call",
-        "money laundering"
-      ]
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "5f92ad00367ec5ed89a371cee44e265ef7c5d05eaf81f3f5ccda9f084f52229c"
-  },
-  {
-    "index": 3,
-    "timestamp": "2026-09-09 13:51:56 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 9823411092",
-    "composite_risk": 0.722,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "BANK_KYC_OTP_THEFT",
-    "transcript_snippet": "Dear customer, your State Bank Net Banking KYC has expired today. Your bank account will be blocked within 2 hours. Please tell the 6-digit OTP sent t",
-    "pillar_details": {
-      "voice_clone_risk": 0.92,
-      "caller_cli_risk": 0.55,
-      "scam_words_risk": 0.55,
-      "biometric_risk": 0.834,
-      "matched_keywords": [
-        "otp"
-      ]
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "0e2d66824ab67490ea9f6deec3c2490011ccbee587a972ec7cac32070652d2f6"
-  },
-  {
-    "index": 2,
-    "timestamp": "2026-09-09 13:47:30 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 11-23459812",
-    "composite_risk": 0.94,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "DIGITAL_ARREST_CBI",
-    "transcript_snippet": "Hello, this is Inspector Rathore from Central Bureau of Investigation CBI Cyber Crime Branch New Delhi. An arrest warrant has been issued in your name",
-    "pillar_details": {
-      "voice_clone_risk": 0.985,
-      "caller_cli_risk": 0.8,
-      "scam_words_risk": 0.99,
-      "biometric_risk": 0.847,
-      "matched_keywords": [
-        "money laundering",
-        "cbi",
-        "central bureau",
-        "digital arrest",
-        "arrest warrant",
-        "cyber crime",
-        "narcotics",
-        "skype call"
-      ]
-    },
-    "prev_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d",
-    "block_hash": "26b80acefbe3e3570ebc048d2b4393fbd83f89ba973eef3fcacea7180f99954e"
-  },
-  {
-    "index": 1,
-    "timestamp": "2026-09-09 13:45:49 UTC",
-    "event_type": "LIVE_CALL_VERIFICATION",
-    "phone_number": "+91 11-23459812",
-    "composite_risk": 0.94,
-    "policy_action": "BLOCK_AND_HOLD",
-    "threat_category": "DIGITAL_ARREST_CBI",
-    "transcript_snippet": "Hello this is CBI cyber crime officer. You are under digital arrest for money laundering. Transfer funds now.",
-    "pillar_details": {
-      "voice_clone_risk": 0.98,
-      "caller_cli_risk": 0.8,
-      "scam_words_risk": 0.99,
-      "biometric_risk": 0.846,
-      "matched_keywords": [
-        "money laundering",
-        "cbi",
-        "digital arrest",
-        "cyber crime"
-      ]
-    },
-    "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
-    "block_hash": "a933119845a41bd628be88133ce187c17ae5f340c06273b0c77563c855de638d"
   }
 ]

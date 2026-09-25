@@ -4,17 +4,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { Mic, Square, Activity, Trash2, UserPlus, CheckCircle2, AlertTriangle } from "lucide-react";
+import { Mic, Square, Activity, Trash2, UserPlus, CheckCircle2, AlertTriangle, Upload } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { api } from "@/lib/api";
 import { audioService } from "@/services/audioService";
+import { AudioVisualizer } from "@/components/ui/AudioVisualizer";
 
 export default function EnrollmentPage() {
   const [enrolledVoices, setEnrolledVoices] = useState<string[]>([]);
   const [isRecording, setIsRecording] = useState(false);
   const [recordingDuration, setRecordingDuration] = useState(0);
   const [audioLevel, setAudioLevel] = useState(0);
-  const [waveData, setWaveData] = useState<number[]>(Array(40).fill(10));
   const [speakerId, setSpeakerId] = useState("");
   const [isEnrolling, setIsEnrolling] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -75,22 +75,37 @@ export default function EnrollmentPage() {
     }
   };
 
-  useEffect(() => {
-    if (isRecording) {
-      const interval = setInterval(() => {
-        setWaveData(prev => {
-          const newData = [...prev.slice(1)];
-          const baseHeight = Math.max(10, audioLevel * 0.8);
-          const jitter = Math.random() * 15;
-          newData.push(baseHeight + jitter);
-          return newData;
-        });
-      }, 100);
-      return () => clearInterval(interval);
-    } else {
-      setWaveData(Array(40).fill(10));
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    if (!speakerId.trim()) {
+      alert("Please enter a Speaker ID first.");
+      return;
     }
-  }, [isRecording, audioLevel]);
+    
+    setIsEnrolling(true);
+    try {
+      const success = await api.enrollVoice(file, speakerId.trim());
+      if (success) {
+        setSpeakerId("");
+        loadEnrolledVoices();
+      } else {
+        alert("Failed to enroll voice. Make sure the recording has at least 0.5s of clear speech.");
+      }
+    } catch (e) {
+      alert("Error enrolling voice.");
+    } finally {
+      setIsEnrolling(false);
+      if (event.target) event.target.value = '';
+    }
+  };
+
+  // Clean up timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
 
   const formatTime = (seconds: number) => {
     const m = Math.floor(seconds / 60).toString().padStart(2, "0");
@@ -129,18 +144,43 @@ export default function EnrollmentPage() {
                 </div>
                 
                 <div className="flex flex-col items-center justify-center py-6">
-                  <button 
-                    className={`relative group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-full ${!speakerId.trim() ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    onClick={startRecording}
-                    disabled={!speakerId.trim()}
-                    aria-label="Start recording"
-                  >
-                    <div className="absolute inset-0 bg-accent/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                    <div className="w-32 h-32 rounded-full border border-border bg-surface-primary flex items-center justify-center relative shadow-sm group-hover:border-accent/50 transition-colors">
-                      <Mic className="w-8 h-8 text-text-secondary group-hover:text-foreground transition-colors" />
+                  <div className="flex flex-col md:flex-row items-center gap-10">
+                    <div className="flex flex-col items-center text-center">
+                      <button 
+                        className={`relative group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-full ${!speakerId.trim() ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        onClick={startRecording}
+                        disabled={!speakerId.trim()}
+                        aria-label="Start recording"
+                      >
+                        <div className="absolute inset-0 bg-accent/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                        <div className="w-24 h-24 rounded-full border border-border bg-surface-primary flex items-center justify-center relative shadow-sm group-hover:border-accent/50 transition-colors">
+                          <Mic className="w-8 h-8 text-text-secondary group-hover:text-foreground transition-colors" />
+                        </div>
+                      </button>
+                      <p className="text-sm text-text-secondary mt-4">Record Sample</p>
                     </div>
-                  </button>
-                  <p className="text-sm text-text-secondary mt-4">Click to start recording voice sample</p>
+
+                    <div className="text-xs text-text-secondary/50 font-semibold uppercase tracking-widest hidden md:block">OR</div>
+
+                    <div className="flex flex-col items-center text-center">
+                      <input 
+                        type="file" 
+                        accept="audio/*" 
+                        id="voice-upload" 
+                        className="hidden" 
+                        onChange={handleFileUpload} 
+                        disabled={!speakerId.trim()}
+                      />
+                      <label 
+                        htmlFor="voice-upload" 
+                        className={`relative group flex items-center justify-center w-24 h-24 rounded-full border border-border bg-surface-primary transition-colors shadow-sm ${!speakerId.trim() ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-accent/50'}`}
+                      >
+                        {speakerId.trim() && <div className="absolute inset-0 bg-accent/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />}
+                        <Upload className="w-8 h-8 text-text-secondary group-hover:text-foreground transition-colors relative z-10" />
+                      </label>
+                      <p className="text-sm text-text-secondary mt-4">Upload File</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
@@ -154,10 +194,8 @@ export default function EnrollmentPage() {
                 
                 <div className="text-4xl font-light tabular-nums tracking-tighter">{formatTime(recordingDuration)}</div>
                 
-                <div className="flex items-end justify-center space-x-1 h-24 w-full bg-surface-primary/30 border border-border/50 rounded-sm p-4">
-                  {waveData.map((h, i) => (
-                    <motion.div key={i} animate={{ height: `${Math.min(100, Math.max(10, h))}%` }} transition={{ type: "tween", duration: 0.1 }} className="w-1.5 bg-accent/80 rounded-t-sm flex-1" />
-                  ))}
+                <div className="flex items-center justify-center w-full max-w-sm bg-surface-primary/30 border border-border/50 rounded-xl overflow-hidden p-2">
+                  <AudioVisualizer state={isRecording ? "RECORDING" : "IDLE"} height={96} />
                 </div>
 
                 <Button variant="danger" size="lg" onClick={stopRecording} className="w-full max-w-xs shadow-lg shadow-danger/20">

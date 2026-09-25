@@ -18,6 +18,9 @@ Endpoint:
     ws://<host>:<port>/ws/audio?speaker_id=<optional_speaker_id>
 """
 
+import asyncio
+import copy
+import tempfile
 import json
 import time
 import logging
@@ -28,6 +31,7 @@ from pydantic import BaseModel
 from fastapi import FastAPI, APIRouter, WebSocket, WebSocketDisconnect, Query, UploadFile, File, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from collections import deque
 import numpy as np
 
 from backend.audio.preprocessing import AudioPreprocessor
@@ -92,6 +96,9 @@ async def audio_websocket_endpoint(
       }
     """
     await websocket.accept()
+    print(f"[CANARY] websocket.py loaded from: {__file__}", flush=True)
+    print("[CANARY] connection accepted - if you see this but never see", flush=True)
+    print("[CANARY] [DEBUG DUMP] lines later, the debug block isn't being reached.", flush=True)
     active_speaker_id = speaker_id.strip() if speaker_id else None
     logger.info(f"Client connected to /ws/audio (target speaker: {active_speaker_id}).")
 
@@ -121,11 +128,13 @@ async def audio_websocket_endpoint(
     })
 
     # Per-connection audio ingest pipeline components
-    preprocessor = AudioPreprocessor(target_sample_rate=16000)
+    preprocessor = AudioPreprocessor(target_sample_rate=16000, streaming=True)
     vad = SileroVAD(threshold=0.5)
+    window_vad = copy.copy(vad)
+    window_vad.reset_states()
     rolling_buffer = RollingAudioBuffer(
         sample_rate=16000,
-        window_duration_sec=3.0,
+        window_duration_sec=64600 / 16000,
         step_duration_sec=0.5,
     )
     utterance_accumulator = UtteranceAccumulator(
@@ -164,14 +173,21 @@ async def audio_websocket_endpoint(
 
     last_fused_risk: float = 0.0
     last_w2v2_score: float = 0.0
+    # A single 4s window is noisy on out-of-domain audio; smoothing over the
+    # last few windows trades a little latency for far less jitter. maxlen=5
+    # at the ~500ms cadence this loop runs at is ~2.5s of recent history.
+    recent_w2v2_scores: deque = deque(maxlen=5)
+    recent_fused_risks: deque = deque(maxlen=5)
     last_prosody_anomaly: float = 0.0
     last_wavlm_score: Optional[float] = None
     last_wavlm_active: bool = False
     last_similarity: float = 0.0
     last_consistency: float = 0.0
-    last_is_match: bool = False
+    last_is_match: Optional[bool] = None
     last_prosody_dict: Dict[str, Any] = {}
     client_sample_rate: int = 16000
+    client_sample_width = 2
+    client_channels = 1
 
     # NLP state
     current_full_transcript: str = ""
@@ -198,15 +214,21 @@ async def audio_websocket_endpoint(
                         rolling_buffer.clear()
                         vad.reset_states()
                         utterance_accumulator.reset()
-                        asr_worker.clear()
+                        preprocessor.reset()
+                        window_vad.reset_states()
+                        if asr_worker is not None:
+                            asr_worker.clear()
+                        last_transcribed_count = 0
                         last_fused_risk = 0.0
                         last_w2v2_score = 0.0
+                        recent_w2v2_scores.clear()
+                        recent_fused_risks.clear()
                         last_prosody_anomaly = 0.0
                         last_wavlm_score = None
                         last_wavlm_active = False
                         last_similarity = 0.0
                         last_consistency = 0.0
-                        last_is_match = False
+                        last_is_match = None
                         current_full_transcript = ""
                         current_semantic_threat = 0.0
                         current_triggered_intents = []
@@ -231,7 +253,7 @@ async def audio_websocket_endpoint(
                             "flagged_phrases": [],
                             "speaker_similarity": 0.0,
                             "speaker_consistency_score": 0.0,
-                            "speaker_match": False,
+                            "speaker_match": None,
                             "latency_ms": 0.0,
                             "vad_active": False,
                         })
@@ -248,19 +270,21 @@ async def audio_websocket_endpoint(
                         continue
 
                     elif cmd == "set_speaker":
-                        active_speaker_id = payload.get("speaker_id")
+                        active_speaker_id = str(payload.get("speaker_id") or "").strip() or None
+                        last_similarity = last_consistency = 0.0
+                        last_is_match = None
                         await websocket.send_json({
                             "status": "SPEAKER_SET_ACK",
                             "speaker_id": active_speaker_id,
-                            "is_enrolled": active_speaker_id in speaker_encoder.enrolled_speakers,
+                            "is_enrolled": active_speaker_id in speaker_encoder.list_enrolled_speakers(),
                         })
                         continue
 
                     elif cmd == "enroll":
                         enroll_id = payload.get("speaker_id") or active_speaker_id
-                        if enroll_id and rolling_buffer.current_samples >= 8000:
+                        if enroll_id and rolling_buffer.current_samples >= 32000:
                             current_audio = rolling_buffer.peek_window()
-                            speaker_encoder.enroll_speaker(enroll_id, current_audio)
+                            await asyncio.to_thread(speaker_encoder.enroll_speaker, enroll_id, current_audio)
                             active_speaker_id = enroll_id
                             await websocket.send_json({
                                 "status": "ENROLL_SUCCESS",
@@ -270,15 +294,33 @@ async def audio_websocket_endpoint(
                         else:
                             await websocket.send_json({
                                 "status": "ENROLL_FAILED",
-                                "reason": "Insufficient speech buffered (need >= 0.5s speech)",
+                                "reason": "Insufficient speech buffered (need >= 2 seconds of usable speech)",
                             })
                         continue
 
-                    if "sample_rate" in payload:
-                        client_sample_rate = int(payload["sample_rate"])
+                    if any(key in payload for key in ("sample_rate", "sample_width_bytes", "channels", "format")):
+                        new_sr = payload.get("sample_rate", client_sample_rate)
+                        formats = {"pcm_s16le": 2, "int16": 2, "pcm_f32le": 4, "float32": 4}
+                        if "format" in payload and payload["format"] not in formats:
+                            raise ValueError("WebSocket accepts raw PCM only; use file upload for WebM/Opus")
+                        width = payload.get("sample_width_bytes", formats.get(payload.get("format"), client_sample_width))
+                        channels = payload.get("channels", client_channels)
+                        if not isinstance(new_sr, int) or not 8000 <= new_sr <= 192000 or width not in (2,4) or channels not in (1,2):
+                            raise ValueError("Invalid PCM format declaration")
+                        if (new_sr,width,channels) != (client_sample_rate,client_sample_width,client_channels):
+                            rolling_buffer.clear()
+                            vad.reset_states()
+                            window_vad.reset_states()
+                            preprocessor.reset()
+                            utterance_accumulator.reset()
+                            last_is_match = None
+                        client_sample_rate,client_sample_width,client_channels = new_sr,width,channels
+                        await websocket.send_json({"status":"FORMAT_ACK","sample_rate":new_sr,
+                                                   "sample_width_bytes":width,"channels":channels})
                         continue
                 except Exception as parse_err:
-                    logger.debug(f"JSON command parse note: {parse_err}")
+                    await websocket.send_json({"status":"ERROR","error":str(parse_err)})
+                    continue
 
             if "bytes" not in message or not message["bytes"]:
                 continue
@@ -290,16 +332,27 @@ async def audio_websocket_endpoint(
             audio_16k, is_valid, info = preprocessor.process_chunk(
                 chunk_bytes,
                 input_sr=client_sample_rate,
+                sample_width_bytes=client_sample_width, channels=client_channels,
             )
 
             # Check for completed utterance boundaries (>600ms silence after speech)
             # If frame is invalid, treat as silence for boundary calculation
             is_speech_flag = False
 
-            if is_valid:
-                # 2. Silero VAD Classification
-                is_speech, vad_prob = vad.is_speech(audio_16k)
-                is_speech_flag = is_speech
+            # Preserve ALL decoded samples (including pauses). A corrupt/missing
+            # chunk breaks continuity, so discard the accumulated window.
+            if info.get("reason") in ("INVALID_PCM", "NON_FINITE_DATA_CORRUPTION", "CLIPPED_FRAME"):
+                rolling_buffer.clear()
+                vad.reset_states()
+                last_is_match = None
+                await websocket.send_json({"status":"INSUFFICIENT AUDIO", "risk_state":"INSUFFICIENT AUDIO",
+                                           "explanation":info.get("error",info["reason"]),
+                                           "scores_valid":False,"speaker_match":None})
+                continue
+            is_window_ready = rolling_buffer.push(audio_16k)
+            if len(audio_16k):
+                is_speech, vad_prob = await asyncio.to_thread(vad.is_speech, audio_16k)
+                is_speech_flag = bool(is_valid and is_speech)
 
             # Feed to Utterance Accumulator to track sentence boundaries
             completed_utterance = utterance_accumulator.process_frame(
@@ -335,7 +388,7 @@ async def audio_websocket_endpoint(
                     speaker_consistency=last_consistency,
                     speaker_similarity=last_similarity,
                     speaker_match=last_is_match if active_speaker_id else None,
-                    speaker_enrolled=bool(active_speaker_id and active_speaker_id in speaker_encoder.enrolled_speakers),
+                    speaker_enrolled=bool(active_speaker_id and active_speaker_id in speaker_encoder.list_enrolled_speakers()),
                     semantic_threat_score=current_semantic_threat,
                     triggered_intents=current_triggered_intents,
                     flagged_phrases=current_flagged_phrases,
@@ -367,32 +420,60 @@ async def audio_websocket_endpoint(
                     "speaker_similarity": round(last_similarity, 4),
                     "speaker_consistency_score": round(last_consistency, 4),
                     "speaker_match": last_is_match,
+                    "scores_valid": False,
                     "latency_ms": round(vad_time_ms, 2),
                     "vad_active": False,
                 })
                 continue
 
-            # 3. Speech detected: Push into rolling FIFO buffer
-            is_window_ready = rolling_buffer.push(audio_16k)
+            # The buffer already contains the intact chronological audio.
 
             if is_window_ready:
                 window_audio = rolling_buffer.get_window()
 
-                # Query latest WavLM score (non-blocking)
-                if wavlm_worker is not None:
-                    wavlm_worker.submit_audio(window_audio)
-                    wavlm_score, is_fresh = wavlm_worker.get_latest_score()
-                else:
-                    wavlm_score, is_fresh = None, False
+                # --- TEMP DEBUG: dump the exact scored window for offline comparison ---
+                # Remove this block once you're done diagnosing.
+                import os as _os, time as _time
+                from pathlib import Path as _Path
+                from scipy.io import wavfile as _wavfile
+                _debug_dir = _Path(_os.getcwd()) / "debug_windows"
+                _debug_dir.mkdir(parents=True, exist_ok=True)
+                _debug_path = _debug_dir / f"live_{_time.time():.3f}.wav"
+                _wavfile.write(str(_debug_path), 16000, window_audio.astype(np.float32))
+                print(f"[DEBUG DUMP] wrote {_debug_path.resolve()}", flush=True)
+                # --- end debug ---
+
+                window_vad.reset_states()
+                await asyncio.to_thread(window_vad.is_speech, window_audio)
+                if window_vad.last_speech_samples < 16000:
+                    await websocket.send_json({"status":"INSUFFICIENT AUDIO","risk_state":"INSUFFICIENT AUDIO",
+                        "explanation":"Need at least one second of detected speech in the current window.",
+                        "scores_valid":False,"speaker_match":None})
+                    continue
+                # The supplied shared async worker has no session/window ID.
+                # Do not attach a previous client's or previous window's result.
+                wavlm_score, is_fresh = None, False
 
                 # A. W2V2-AASIST Acoustic Deepfake Inference
-                pred = w2v2_model.predict(window_audio)
-                last_w2v2_score = pred.spoof_score
+                try:
+                    pred = await asyncio.to_thread(w2v2_model.predict, window_audio)
+                except ValueError as exc:
+                    await websocket.send_json({"status":"INSUFFICIENT AUDIO","risk_state":"INSUFFICIENT AUDIO",
+                                               "explanation":str(exc),"scores_valid":False,"speaker_match":None})
+                    continue
+                recent_w2v2_scores.append(pred.spoof_score)
+                last_w2v2_score = float(np.median(recent_w2v2_scores))
 
                 # B. OpenSMILE Prosody & Micro-Stability Analysis
-                prosody_result = prosody_extractor.extract_features(window_audio)
-                last_prosody_anomaly = prosody_result["prosody_anomaly_score"]
-                last_prosody_dict = prosody_result["features"]
+                try:
+                    prosody_result = await asyncio.to_thread(prosody_extractor.extract_features, window_audio)
+                    last_prosody_anomaly = float(prosody_result["prosody_anomaly_score"])
+                    if not np.isfinite(last_prosody_anomaly) or not 0 <= last_prosody_anomaly <= 1:
+                        raise ValueError("Invalid prosody score")
+                    last_prosody_dict = prosody_result["features"]
+                except Exception as exc:
+                    last_prosody_anomaly = 0.0  # display placeholder, excluded from default fusion
+                    last_prosody_dict = {"available":False,"error":str(exc)}
 
                 # C. Multi-Signal Score Fusion Engine (with Graceful Degradation)
                 fusion_result: AcousticFusionResult = fusion_head.fuse(
@@ -400,19 +481,20 @@ async def audio_websocket_endpoint(
                     prosody_score=last_prosody_anomaly,
                     wavlm_score=wavlm_score if is_fresh else None,
                 )
-                last_fused_risk = fusion_result.acoustic_spoof_risk
+                recent_fused_risks.append(fusion_result.acoustic_spoof_risk)
+                last_fused_risk = float(np.median(recent_fused_risks))
                 last_wavlm_score = fusion_result.wavlm_score
                 last_wavlm_active = fusion_result.wavlm_active
 
                 # D. ECAPA-TDNN Speaker Biometric Verification
-                if active_speaker_id and active_speaker_id in speaker_encoder.enrolled_speakers:
-                    spk_res = speaker_encoder.verify_speaker(active_speaker_id, window_audio)
+                if active_speaker_id and active_speaker_id in speaker_encoder.list_enrolled_speakers():
+                    spk_res = await asyncio.to_thread(speaker_encoder.verify_speaker, active_speaker_id, window_audio)
                     last_similarity = spk_res["similarity"]
                     last_is_match = spk_res["is_match"]
                     last_consistency = spk_res["speaker_consistency_score"]
                 else:
                     last_similarity = 0.0
-                    last_is_match = False
+                    last_is_match = None
                     last_consistency = 0.0
 
                 total_latency_ms = (time.perf_counter() - chunk_start_time) * 1000.0
@@ -426,7 +508,7 @@ async def audio_websocket_endpoint(
                     speaker_consistency=last_consistency,
                     speaker_similarity=last_similarity,
                     speaker_match=last_is_match if active_speaker_id else None,
-                    speaker_enrolled=bool(active_speaker_id and active_speaker_id in speaker_encoder.enrolled_speakers),
+                    speaker_enrolled=bool(active_speaker_id and active_speaker_id in speaker_encoder.list_enrolled_speakers()),
                     semantic_threat_score=current_semantic_threat,
                     triggered_intents=current_triggered_intents,
                     flagged_phrases=current_flagged_phrases,
@@ -483,6 +565,8 @@ async def audio_websocket_endpoint(
                     "latency_ms": round(total_latency_ms, 2),
                     "vad_active": True,
                     "prosody_features": last_prosody_dict,
+                    "scores_valid": True,
+                    "score_kind": "uncalibrated_model_score",
                 })
             else:
                 elapsed_ms = (time.perf_counter() - chunk_start_time) * 1000.0
@@ -496,7 +580,7 @@ async def audio_websocket_endpoint(
                     speaker_consistency=last_consistency,
                     speaker_similarity=last_similarity,
                     speaker_match=last_is_match if active_speaker_id else None,
-                    speaker_enrolled=bool(active_speaker_id and active_speaker_id in speaker_encoder.enrolled_speakers),
+                    speaker_enrolled=bool(active_speaker_id and active_speaker_id in speaker_encoder.list_enrolled_speakers()),
                     semantic_threat_score=current_semantic_threat,
                     triggered_intents=current_triggered_intents,
                     flagged_phrases=current_flagged_phrases,
@@ -528,6 +612,7 @@ async def audio_websocket_endpoint(
                     "speaker_similarity": round(last_similarity, 4),
                     "speaker_consistency_score": round(last_consistency, 4),
                     "speaker_match": last_is_match,
+                    "scores_valid": False,
                     "latency_ms": round(elapsed_ms, 2),
                     "vad_active": True,
                 })
@@ -613,7 +698,7 @@ async def ws_status():
     fusion_head = get_fusion_head()
     return {
         "target_sample_rate": 16000,
-        "rolling_window_sec": 3.0,
+        "rolling_window_sec": 64600 / 16000,
         "step_cadence_sec": 0.5,
         "vad": "Silero VAD v5 ONNX",
         "deepfake_model": "W2V2-AASIST ONNX",
@@ -645,27 +730,28 @@ async def enroll_speaker_endpoint(
     audio_file: UploadFile = File(...),
 ):
     """Enroll a new speaker reference profile from an uploaded audio file."""
-    import soundfile as sf
-    import io
-
-    content = await audio_file.read()
-    data, sr = sf.read(io.BytesIO(content))
-
-    preprocessor = AudioPreprocessor(target_sample_rate=16000)
-    audio_16k, valid, _ = preprocessor.process_chunk(data, input_sr=sr)
-
-    if not valid or len(audio_16k) < 8000:
-        return {"success": False, "error": "Audio file too short or silent (need >= 0.5s speech)."}
-
-    encoder = get_speaker_encoder()
-    emb = encoder.enroll_speaker(speaker_id, audio_16k)
-
-    return {
-        "success": True,
-        "speaker_id": speaker_id,
-        "embedding_dim": len(emb),
-        "samples_enrolled": len(audio_16k),
-    }
+    # Browser uploads may be WebM/Opus, unsupported by some libsndfile builds.
+    # Decode the actual container with the same FFmpeg path used by Flask.
+    from backend.models.w2v2_aasist import prepare_pcm
+    from src.audio_preprocessing import load_audio
+    content = await audio_file.read(50*1024*1024+1)
+    if len(content)>50*1024*1024:
+        return {"success":False,"error":"Audio upload exceeds 50 MiB"}
+    path = None
+    try:
+        with tempfile.NamedTemporaryFile(suffix=Path(audio_file.filename or "audio.webm").suffix,delete=False) as stream:
+            stream.write(content)
+            path = Path(stream.name)
+        data,sr = await asyncio.to_thread(load_audio,path)
+        encoder = get_speaker_encoder()
+        emb = await asyncio.to_thread(encoder.enroll_speaker,speaker_id,data,sr)
+        return {"success":True,"speaker_id":speaker_id,"embedding_dim":len(emb),
+                "samples_enrolled":len(prepare_pcm(data,sr))}
+    except ValueError as exc:
+        return {"success":False,"error":str(exc)}
+    finally:
+        if path is not None:
+            path.unlink(missing_ok=True)
 
 
 @app.post("/api/nlp/classify-intent")
@@ -757,5 +843,3 @@ if _STATIC_DIR.exists():
 
 if _FRONTEND_DIR.exists():
     app.mount("/", StaticFiles(directory=str(_FRONTEND_DIR), html=True), name="frontend")
-
-

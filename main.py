@@ -16,7 +16,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 
-import config  # noqa: E402
+import src.config  # noqa: E402
 
 
 def cmd_analyze(args):

@@ -1,68 +1,51 @@
-"""
-Central configuration for the voice-security Phase 1 pipeline.
-
-Keep every tunable value here so experiments (aggregation strategy,
-segment length, threshold, etc.) don't require hunting through code.
-"""
-
+"""Explicit candidate contract. Confirm against YOUR checkpoint/export, not its filename."""
+from dataclasses import dataclass, asdict
 from pathlib import Path
 
-# ---------------------------------------------------------------------------
-# Paths
-# ---------------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parent
-
-# MODEL_PATH = PROJECT_ROOT / "models" / "aasist-l.onnx"  # Legacy, kept for reference
-# MODEL_NAME = "garystafford/wav2vec2-deepfake-voice-detector"
 MODEL_PATH = PROJECT_ROOT / "models" / "w2v2-aasist.onnx"
-MODEL_TYPE = "w2v2-aasist-onnx"
+CALIBRATION_PATH = PROJECT_ROOT / "calibration.json"
 
+@dataclass(frozen=True)
+class Settings:
+    sample_rate: int = 16000
+    window_samples: int = 64600
+    hop_samples: int = 32000
+    normalization: str = "peak"   # none / peak / zscore: verify with export
+    output_name: str | None = None  # mandatory if graph has multiple outputs
+    output_kind: str = "logits"   # logits / probabilities (two classes only)
+    spoof_index: int = 0
+    contract_verified: bool = False  # change only after provenance/parity checks
+    # Defaults below are engineering quality gates, NOT calibrated accuracy claims.
+    min_rms_dbfs: float = -60.0
+    max_clipped_fraction: float = 0.01
+    min_speech_seconds: float = 1.0
+    min_speech_fraction: float = 0.30
+    vad_mode: int = 1
+    max_file_seconds: float = 120.0
+    # Keep all waveform windows intact; VAD is used only for eligibility.
+    short_audio: str = "abstain"  # abstain / repeat (reference diagnostic only)
+    # List any ONNX external weight sidecars; they enter the calibration fingerprint.
+    external_weights: tuple[str, ...] = ()
 
-TEST_AUDIO_DIR = PROJECT_ROOT / "test_audio"
-REAL_AUDIO_DIR = TEST_AUDIO_DIR / "real"
-SPOOF_AUDIO_DIR = TEST_AUDIO_DIR / "spoof"
+    def __post_init__(self):
+        if self.sample_rate != 16000:
+            raise ValueError("This adapter targets a verified 16 kHz checkpoint only")
+        if self.window_samples <= 0 or not 0 < self.hop_samples <= self.window_samples:
+            raise ValueError("Invalid window/hop")
+        if self.normalization not in {"none", "peak", "zscore"}:
+            raise ValueError("Unknown normalization")
+        if self.output_kind not in {"logits", "probabilities"} or self.spoof_index not in (0, 1):
+            raise ValueError("Unsupported two-class output contract")
+        if self.short_audio not in {"abstain", "repeat"} or self.vad_mode not in range(4):
+            raise ValueError("Invalid short-audio or VAD setting")
+        if not 0 <= self.min_speech_fraction <= 1 or not 0 <= self.max_clipped_fraction <= 1:
+            raise ValueError("Invalid quality fraction")
+        if self.min_speech_seconds < 0 or self.max_file_seconds <= 0:
+            raise ValueError("Invalid duration")
 
-RESULTS_DIR = PROJECT_ROOT / "results"
-PREDICTIONS_CSV = RESULTS_DIR / "predictions.csv"
-METRICS_JSON = RESULTS_DIR / "metrics.json"
+    def as_dict(self):
+        return asdict(self)
 
-# ---------------------------------------------------------------------------
-# Audio preprocessing
-# ---------------------------------------------------------------------------
-# NOTE: TARGET_SAMPLE_RATE must match whatever the ONNX model actually
-# expects. Verify this with tests/test_model.py (Step 2 of Phase 1) before
-# trusting this value — 16000 Hz is the common AASIST default, but confirm.
-TARGET_SAMPLE_RATE = 16000
-FORCE_MONO = True
-# ---------------------------------------------------------------------------
-# Windowing
-# ---------------------------------------------------------------------------
-# AASIST-L's ONNX export has a FIXED input length — confirmed via
-# inspect-model: input shape is ('batch', 64600). Not a tunable value.
-FIXED_WINDOW_SAMPLES = 64600
-
-# Upstream clovaai/aasist eval convention: audio >= 64600 -> first 64600
-# samples; audio < 64600 -> tile-repeat to fill. Keep False for baseline.
-USE_SLIDING_WINDOWS = True
-SEGMENT_OVERLAP_SECONDS = 2.0
-
-# ---------------------------------------------------------------------------
-# Aggregation
-# ---------------------------------------------------------------------------
-# Only relevant when USE_SLIDING_WINDOWS = True.
-# One of: "mean", "median", "weighted_mean", "top_k", "majority_vote"
-AGGREGATION_STRATEGY = "mean"
-TOP_K = 3
-
-# ---------------------------------------------------------------------------
-# Decision
-# ---------------------------------------------------------------------------
-# Model outputs logits[:, 1] = bona fide (higher = more real). aasist_onnx.py
-# converts this to a spoof probability so "higher = more spoof-like" holds
-# throughout the pipeline.
+DEFAULTS = Settings()
 SPOOF_THRESHOLD = 0.6
-UNCERTAIN_MARGIN = 0.0
-# ---------------------------------------------------------------------------
-# Misc
-# ---------------------------------------------------------------------------
-RANDOM_SEED = 42

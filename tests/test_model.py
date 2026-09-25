@@ -9,7 +9,7 @@ assumptions baked into config.py.
 import numpy as np
 import pytest
 
-import config
+import src.config
 from aasist_onnx import AasistOnnxModel
 
 

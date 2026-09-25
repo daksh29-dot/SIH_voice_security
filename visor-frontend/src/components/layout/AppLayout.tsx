@@ -17,11 +17,11 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
   // Landing page doesn't get the dashboard layout
   if (pathname === "/") {
-    return <main className="min-h-screen bg-background">{children}</main>
+    return <main className="min-h-screen bg-transparent">{children}</main>
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
+    <div className="flex h-screen overflow-hidden bg-transparent">
       
       {/* Mobile Menu Backdrop */}
       {mobileMenuOpen && (
@@ -59,7 +59,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Main Content Area */}
-        <main className="flex-1 overflow-y-auto overflow-x-hidden bg-background focus:outline-none" tabIndex={-1}>
+        <main className="flex-1 overflow-y-auto overflow-x-hidden bg-transparent focus:outline-none" tabIndex={-1}>
           {children}
         </main>
       </div>

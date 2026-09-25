@@ -39,6 +39,8 @@ class SileroVAD:
             model_path: Path to silero_vad.onnx file. If None or non-existent, attempts to locate or download it.
             threshold: Speech probability threshold (default: 0.5). Probabilities >= threshold are considered speech.
         """
+        if not 0 <= threshold <= 1:
+            raise ValueError("Invalid VAD threshold")
         self.threshold = threshold
         self.model_path = Path(model_path) if model_path else DEFAULT_MODEL_PATH
 
@@ -75,6 +77,7 @@ class SileroVAD:
 
     def reset_states(self) -> None:
         """Reset recurrent hidden state, context, and leftover sample buffer."""
+        self.last_speech_samples = 0
         self._state = np.zeros((2, 1, 128), dtype=np.float32)
         self._context = np.zeros((1, self.CONTEXT_SIZE_SAMPLES), dtype=np.float32)
         self._leftover_samples = np.empty(0, dtype=np.float32)
@@ -99,7 +102,10 @@ class SileroVAD:
         )
         self._state = new_state
         self._context = model_input[:, -self.CONTEXT_SIZE_SAMPLES :].copy()
-        return float(out[0][0])
+        probability = float(out[0][0])
+        if not np.isfinite(probability) or not 0 <= probability <= 1:
+            raise ValueError("Invalid VAD output")
+        return probability
 
     def is_speech(
         self,
@@ -121,12 +127,15 @@ class SileroVAD:
                 - is_speech: True if speech detected (prob >= threshold)
                 - max_speech_prob: Peak speech probability detected in this chunk
         """
+        self.last_speech_samples = 0
         active_thresh = self.threshold if threshold is None else threshold
 
         if chunk is None or len(chunk) == 0:
             return False, 0.0
 
-        chunk_1d = np.asarray(chunk, dtype=np.float32).flatten()
+        chunk_1d = np.asarray(chunk, dtype=np.float32)
+        if chunk_1d.ndim != 1 or not np.isfinite(chunk_1d).all():
+            raise ValueError("VAD requires finite mono PCM")
 
         # Combine with leftover samples from previous call
         if len(self._leftover_samples) > 0:
@@ -153,6 +162,7 @@ class SileroVAD:
         self._leftover_samples = full_audio[remainder_idx:]
 
         # Maximum confidence across the frames in this chunk
+        self.last_speech_samples = sum(p >= active_thresh for p in probs)*self.WINDOW_SIZE_SAMPLES
         max_prob = max(probs) if probs else 0.0
         return (max_prob >= active_thresh), max_prob
 

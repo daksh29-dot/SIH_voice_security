@@ -7,6 +7,7 @@ import { audioService } from "../services/audioService";
 import { api } from "../lib/api";
 
 type AnalysisState = "READY" | "RECORDING" | "ANALYZING" | "RESULT";
+export type DeploymentMode = "retail" | "enterprise";
 
 interface AppState {
   isInitializing: boolean;
@@ -18,6 +19,7 @@ interface AppState {
   modelStatus: ModelStatus;
   audioLevel: number;
   recordingDuration: number;
+  deploymentMode: DeploymentMode;
 }
 
 interface AppContextActions {
@@ -27,6 +29,7 @@ interface AppContextActions {
   analyzePreset: (preset: any, enrolledSpeakerId?: string) => Promise<void>;
   resetAnalysis: () => void;
   clearHistory: () => void;
+  setDeploymentMode: (mode: DeploymentMode) => void;
 }
 
 const defaultState: AppState = {
@@ -39,6 +42,7 @@ const defaultState: AppState = {
   modelStatus: { engine: "W2V2-AASIST", inference: "ONNX Runtime", backend: "Demo Mode", version: "v2.4.1" },
   audioLevel: 0,
   recordingDuration: 0,
+  deploymentMode: "retail",
 };
 
 const AppContext = createContext<{ state: AppState; actions: AppContextActions } | null>(null);
@@ -51,6 +55,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const initData = async () => {
       try {
+        // Load persisted deployment mode
+        const savedMode = (typeof window !== "undefined" ? localStorage.getItem("visor_deployment_mode") : null) as DeploymentMode | null;
+
         let history = [];
         let initialThreats = [];
         if (api.getIsDemoMode()) {
@@ -82,6 +89,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
           isInitializing: false,
           analysisHistory: history, 
           threatIndicators: initialThreats,
+          deploymentMode: savedMode ?? "retail",
           modelStatus: { ...prev.modelStatus, backend: api.getIsDemoMode() ? "Demo Mode" : "Connected" }
         }));
       } catch (e) {
@@ -185,7 +193,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
     clearHistory: () => {
       storageService.clearAll();
       updateState({ analysisHistory: [], threatIndicators: [] });
-    }
+    },
+
+    setDeploymentMode: (mode: DeploymentMode) => {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("visor_deployment_mode", mode);
+      }
+      updateState({ deploymentMode: mode });
+    },
   };
 
   return <AppContext.Provider value={{ state, actions }}>{children}</AppContext.Provider>;

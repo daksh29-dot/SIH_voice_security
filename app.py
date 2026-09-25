@@ -25,21 +25,22 @@ import sys
 import time
 import uuid
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
+import config
 
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 
 if sys.platform == "win32":
     try:
-        sys.stdout.reconfigure(encoding="utf-8")
-        sys.stderr.reconfigure(encoding="utf-8")
+        sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)
+        sys.stderr.reconfigure(encoding="utf-8", line_buffering=True)
     except Exception:
         pass
 
 # ── Path setup ────────────────────────────────────────────────────────
 sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 
-import config
 from inference import VoiceSpoofDetector
 from speech_to_text import transcribe_audio_file
 from multi_modal_engine import (
@@ -53,6 +54,7 @@ from audit_ledger import ledger, threat_db
 
 from backend.models.speaker_encoder import get_speaker_encoder
 from backend.audio.preprocessing import AudioPreprocessor
+from backend.models.w2v2_aasist import prepare_pcm
 
 app = Flask(__name__, static_folder="frontend")
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
@@ -68,9 +70,9 @@ _detector = None
 def get_detector():
     global _detector
     if _detector is None:
-        print("[*] Initializing VoiceGuard Deepfake Detector in memory...")
+        print("[*] Initializing VoiceGuard Deepfake Detector in memory...", flush=True)
         _detector = VoiceSpoofDetector()
-        print("[*] VoiceGuard Detector loaded & warmed up.")
+        print("[*] VoiceGuard Detector loaded & warmed up.", flush=True)
     return _detector
 
 
@@ -123,33 +125,43 @@ def analyze():
         result = get_detector().analyze(str(save_path))
         elapsed = time.perf_counter() - start
 
+        score = result.calibrated_score if result.calibrated_score is not None else result.aggregated_score
+        dec = result.decision.value.upper() if result.decision else "UNCERTAIN"
+
         response = {
             "id": uuid.uuid4().hex[:8],
             "filename": audio_file.filename,
-            "decision": result.decision.value,
-            "aggregated_score": round(result.aggregated_score, 6),
-            "spoof_probability": round(result.aggregated_score * 100, 2),
+            "decision": dec,
+            "aggregated_score": round(score, 6) if score is not None else None,
+            "status": result.status,
+            "reasons": result.reasons,
+            "score_kind": "calibrated_score" if result.calibrated_score is not None else "uncalibrated_model_score",
+            "spoof_probability": round(result.calibrated_score * 100, 2) if result.calibrated_score is not None else None,
+            "model_score_percent": round(score * 100, 2) if score is not None else None,
             "segment_scores": [round(s, 6) for s in result.segment_scores],
             "num_segments": len(result.segment_scores),
             "inference_time_s": round(elapsed, 4),
             "inference_time_ms": round(elapsed * 1000, 1),
-            "threshold_used": config.SPOOF_THRESHOLD,
+            "threshold_used": None,
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
         }
 
         # Log to ledger
-        ledger.record_event(
-            event_type="AUDIO_FILE_ANALYSIS",
-            phone_number="N/A (Direct File)",
-            composite_risk=response["aggregated_score"],
-            policy_action="BLOCK_AND_HOLD" if result.decision.value == "SPOOF" else "PROCEED_NORMALLY",
-            pillar_details={"voice_clone_score": response["aggregated_score"]},
-            transcript_snippet=f"File: {audio_file.filename}",
-            threat_category="SPOOF_VOICE" if result.decision.value == "SPOOF" else "CLEAN"
-        )
+        if score is not None:
+            ledger.record_event(
+                event_type="AUDIO_FILE_ANALYSIS",
+                phone_number="N/A (Direct File)",
+                composite_risk=response["aggregated_score"],
+                policy_action="BLOCK_AND_HOLD" if dec == "SPOOF" else ("PROCEED_NORMALLY" if dec == "REAL" else "STEP_UP_MFA"),
+                pillar_details={"voice_clone_score": response["aggregated_score"]},
+                transcript_snippet=f"File: {audio_file.filename}",
+                threat_category="SPOOF_VOICE" if dec == "SPOOF" else ("CLEAN" if dec == "REAL" else "UNVERIFIED")
+            )
 
         return jsonify(response)
 
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -184,15 +196,11 @@ def enroll_voice():
     try:
         from audio_preprocessing import load_audio
         data_sig, sr = load_audio(str(save_path))
-        preprocessor = AudioPreprocessor(target_sample_rate=16000)
-        audio_16k, valid, _ = preprocessor.process_chunk(data_sig, input_sr=sr)
-        
-        if not valid or len(audio_16k) < 8000:
-            return jsonify({"error": "Audio file too short or silent (need >= 0.5s speech)."}), 400
-            
         encoder = get_speaker_encoder()
-        encoder.enroll_speaker(speaker_id, audio_16k)
+        encoder.enroll_speaker(speaker_id, data_sig, sample_rate=sr)
         return jsonify({"success": True, "speaker_id": speaker_id})
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:
@@ -204,8 +212,11 @@ def enroll_voice():
 @app.route("/api/enrolled-voices/<speaker_id>", methods=["DELETE"])
 def delete_enrolled_voice(speaker_id):
     encoder = get_speaker_encoder()
-    clean_id = speaker_id.strip()
-    if clean_id in encoder.enrolled_speakers:
+    try:
+        clean_id = encoder._speaker_id(speaker_id)
+    except ValueError as exc:
+        return jsonify({"error":str(exc)}),400
+    if clean_id in encoder.list_enrolled_speakers():
         del encoder.enrolled_speakers[clean_id]
         npy_path = encoder.enrolled_dir / f"{clean_id}.npy"
         if npy_path.exists():
@@ -244,6 +255,11 @@ def analyze_call():
     
     enrolled_speaker_id = data.get("enrolled_speaker_id")
     acoustic_consistency = None
+    speaker_match = None
+    speaker_similarity = None
+    voice_decision = "UNCERTAIN"
+    voice_status = "unavailable"
+    voice_error = None
     
     if "audio" in request.files and request.files["audio"].filename != "":
         audio_file = request.files["audio"]
@@ -255,10 +271,13 @@ def analyze_call():
             t0 = time.perf_counter()
             res = get_detector().analyze(str(save_path))
             voice_inference_ms = round((time.perf_counter() - t0) * 1000, 1)
-            voice_score = res.aggregated_score
+            voice_score = res.calibrated_score if res.calibrated_score is not None else res.aggregated_score
+            voice_decision = res.decision.value.upper()
+            voice_status = res.status
         except Exception as e:
             print(f"[!] Voice inference error: {e}")
-            voice_score = 0.15
+            voice_score = None
+            voice_error = str(e)
 
         # 2. Run Real Speech-to-Text if transcript wasn't passed or is empty
         if not transcript or len(transcript.strip()) < 3:
@@ -281,10 +300,10 @@ def analyze_call():
                 encoder = get_speaker_encoder()
                 from audio_preprocessing import load_audio
                 data_sig, sr = load_audio(str(save_path))
-                preprocessor = AudioPreprocessor(target_sample_rate=16000)
-                audio_16k, valid, _ = preprocessor.process_chunk(data_sig, input_sr=sr)
-                if valid:
-                    spk_res = encoder.verify_speaker(enrolled_speaker_id, audio_16k)
+                spk_res = encoder.verify_speaker(enrolled_speaker_id, data_sig, sample_rate=sr)
+                speaker_match = spk_res["is_match"]
+                speaker_similarity = spk_res["similarity"]
+                if speaker_match is not None:
                     acoustic_consistency = spk_res["speaker_consistency_score"]
             except Exception as e:
                 print(f"[!] Speaker verification error: {e}")
@@ -294,11 +313,17 @@ def analyze_call():
         except OSError:
             pass
     elif preset_voice_score is not None:
-        voice_score = float(preset_voice_score)
-        voice_inference_ms = 18.0
+        try:
+            voice_score = float(preset_voice_score)
+            if not 0 <= voice_score <= 1:
+                raise ValueError("Invalid preset score")
+        except (TypeError,ValueError):
+            return jsonify({"error":"preset_voice_score must be in [0,1]"}),400
+        voice_status = "demo_preset"
+        voice_inference_ms = 0.0
     else:
-        voice_score = 0.08
-        voice_inference_ms = 1.0
+        voice_score = None
+        voice_inference_ms = 0.0
 
     # 2. Check Caller (Spoofed?)
     caller_result = check_caller_telecom(
@@ -314,7 +339,8 @@ def analyze_call():
     # 4. Check Match (Is it them?)
     bio_result = check_voice_biometrics(
         voice_clone_score=voice_score,
-        acoustic_consistency_score=acoustic_consistency
+        acoustic_consistency_score=acoustic_consistency,
+        speaker_match=speaker_match, speaker_similarity=speaker_similarity
     )
 
     # Dynamic Risk Orchestrator
@@ -325,6 +351,9 @@ def analyze_call():
         biometric_mismatch_risk=bio_result["risk_score"]
     )
 
+    if voice_decision == "UNCERTAIN" and orchestration["policy_action"] == "PROCEED_NORMALLY":
+        orchestration.update(policy_action="STEP_UP_MFA",action_label="Voice result requires review",
+                             action_color="amber",recommendation="No calibrated real/spoof conclusion is available.")
     total_time_ms = round((time.perf_counter() - start_total) * 1000, 1)
 
     # Record in cryptographic immutable ledger
@@ -345,7 +374,7 @@ def analyze_call():
     )
 
     # If Critical Threat, register into Threat DB
-    if orchestration["composite_risk_score"] >= 0.70:
+    if orchestration["composite_risk_score"] >= 0.70 and voice_decision != "UNCERTAIN":
         threat_db.add_threat({
             "id": f"THREAT-{uuid.uuid4().hex[:6].upper()}",
             "phone_number": phone_number,
@@ -368,9 +397,11 @@ def analyze_call():
         "orchestration": orchestration,
         "pillars": {
             "voice_clone": {
-                "score": round(voice_score, 4),
-                "is_clone": voice_score >= config.SPOOF_THRESHOLD,
-                "label": "AI Synthetic Voice" if voice_score >= config.SPOOF_THRESHOLD else "Human Natural Voice"
+                "score": round(voice_score, 4) if voice_score is not None else None,
+                "is_clone": (voice_decision == "SPOOF") if voice_decision in ("REAL","SPOOF") else None,
+                "label": {"REAL":"Genuine prediction","SPOOF":"Spoof prediction"}.get(voice_decision,"Uncertain — uncalibrated or unavailable"),
+                "status": voice_status, "error": voice_error,
+                "decision": voice_decision
             },
             "caller_telecom": caller_result,
             "scam_nlp": nlp_result,
@@ -521,18 +552,11 @@ def get_presets():
 # ── 9. Batch Evaluation Metrics ──────────────────────────────────────
 @app.route("/api/metrics")
 def metrics():
-    metrics_path = config.METRICS_JSON
+    metrics_path = Path(getattr(config, "METRICS_JSON", Path(__file__).parent / "metrics.json"))
     if not metrics_path.exists():
-        return jsonify({
-            "accuracy": 1.0,
-            "precision": 1.0,
-            "recall": 1.0,
-            "f1_score": 1.0,
-            "eer": 0.0,
-            "fpr": 0.0,
-            "fnr": 0.0,
-            "confusion_matrix": {"tp": 10, "fp": 0, "tn": 10, "fn": 0}
-        })
+        return jsonify({"status":"not_evaluated","accuracy":None,"precision":None,
+                        "recall":None,"f1_score":None,"eer":None,"fpr":None,"fnr":None,
+                        "confusion_matrix":None})
     with open(metrics_path) as f:
         data = json.load(f)
     return jsonify(data)
@@ -563,6 +587,9 @@ if __name__ == "__main__":
     print("\n" + "="*60)
     print(" [!] VISOR -- TACTICAL VOICE INTELLIGENCE & SECURITY DEFENSE")
     print("="*60)
+    # Eagerly load the model at startup so it's ready and the user sees the log
+    get_detector()
+    
     # print(f" [*] Model: {config.MODEL_NAME}")
     print(f" [*] Model: W2V2-AASIST ONNX")
     print(f" [*] Model Path: {config.MODEL_PATH}")

@@ -33,7 +33,13 @@ export class AudioService {
     };
 
     this.microphone.connect(this.processor);
-    this.processor.connect(this.audioContext.destination);
+    
+    // Connect to destination through a muted GainNode to prevent acoustic feedback loop 
+    // (ScriptProcessor requires connection to destination to fire events in some browsers)
+    const gainNode = this.audioContext.createGain();
+    gainNode.gain.value = 0;
+    this.processor.connect(gainNode);
+    gainNode.connect(this.audioContext.destination);
 
     const dataArray = new Uint8Array(this.analyser.frequencyBinCount);
     
@@ -138,6 +144,10 @@ export class AudioService {
       this.stream = null;
     }
     this.pcmData = [];
+  }
+
+  getAnalyser(): AnalyserNode | null {
+    return this.analyser;
   }
 }
 
